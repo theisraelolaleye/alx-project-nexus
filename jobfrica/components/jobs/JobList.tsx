@@ -1,13 +1,16 @@
 import { Search } from 'lucide-react'
-import { JobCard, Job } from './JobCard'
+import { JobCard } from './JobCard'
+import { Job } from '@/types'
+import { ViewMode } from './ViewToggle'
 
 interface JobListProps {
   jobs: Job[]
   loading?: boolean
   emptyStateMessage?: string
+  viewMode?: ViewMode
 }
 
-export function JobList({ jobs, loading = false, emptyStateMessage = "No jobs found. Try adjusting your filters." }: JobListProps) {
+export function JobList({ jobs, loading = false, emptyStateMessage = "No jobs found. Try adjusting your filters.", viewMode = 'grid' }: JobListProps) {
   const handleJobClick = (job: Job) => {
     // Navigate to job details page or open modal
     console.log('Job clicked:', job)
@@ -63,6 +66,7 @@ export function JobList({ jobs, loading = false, emptyStateMessage = "No jobs fo
   return (
     <div className="space-y-6">
       {/* Results count */}
+
       <div className="flex items-center justify-between">
         <p className="text-sm text-gray-600">
           Showing {jobs.length} {jobs.length === 1 ? 'job' : 'jobs'}
@@ -77,15 +81,22 @@ export function JobList({ jobs, loading = false, emptyStateMessage = "No jobs fo
         </div>
       </div>
 
-      {/* Job Cards Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+      {/* Job Cards Grid/List */}
+      <div className={
+        viewMode === 'grid'
+          ? "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6"
+          : "space-y-4"
+      }>
         {jobs.map((job) => (
           <JobCard
             key={job.id}
             job={job}
             onClick={handleJobClick}
+            viewMode={viewMode}
           />
         ))}
+
+
       </div>
     </div>
   )
