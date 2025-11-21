@@ -55,11 +55,7 @@ INSTALLED_APPS = [
     'users',
     'jobs',
     'applications',
-    'companies',
     'notifications',
-    'tags',
-    'core',
-
 ]
 
 MIDDLEWARE = [
