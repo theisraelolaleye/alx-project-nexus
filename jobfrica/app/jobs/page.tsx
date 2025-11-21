@@ -2,11 +2,10 @@
 
 import { useState, useMemo } from 'react'
 import { Filter } from 'lucide-react'
-import { Navbar } from '@/components/layout/landingpage/Navbar'
-import { Footer } from '@/components/layout/landingpage/Footer'
 import { JobFilters } from '@/components/jobs/JobFilters'
 import { JobList } from '@/components/jobs/JobList'
 import { Pagination } from '@/components/jobs/Pagination'
+import { ViewToggle, ViewMode } from '@/components/jobs/ViewToggle'
 import { mockJobs } from '@/data/mockJobs'
 
 interface Filters {
@@ -21,6 +20,7 @@ const JOBS_PER_PAGE = 6
 export default function JobsPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false)
+  const [viewMode, setViewMode] = useState<ViewMode>('grid')
   const [filters, setFilters] = useState<Filters>({
     search: '',
     category: '',
@@ -91,9 +91,7 @@ export default function JobsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-
+    <div className="bg-gray-50">
       {/* Page Header */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -107,6 +105,7 @@ export default function JobsPage() {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex flex-col lg:flex-row gap-8">
+
           {/* Mobile Filter Button */}
           <div className="lg:hidden">
             <button
@@ -135,9 +134,24 @@ export default function JobsPage() {
 
           {/* Job Listings */}
           <main className="flex-1 min-w-0">
+            {/* Header with view toggle */}
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-4">
+                <h2 className="text-lg font-semibold text-gray-900">
+                  Job Results
+                </h2>
+              </div>
+
+              <ViewToggle
+                viewMode={viewMode}
+                onViewChange={setViewMode}
+              />
+            </div>
+
             <JobList
               jobs={getCurrentPageJobs()}
               emptyStateMessage="No jobs found. Try adjusting your filters."
+              viewMode={viewMode}
             />
 
             {/* Pagination */}
@@ -153,8 +167,6 @@ export default function JobsPage() {
           </main>
         </div>
       </div>
-
-      <Footer />
     </div>
   )
 }

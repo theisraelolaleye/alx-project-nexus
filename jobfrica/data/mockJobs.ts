@@ -1,4 +1,4 @@
-import { Job } from '../components/jobs/JobCard'
+import { Job } from '@/types'
 
 export const mockJobs: Job[] = [
   {

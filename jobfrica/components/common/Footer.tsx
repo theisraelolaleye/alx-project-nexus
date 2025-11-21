@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { Briefcase, Mail, Phone, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react'
 
 export function Footer() {
@@ -17,18 +18,18 @@ export function Footer() {
               Build your career and find opportunities that match your skills and ambitions.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
+              <Link href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
                 <Facebook className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
+              </Link>
+              <Link href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
                 <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
+              </Link>
+              <Link href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
                 <Linkedin className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
+              </Link>
+              <Link href="#" className="text-gray-400 hover:text-blue-400 transition-colors">
                 <Instagram className="w-5 h-5" />
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -37,29 +38,29 @@ export function Footer() {
             <h3 className="text-white font-semibold mb-6">Quick Links</h3>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/jobs" className="text-gray-400 hover:text-white transition-colors">
                   Browse Jobs
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="#" className="text-gray-400 hover:text-white transition-colors">
                   Companies
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="#" className="text-gray-400 hover:text-white transition-colors">
                   Post a Job
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="#" className="text-gray-400 hover:text-white transition-colors">
                   Career Resources
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="#" className="text-gray-400 hover:text-white transition-colors">
                   Salary Guide
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -69,29 +70,29 @@ export function Footer() {
             <h3 className="text-white font-semibold mb-6">Categories</h3>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="#" className="text-gray-400 hover:text-white transition-colors">
                   Design
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="#" className="text-gray-400 hover:text-white transition-colors">
                   Engineering
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="#" className="text-gray-400 hover:text-white transition-colors">
                   Marketing
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="#" className="text-gray-400 hover:text-white transition-colors">
                   Sales
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/jobs" className="text-gray-400 hover:text-white transition-colors">
                   View All
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -138,18 +139,18 @@ export function Footer() {
               © 2024 JobFrica. All rights reserved.
             </div>
             <div className="flex flex-wrap gap-6 text-sm">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              <Link href="#" className="text-gray-400 hover:text-white transition-colors">
                 Privacy Policy
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              </Link>
+              <Link href="#" className="text-gray-400 hover:text-white transition-colors">
                 Terms of Service
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              </Link>
+              <Link href="#" className="text-gray-400 hover:text-white transition-colors">
                 Cookie Policy
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
+              </Link>
+              <Link href="#" className="text-gray-400 hover:text-white transition-colors">
                 Help Center
-              </a>
+              </Link>
             </div>
           </div>
         </div>
