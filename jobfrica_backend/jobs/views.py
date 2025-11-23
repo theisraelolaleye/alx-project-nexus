@@ -6,11 +6,15 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Job
-from users.permissions import IsAdmin, IsEmployerOrAdmin, IsJobSeekerOrAdmin, IsOwnerOrAdmin
+from users.permissions import IsEmployerOrAdmin, IsOwnerOrAdmin, IsJobSeekerOrAdmin
 from .serializers import JobSerializer
 from applications.serializers import ApplicationCreateSerializer
+from applications.serializers import ApplicationSerializer
+from django.db.models import Q
+from rest_framework import status
 from applications.models import Application
 from django.shortcuts import render
+from django.utils import timezone
 from .models import JobCategory, Skill
 from .serializers import (CategorySerializer, SkillSerializer, 
                           JobListSerializer, JobSerializer,
@@ -24,6 +28,19 @@ class JobCategoryViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]  # Anyone can see categories
     pagination_class = None
 
+    def jobs(self, request, slug=None):
+        """Get jobs for a specific category"""
+        category = self.get_object()
+        jobs = Job.objects.filter(category=category, application_deadline__gte=timezone.now())
+        page = self.paginate_queryset(jobs)
+        
+        if page is not None:
+            serializer = JobListSerializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        
+        serializer = JobListSerializer(jobs, many=True)
+        return Response(serializer.data)
+
 
 class SkillViewSet(viewsets.ModelViewSet):
     """API endpoint that allows skills to be viewed."""
@@ -33,6 +50,8 @@ class SkillViewSet(viewsets.ModelViewSet):
     pagination_class = None
 
 class JobViewSet(viewsets.ModelViewSet):
+    """ViewSet for managing job listings."""
+    queryset = Job.objects.all()
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['category', 'job_type', 'experience_level', 'location', 'company']
     search_fields = ['title', 'description', 'company']
@@ -45,7 +64,7 @@ class JobViewSet(viewsets.ModelViewSet):
         elif self.action in ['create', 'update', 'partial_update', 'destroy']:
             permission_classes = [IsEmployerOrAdmin]
         elif self.action == 'apply':
-            permission_classes = [IsAuthenticated]
+            permission_classes = [IsJobSeekerOrAdmin]
         else:
             permission_classes = [IsAuthenticated]
         return [permission() for permission in permission_classes]
@@ -58,7 +77,7 @@ class JobViewSet(viewsets.ModelViewSet):
         return JobDetailSerializer
 
     def get_queryset(self):
-        queryset = Job.objects.filter(is_active=True).select_related('category', 'employer')
+        queryset = Job.objects.filter(application_deadline__gte=timezone.now()).select_related('category', 'employer')
         
         # Advanced filtering
         salary_min = self.request.query_params.get('salary_min')
@@ -74,12 +93,12 @@ class JobViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(employer=self.request.user)
     
-    @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated])
+    @action(detail=True, methods=['post'])
     def apply(self, request, pk=None):
         """Apply for a job"""
         job = self.get_object()
         
-        # Check if already applied
+        # Check if user already applied
         if Application.objects.filter(job=job, applicant=request.user).exists():
             return Response(
                 {'error': 'You have already applied for this job.'},
@@ -88,12 +107,13 @@ class JobViewSet(viewsets.ModelViewSet):
         
         serializer = ApplicationCreateSerializer(
             data=request.data,
-            context={'request': request}
+            context={'request': request, 'job': job}
         )
         
         if serializer.is_valid():
-            serializer.save(job=job, applicant=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            application = serializer.save(job=job, applicant=request.user)
+            response_serializer = ApplicationSerializer(application)
+            return Response(response_serializer.data, status=status.HTTP_201_CREATED)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
@@ -108,13 +128,13 @@ class JobViewSet(viewsets.ModelViewSet):
         serializer = JobListSerializer(similar_jobs, many=True)
         return Response(serializer.data)
     
-    @action(detail=True, methods=['get'], permission_classes=[IsEmployerOrAdmin])
+    @action(detail=True, methods=['get'])
     def applications(self, request, pk=None):
         """Get all applications for a job"""
         job = self.get_object()
         
         # Check if user owns the job or is admin
-        if job.posted_by != request.user and request.user.role != 'admin':
+        if job.employer != request.user and request.user.role != 'admin':
             return Response(
                 {'error': 'You do not have permission to view these applications.'},
                 status=status.HTTP_403_FORBIDDEN
@@ -130,7 +150,7 @@ class JobViewSet(viewsets.ModelViewSet):
         serializer = ApplicationSerializer(applications, many=True)
         return Response(serializer.data)
 
-    @action(detail=False, methods=['get'], permission_classes=[IsEmployerOrAdmin])
+    @action(detail=False, methods=['get'])
     def my_jobs(self, request):
         """Get jobs posted by current user"""
         jobs = self.get_queryset().filter(employer=request.user)

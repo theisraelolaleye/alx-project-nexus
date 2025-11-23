@@ -12,8 +12,8 @@ class IsOwnerOrAdmin(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         if request.user.role == 'admin':
             return True
-        if hasattr(obj, 'posted_by'):
-            return obj.posted_by == request.user
+        if hasattr(obj, 'employer'):
+            return obj.employer == request.user
         if hasattr(obj, 'applicant'):
             return obj.applicant == request.user
         return False
