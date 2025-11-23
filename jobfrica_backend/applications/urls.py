@@ -8,7 +8,7 @@ from .views import (
 router = DefaultRouter()
 router.register(r'applications', ApplicationViewSet, basename='application')
 
-app_name = 'jobs'
+
 
 urlpatterns = [
     # ViewSet routes

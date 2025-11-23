@@ -26,12 +26,13 @@ from .models import CustomUser
 from jobs.models import Job
 from applications.models import Application
 import logging
-from .permissions import IsAdmin, IsEmployerOrAdmin, IsJobSeekerOrAdmin, IsOwnerOrAdmin
+from .permissions import IsAdmin
 from .serializers import ( UserStatisticsSerializer, UserProfileSerializer, 
                           UserRegistrationSerializer, CustomTokenObtainPairSerializer,
-                          EmployerProfileSerializer, JobSeekerProfileSerializer,
-                          PasswordChangeSerializer, UserLoginSerializer, PublicUserSerializer,
-                          PasswordResetConfirmSerializer, PasswordResetRequestSerializer)
+                          PasswordChangeSerializer, UserLoginSerializer, UserLogoutSerializer,
+                          ResendVerificationEmailSerializer, EmailVerificationSerializer, 
+                          PasswordResetConfirmSerializer, PasswordResetRequestSerializer,
+                          UserDashboardSerializer, PublicuserDashboardSerializer, DashboardResponseSerializer)
 
 logger = logging.getLogger(__name__)
 
@@ -48,18 +49,38 @@ class UserRegistrationView(generics.CreateAPIView):
     permission_classes = [AllowAny]
 
     def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
+        # Clean input data if it comes as lists
+        cleaned_data = self.clean_request_data(request.data)
+        
+        # Create serializer with cleaned data
+        serializer = self.get_serializer(data=cleaned_data)
+        
+        # Validate
         serializer.is_valid(raise_exception=True)
+        
+        # Save user
         user = serializer.save()
         
-        # Send welcome email
-        self.send_welcome_email(user)
+        # Send welcome email (don't let email failure break registration)
+        try:
+            self.send_welcome_email(user)
+        except Exception as e:
+            logger.error(f"Failed to send welcome email to {user.email}: {str(e)}")
         
-        # Generate tokens for auto-login after registration
+        # Generate tokens for auto-login
         refresh = RefreshToken.for_user(user)
         
+        # Prepare response
         response_data = {
-            'user': UserProfileSerializer(user).data,
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'role': user.role,
+                'company_name': user.company_name,
+            },
             'tokens': {
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
@@ -69,101 +90,95 @@ class UserRegistrationView(generics.CreateAPIView):
         
         return Response(response_data, status=status.HTTP_201_CREATED)
     
+    def clean_request_data(self, data):
+        """Clean request data to handle list inputs"""
+        cleaned = {}
+        for key, value in data.items():
+            if isinstance(value, list):
+                cleaned[key] = value[0] if value else ''
+            else:
+                cleaned[key] = value
+        return cleaned
+    
     def send_welcome_email(self, user):
         """Send welcome email to newly registered user"""
-        try:
-            subject = 'Welcome to Job Board Platform'
-            message = render_to_string('emails/welcome.html', {
-                'user': user,
-                'verification_link': self.get_verification_link(user)
-            })
-            send_mail(
-                subject,
-                message,
-                settings.DEFAULT_FROM_EMAIL,
-                [user.email],
-                html_message=message,
-                fail_silently=False,
-            )
-        except Exception as e:
-            logger.error(f"Failed to send welcome email: {str(e)}")
+        subject = 'Welcome to Job Board Platform'
+        
+        # Create email context
+        context = {
+            'user': user,
+            'verification_link': self.get_verification_link(user),
+            'login_url': f"{settings.FRONTEND_URL}/login",
+            'support_email': settings.DEFAULT_FROM_EMAIL,
+        }
+        
+        # Render email templates
+        html_message = render_to_string('emails/welcome.html', context)
+        plain_message = render_to_string('emails/welcome.txt', context)
+        
+        # Send email
+        send_mail(
+            subject=subject,
+            message=plain_message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[user.email],
+            html_message=html_message,
+            fail_silently=False,
+        )
     
     def get_verification_link(self, user):
         """Generate email verification link"""
         token = default_token_generator.make_token(user)
         uid = urlsafe_base64_encode(force_bytes(user.pk))
-        return f"{settings.FRONTEND_URL}/verify-email/{uid}/{token}"
-
-
+        return f"{settings.FRONTEND_URL}/verify-email/{uid}/{token}/"
+    
+    
 class UserLoginView(generics.CreateAPIView):
     """User login endpoint"""
-    queryset = CustomUser.objects.all()
     serializer_class = UserLoginSerializer
     permission_classes = [AllowAny]
 
-    def post(self, request, *args, **kwargs):
-        # Allow login with email
-        email = request.data.get('email', '')
-        password = request.data.get('password', '')
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)  # This will trigger the serializer's validate method
         
-        user = None
+        user = serializer.validated_data['user']
         
-        # Try to authenticate with email
-        if '@' in email:
-            try:
-                user_obj = CustomUser.objects.get(email=email.lower())
-                user = authenticate(
-                    request=request,
-                    email=user_obj.email,
-                    password=password
-                )
-            except CustomUser.DoesNotExist:
-                pass
-        else:
-            # Authenticate with username
-            user = authenticate(
-                request=request,
-                email=email,
-                password=password
+        if not user.is_active:
+            return Response(
+                {'error': 'Account is deactivated. Please contact support.'},
+                status=status.HTTP_403_FORBIDDEN
             )
         
-        if user:
-            if not user.is_active:
-                return Response(
-                    {'error': 'Account is deactivated. Please contact support.'},
-                    status=status.HTTP_403_FORBIDDEN
-                )
-            
-            # Update last login
-            user.last_login = timezone.now()
-            user.save(update_fields=['last_login'])
-            
-            refresh = RefreshToken.for_user(user)
-            
-            # Get user's role-specific data
-            if user.role == 'employer':
-                user_data = EmployerProfileSerializer(user).data
-            elif user.role == 'jobseeker':
-                user_data = JobSeekerProfileSerializer(user).data
-            else:
-                user_data = UserProfileSerializer(user).data
-            
-            return Response({
-                'user': user_data,
-                'tokens': {
-                    'refresh': str(refresh),
-                    'access': str(refresh.access_token),
-                },
-                'message': 'Login successful'
-            })
+        # Update last login
+        user.last_login = timezone.now()
+        user.save(update_fields=['last_login'])
         
-        return Response(
-            {'error': 'Invalid credentials'},
-            status=status.HTTP_401_UNAUTHORIZED
-        )
+        refresh = RefreshToken.for_user(user)
+        
+        # Get user's role-specific data
+        if user.role == 'employer':
+            user_data = EmployerProfileSerializer(user).data
+        elif user.role == 'job_seeker':
+            user_data = JobSeekerProfileSerializer(user).data
+        else:
+            user_data = UserProfileSerializer(user).data
+        
+        return Response({
+            'user': user_data,
+            'tokens': {
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+            },
+            'message': 'Login successful'
+        }, status=status.HTTP_200_OK)
+
 
 class UserLogoutView(APIView):
     """Logout view that blacklists the refresh token"""
+    permission_classes = [IsAuthenticated]
+    serializer_class = UserLogoutSerializer
+
     def post(self, request):
         try:
             refresh_token = request.data.get('refresh_token')
@@ -185,16 +200,8 @@ class UserLogoutView(APIView):
     
 class CurrentUserProfileView(generics.RetrieveUpdateAPIView):
     """Get and update current user profile"""
+    serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
-    
-    def get_serializer_class(self):
-        if self.request.method == 'GET':
-            user = self.request.user
-            if user.role == 'employer':
-                return EmployerProfileSerializer
-            elif user.role == 'jobseeker':
-                return JobSeekerProfileSerializer
-        return UserProfileSerializer
     
     def get_object(self):
         return self.request.user
@@ -223,7 +230,7 @@ class PasswordResetRequestView(generics.GenericAPIView):
         email = serializer.validated_data['email']
         
         try:
-            user = User.objects.get(email=email)
+            user = CustomUser.objects.get(email=email)
             
             # Generate password reset token
             token = default_token_generator.make_token(user)
@@ -248,7 +255,7 @@ class PasswordResetRequestView(generics.GenericAPIView):
                 fail_silently=False,
             )
             
-        except User.DoesNotExist:
+        except CustomUser.DoesNotExist:
             # Don't reveal that user doesn't exist
             pass
         except Exception as e:
@@ -273,8 +280,8 @@ class PasswordResetConfirmView(generics.GenericAPIView):
         # Decode uid and get user
         try:
             uid = force_str(urlsafe_base64_decode(request.data.get('uid')))
-            user = User.objects.get(pk=uid)
-        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = CustomUser.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
             return Response({
                 'error': 'Invalid reset link'
             }, status=status.HTTP_400_BAD_REQUEST)
@@ -311,63 +318,75 @@ class PasswordResetConfirmView(generics.GenericAPIView):
         }, status=status.HTTP_200_OK)
 
 
-class EmailVerificationView(APIView):
+class EmailVerificationView(generics.GenericAPIView):
     """
     Verify user email address
     """
     permission_classes = [AllowAny]
+    serializer_class = EmailVerificationSerializer
     
     def get(self, request, token, *args, **kwargs):
+        """
+        Verify email using token from URL
+        """
         try:
-            # Decode uid from URL
-            uid = kwargs.get('uid')
-            user_id = force_str(urlsafe_base64_decode(uid))
-            user = CustomUser.objects.get(pk=user_id)
-            
-            # Check if token is valid
-            if default_token_generator.check_token(user, token):
-                user.is_active = True
-                user.email_verified = True
-                user.save()
-                
-                return Response({
-                    'message': 'Email verified successfully'
-                }, status=status.HTTP_200_OK)
-            
-            return Response({
-                'error': 'Invalid or expired verification link'
-            }, status=status.HTTP_400_BAD_REQUEST)
-            
+            uidb64 = request.GET.get('uid')
+            uid = force_str(urlsafe_base64_decode(uidb64))
+            user = CustomUser.objects.get(pk=uid)
         except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
             return Response({
                 'error': 'Invalid verification link'
             }, status=status.HTTP_400_BAD_REQUEST)
+        
+        if user.email_verified:
+            return Response({
+                'message': 'Email is already verified.'
+            }, status=status.HTTP_200_OK)
+        
+        if default_token_generator.check_token(user, token):
+            user.email_verified = True
+            user.save(update_fields=['email_verified'])
+            return Response({
+                'message': 'Email verified successfully.'
+            }, status=status.HTTP_200_OK)
+        else:
+            return Response({
+                'error': 'Invalid or expired verification link.'
+            }, status=status.HTTP_400_BAD_REQUEST)
+    
 
-
-class ResendVerificationEmailView(APIView):
+class ResendVerificationEmailView(generics.GenericAPIView):
     """
     Resend email verification link
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = []  # Allow anyone to request verification resend
+    serializer_class = ResendVerificationEmailSerializer
     
     def post(self, request):
-        user = request.user
+        """
+        Resend verification email to the provided email address
+        """
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         
-        if hasattr(user, 'email_verified') and user.email_verified:
-            return Response({
-                'message': 'Email is already verified'
-            }, status=status.HTTP_200_OK)
-        
+        email = serializer.validated_data['email'].lower()
         try:
+            user = CustomUser.objects.get(email=email)
+            
+            if user.email_verified:
+                return Response({
+                    'message': 'Email is already verified.'
+                }, status=status.HTTP_200_OK)
+            
             # Generate new verification token
             token = default_token_generator.make_token(user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             
-            verification_link = f"{settings.FRONTEND_URL}/verify-email/{uid}/{token}"
-            
             # Send verification email
-            subject = 'Verify Your Email Address'
-            message = render_to_string('emails/email_verification.html', {
+            verification_link = f"{settings.FRONTEND_URL}/verify-email/{uid}/{token}/"
+            
+            subject = 'Resend Email Verification'
+            message = render_to_string('emails/verify_email.html', {
                 'user': user,
                 'verification_link': verification_link,
             })
@@ -382,20 +401,38 @@ class ResendVerificationEmailView(APIView):
             )
             
             return Response({
-                'message': 'Verification email sent successfully'
+                'message': 'Verification email resent. Please check your inbox.'
             }, status=status.HTTP_200_OK)
-            
-        except Exception as e:
-            logger.error(f"Failed to send verification email: {str(e)}")
+        except CustomUser.DoesNotExist:
+            # Don't reveal whether email exists for security
             return Response({
-                'error': 'Failed to send verification email'
-            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                'message': 'If an account with this email exists, a verification link has been sent.'
+            }, status=status.HTTP_200_OK)
+    
+    def send_verification_email(self, user, verification_link):
+        """Send verification email to user"""
+        subject = 'Email Verification'
+        message = render_to_string('emails/verify_email.html', {
+            'user': user,
+            'verification_link': verification_link,
+        })
+        
+        send_mail(
+            subject,
+            message,
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email],
+            html_message=message,
+            fail_silently=False,
+        )
+        
 
 class UserDashboardView(APIView):
     """
     Get dashboard data for authenticated user
     """
     permission_classes = [IsAuthenticated]
+    serializer_class = UserDashboardSerializer
     
     def get(self, request):
         user = request.user
@@ -409,7 +446,7 @@ class UserDashboardView(APIView):
             # Employer dashboard data
             dashboard_data['statistics'] = {
                 'total_jobs_posted': user.posted_jobs.count(),
-                'active_jobs': user.posted_jobs.filter(is_active=True).count(),
+                'active_jobs': user.posted_jobs.filter(application_deadline__gte=timezone.now()).count(),
                 'total_applications_received': Application.objects.filter(
                     job__posted_by=user
                 ).count(),
@@ -525,15 +562,17 @@ class PublicDashboardView(APIView):
     Get public dashboard data for unauthenticated users
     """
     permission_classes = [AllowAny]
+    serializer_class = PublicuserDashboardSerializer
     
     def get(self, request):
         # Basic platform statistics
-        total_jobs = Job.objects.filter().count()
+        total_jobs = Job.objects.count()
+        
+        # Use a subquery or direct Job model filtering
         total_companies = CustomUser.objects.filter(
             role='employer', 
             is_active=True,
-            jobs__status='active',
-            jobs__is_approved=True
+            id__in=Job.objects.filter(application_deadline__gte=timezone.now()).values('employer')
         ).distinct().count()
         
         # Recent job postings
@@ -544,7 +583,7 @@ class PublicDashboardView(APIView):
                 'total_jobs': total_jobs,
                 'total_companies': total_companies,
                 'new_jobs_today': Job.objects.filter(
-                    created_at__date=timezone.now().date()
+                    created_at__date=timezone.now().date(),
                 ).count(),
             },
             'recent_jobs': recent_jobs,
@@ -554,14 +593,14 @@ class PublicDashboardView(APIView):
     
     def get_recent_jobs(self):
         """Get recently posted jobs"""
-        from jobs.models import Job
-        
-        jobs = Job.objects.filter().select_related('posted_by').order_by('-created_at')[:8]
+        jobs = Job.objects.filter(
+            application_deadline__gte=timezone.now(),
+        ).select_related('employer').order_by('-created_at')[:8]
         
         return [{
             'id': job.id,
             'title': job.title,
-            'company': job.posted_by.company,
+            'company': job.employer.company_name,
             'location': job.location,
             'job_type': job.job_type,
             'salary_min': job.salary_min,
@@ -570,12 +609,12 @@ class PublicDashboardView(APIView):
             'is_new': job.created_at.date() == timezone.now().date()
         } for job in jobs]
 
-
 class CombinedDashboardView(APIView):
     """
     Combined dashboard that handles both authenticated and unauthenticated users
     """
     permission_classes = [AllowAny]
+    serializer_class = DashboardResponseSerializer
     
     def get(self, request):
         if request.user.is_authenticated:
@@ -588,6 +627,43 @@ class CombinedDashboardView(APIView):
             public_view = PublicDashboardView()
             public_view.request = request
             return public_view.get(request)
+
+class AvatarUploadView(generics.UpdateAPIView):
+    """
+    Upload or update user avatar
+    """
+    serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_object(self):
+        return self.request.user
+    
+    def post(self, request, *args, **kwargs):
+        user = self.get_object()
+        avatar_file = request.FILES.get('avatar')
+        
+        if not avatar_file:
+            return Response(
+                {'error': 'No avatar file provided'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        user.avatar = avatar_file
+        user.save(update_fields=['avatar'])
+        
+        return Response(
+            {'message': 'Avatar updated successfully', 'avatar_url': user.get_avatar_url()},
+            status=status.HTTP_200_OK
+        )
+    
+    def delete(self, request, *args, **kwargs):
+        user = self.get_object()
+        user.avatar.delete(save=True)
+        
+        return Response(
+            {'message': 'Avatar removed successfully', 'avatar_url': user.get_avatar_url()},
+            status=status.HTTP_200_OK
+        )
 
 class UserStatisticsView(APIView):
     """

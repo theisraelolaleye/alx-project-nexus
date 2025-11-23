@@ -5,11 +5,10 @@ from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshVie
 from .views import (CustomTokenObtainPairView, UserRegistrationView, UserLogoutView, 
                     CombinedDashboardView, CurrentUserProfileView, UserStatisticsView,
                     PasswordChangeView, EmailVerificationView, ResendVerificationEmailView,
-                    PasswordResetRequestView, PasswordResetConfirmView)
+                    PasswordResetRequestView, PasswordResetConfirmView, AvatarUploadView)
 
 # Router for ViewSets
 router = DefaultRouter()
-router.register(r'users', CombinedDashboardView, basename='home_dashoard')
 
 app_name = 'users'
 
@@ -29,6 +28,8 @@ urlpatterns = [
     # Profile endpoints
     path('profile/', CurrentUserProfileView.as_view(), name='profile'),
     path('profile/password/', PasswordChangeView.as_view(), name='change_password'),
+    path('dashboard/', CombinedDashboardView.as_view(), name='dashboard'),
+    path('profile/avatar/', AvatarUploadView.as_view(), name='avatar_upload'),
     
     # Password reset endpoints
     path('password-reset/', PasswordResetRequestView.as_view(), name='password_reset_request'),
@@ -39,7 +40,7 @@ urlpatterns = [
     path('resend-verification/', ResendVerificationEmailView.as_view(), name='resend_verification'),
     
     # User management (admin only)
-    path('', include(router.urls)),
+    path('', CombinedDashboardView.as_view(), name='dashboard'),
     
     # Statistics endpoint (admin only)
     path('statistics/', UserStatisticsView.as_view(), name='user_statistics'),
