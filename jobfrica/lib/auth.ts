@@ -1,7 +1,3 @@
-/**
- * Authentication API methods for JobFrica platform
- * Handles all authentication-related API calls to the external backend
- */
 
 import api from './api'
 import type {
@@ -21,7 +17,7 @@ export const authApi = {
    * User login
    */
   login: async (credentials: LoginCredentials): Promise<AuthResponse> => {
-    const response = await api.post('/auth/login', {
+    const response = await api.post('/auth/login/', {
       email: credentials.email,
       password: credentials.password,
       rememberMe: credentials.rememberMe || false
@@ -33,10 +29,13 @@ export const authApi = {
    * User registration
    */
   register: async (data: RegisterData): Promise<AuthResponse> => {
-    const response = await api.post('/auth/register', {
-      name: data.name,
+    const response = await api.post('/auth/register/', {
+      fname: data.fname,
+      lname: data.lname,
+      username: data.username,
       email: data.email,
       password: data.password,
+      password_confirm: data.password_confirm,
       role: data.role
     })
     return response.data
@@ -46,7 +45,7 @@ export const authApi = {
    * Get current authenticated user
    */
   getCurrentUser: async (): Promise<User> => {
-    const response = await api.get('/auth/me')
+    const response = await api.get('/auth/me/')
     return response.data
   },
 
@@ -54,7 +53,7 @@ export const authApi = {
    * Refresh authentication token
    */
   refreshToken: async (refreshToken: string): Promise<AuthResponse> => {
-    const response = await api.post('/auth/refresh', {
+    const response = await api.post('/auth/refresh/', {
       refreshToken
     })
     return response.data
@@ -71,7 +70,7 @@ export const authApi = {
    * Forgot password - send reset email
    */
   forgotPassword: async (data: ForgotPasswordData): Promise<{ message: string }> => {
-    const response = await api.post('/auth/forgot-password', {
+    const response = await api.post('/auth/forgot-password/', {
       email: data.email
     })
     return response.data
@@ -81,7 +80,7 @@ export const authApi = {
    * Reset password with token
    */
   resetPassword: async (data: ResetPasswordData): Promise<{ message: string }> => {
-    const response = await api.post('/auth/reset-password', {
+    const response = await api.post('/auth/reset-password/', {
       token: data.token,
       password: data.password
     })
@@ -92,7 +91,7 @@ export const authApi = {
    * Update user profile
    */
   updateProfile: async (profileData: Partial<User>): Promise<User> => {
-    const response = await api.put('/auth/profile', profileData)
+    const response = await api.put('/auth/profile/', profileData)
     return response.data
   },
 
@@ -103,7 +102,7 @@ export const authApi = {
     currentPassword: string
     newPassword: string
   }): Promise<{ message: string }> => {
-    const response = await api.post('/auth/change-password', data)
+    const response = await api.post('/auth/change-password/', data)
     return response.data
   },
 
@@ -111,7 +110,7 @@ export const authApi = {
    * Verify email address
    */
   verifyEmail: async (token: string): Promise<{ message: string }> => {
-    const response = await api.post('/auth/verify-email', { token })
+    const response = await api.post('/auth/verify-email/', { token })
     return response.data
   },
 
@@ -119,7 +118,7 @@ export const authApi = {
    * Resend email verification
    */
   resendVerification: async (): Promise<{ message: string }> => {
-    const response = await api.post('/auth/resend-verification')
+    const response = await api.post('/auth/resend-verification/')
     return response.data
   }
 }

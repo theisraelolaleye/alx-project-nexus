@@ -1,10 +1,4 @@
 'use client'
-
-/**
- * Login form component with react-hook-form and zod validation
- * Provides a professional login interface with error handling
- */
-
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -20,8 +14,11 @@ interface LoginFormProps {
 }
 
 export function LoginForm({ onSuccess, redirectPath = '/dashboard' }: LoginFormProps) {
+
   const [showPassword, setShowPassword] = useState(false)
+
   const { login, isLoading, error, clearError } = useAuthStore()
+
   const router = useRouter()
 
   const {
@@ -30,14 +27,18 @@ export function LoginForm({ onSuccess, redirectPath = '/dashboard' }: LoginFormP
     formState: { errors },
     reset
   } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema)
+    resolver: zodResolver(loginSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+      rememberMe: false
+    }
   })
 
   const onSubmit = async (data: LoginFormData) => {
     try {
       clearError()
 
-      // Ensure rememberMe has a default value to match LoginCredentials interface
       const loginData = {
         email: data.email,
         password: data.password,
@@ -79,7 +80,7 @@ export function LoginForm({ onSuccess, redirectPath = '/dashboard' }: LoginFormP
           </div>
         )}
         {
-          
+
         }
 
         {/* Login Form */}
@@ -193,25 +194,6 @@ export function LoginForm({ onSuccess, redirectPath = '/dashboard' }: LoginFormP
             )}
           </button>
 
-          {/* Divider */}
-          {/* <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300" />
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Don&apos;t have an account?</span>
-            </div>
-          </div> */}
-
-          {/* Register Link */}
-          {/* <div className="text-center">
-            <Link
-              href="/auth/register"
-              className="text-blue-600 hover:text-blue-500 font-medium"
-            >
-              Create a new account
-            </Link>
-          </div> */}
         </form>
       </div>
     </div>

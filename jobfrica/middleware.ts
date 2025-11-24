@@ -1,85 +1,142 @@
-/**
- * Next.js Middleware for authentication and route protection
- * Handles authentication checks before pages load
- */
-
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-// Define protected routes and their required roles
-const protectedRoutes = {
-  '/dashboard': null, // Any authenticated user
-  '/profile': null, // Any authenticated user
-  '/applications': 'jobseeker', // Only job seekers
-  '/saved-jobs': 'jobseeker', // Only job seekers
-  '/employer': 'employer', // Only employers
-  '/employer/dashboard': 'employer',
-  '/employer/jobs': 'employer',
-  '/employer/applications': 'employer',
-  '/admin': 'admin', // Only admin users
-}
+// Define protected routes
+const protectedRoutes = [
+  '/dashboard',
+  '/profile',
+  '/settings',
+  '/jobs/saved',
+  '/jobs/applied',
+  '/applications'
+]
 
-// Public routes that don't require authentication
+// Define employer-only routes
+const employerRoutes = [
+  '/employer/dashboard',
+  '/employer/post-job',
+  '/employer/applications',
+  '/employer/company'
+]
+
+// Define jobseeker-only routes
+const jobseekerRoutes = [
+  '/applications',
+  '/jobs/saved',
+  '/resume'
+]
+
+// Define public routes (no auth needed)
 const publicRoutes = [
   '/',
-  '/jobs',
-  '/companies',
-  '/about',
-  '/contact',
   '/auth/login',
   '/auth/register',
   '/auth/forgot-password',
   '/auth/reset-password',
+  '/auth/verify-email',
+  '/jobs',
+  '/companies',
+  '/resources',
+  '/employers',
+  '/unauthorized'
 ]
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
+
+  // Get token from cookies
   const token = request.cookies.get('auth_token')?.value
 
-  // Check if the route is protected
-  const isProtectedRoute = Object.keys(protectedRoutes).some(route => 
+  // Get user data from cookies
+  const userCookie = request.cookies.get('user')?.value
+  let user = null
+
+  if (userCookie) {
+    try {
+      user = JSON.parse(userCookie)
+    } catch (error) {
+      console.error('Failed to parse user cookie:', error)
+    }
+  }
+
+  const isAuthenticated = !!token
+
+  console.log('🔐 Middleware:', { pathname, isAuthenticated, userRole: user?.role, isVerified: user?.isVerified })
+
+  // 1. Redirect authenticated users away from auth pages
+  if (isAuthenticated && pathname.startsWith('/auth')) {
+    // Allow access to verify-email page if not verified
+    if (!user?.isVerified && pathname.startsWith('/auth/verify-email')) {
+      return NextResponse.next()
+    }
+
+    // If verified, redirect away from auth pages
+    if (user?.isVerified) {
+      return NextResponse.redirect(new URL('/dashboard', request.url))
+    }
+
+    // If not verified and not on verify page, go to verify page
+    if (!pathname.startsWith('/auth/verify-email')) {
+      return NextResponse.redirect(new URL('/auth/verify-email', request.url))
+    }
+  }
+
+  // 2. Check if route requires authentication
+  const isProtectedRoute = protectedRoutes.some(route =>
     pathname.startsWith(route)
   )
 
-  // Check if the route is public
-  const isPublicRoute = publicRoutes.some(route => 
-    pathname === route || pathname.startsWith(route)
-  )
-
-  // If it's a public route, allow access
-  if (isPublicRoute) {
-    return NextResponse.next()
+  if (isProtectedRoute && !isAuthenticated) {
+    // Store the original URL to redirect after login
+    const redirectUrl = new URL('/auth/login', request.url)
+    redirectUrl.searchParams.set('redirect', pathname)
+    return NextResponse.redirect(redirectUrl)
   }
 
-  // If it's a protected route and user is not authenticated
-  if (isProtectedRoute && !token) {
-    const loginUrl = new URL('/auth/login', request.url)
-    loginUrl.searchParams.set('redirect', pathname)
-    return NextResponse.redirect(loginUrl)
+  // 3. Check if user is verified for protected routes
+  if (isAuthenticated && isProtectedRoute && user && !user.isVerified) {
+    // Unverified users can only access verification page
+    if (!pathname.startsWith('/auth/verify-email')) {
+      return NextResponse.redirect(new URL('/auth/verify-email', request.url))
+    }
   }
 
-  // For authenticated users accessing auth pages, redirect to dashboard
-  if (token && pathname.startsWith('/auth/')) {
-    return NextResponse.redirect(new URL('/dashboard', request.url))
+  // 4. Role-based route protection
+  if (isAuthenticated && user) {
+    // Check employer-only routes
+    const isEmployerRoute = employerRoutes.some(route =>
+      pathname.startsWith(route)
+    )
+
+    if (isEmployerRoute && user.role !== 'employer') {
+      return NextResponse.redirect(new URL('/unauthorized', request.url))
+    }
+
+    // Check jobseeker-only routes
+    const isJobseekerRoute = jobseekerRoutes.some(route =>
+      pathname.startsWith(route)
+    )
+
+    if (isJobseekerRoute && user.role !== 'jobseeker') {
+      return NextResponse.redirect(new URL('/unauthorized', request.url))
+    }
   }
 
-  // TODO: Add role-based access control
-  // This would require decoding the JWT token to get user role
-  // For now, we'll handle role-based access in the ProtectedRoute component
-
+  // 5. Allow the request to proceed
   return NextResponse.next()
 }
 
+// Configure which routes middleware runs on
 export const config = {
   matcher: [
     /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
+     * Match all request paths except:
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
-     * - public folder files
+     * - public folder
+     * - api routes (optional)
      */
-    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
-  ],
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+  ]
 }

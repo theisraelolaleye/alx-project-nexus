@@ -20,130 +20,141 @@ const COOKIE_OPTIONS = {
   expires: 7, // 7 days
 }
 
-/**
- * Set authentication token
- * Uses localStorage for development and secure cookies for production
- */
-export const setToken = (token: string): void => {
-  if (typeof window !== 'undefined') {
-    if (process.env.NODE_ENV === 'development') {
-      localStorage.setItem(TOKEN_KEY, token)
-    } else {
-      Cookies.set(TOKEN_KEY, token, COOKIE_OPTIONS)
-    }
+export const setToken = (token: string) => {
+  console.log('🔐 Setting auth token')
+
+  // Always set cookie for middleware access
+  Cookies.set(TOKEN_KEY, token, {
+    expires: 7, // 7 days
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict'
+  })
+  console.log('✅ Token stored in cookie')
+
+  // Also store in localStorage for development convenience
+  if (process.env.NODE_ENV === 'development') {
+    localStorage.setItem(TOKEN_KEY, token)
+    console.log('✅ Token also stored in localStorage (dev only)')
   }
 }
 
-/**
- * Get authentication token
- */
+
 export const getToken = (): string | null => {
-  if (typeof window !== 'undefined') {
-    if (process.env.NODE_ENV === 'development') {
-      return localStorage.getItem(TOKEN_KEY)
-    } else {
-      return Cookies.get(TOKEN_KEY) || null
+  if (typeof window === 'undefined') return null
+
+  // Try cookie first (works everywhere including middleware)
+  const cookieToken = Cookies.get(TOKEN_KEY)
+  if (cookieToken) {
+    console.log('🔍 Token retrieved from cookie')
+    return cookieToken
+  }
+
+  // Fallback to localStorage in development
+  if (process.env.NODE_ENV === 'development') {
+    const localToken = localStorage.getItem(TOKEN_KEY)
+    if (localToken) {
+      console.log('🔍 Token retrieved from localStorage')
+      return localToken
     }
   }
+
+  console.log('⚠️ No token found')
   return null
 }
 
-/**
- * Set refresh token
- */
-export const setRefreshToken = (refreshToken: string): void => {
-  if (typeof window !== 'undefined') {
+export const removeToken = (): void => {
+  console.log('🗑️ Removing auth token')
+  Cookies.remove(TOKEN_KEY)
+
+  if (process.env.NODE_ENV === 'development') {
+    localStorage.removeItem(TOKEN_KEY)
+    console.log('✅ Token removed from localStorage (dev only)')
+  }
+
+
+  export const setRefreshToken = (token: string) => {
+    Cookies.set(REFRESH_TOKEN_KEY, token, {
+      expires: 30, // 30 days
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict'
+    })
+
     if (process.env.NODE_ENV === 'development') {
-      localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken)
-    } else {
-      Cookies.set(REFRESH_TOKEN_KEY, refreshToken, {
-        ...COOKIE_OPTIONS,
-        expires: 30, // 30 days for refresh token
-      })
+      localStorage.setItem(REFRESH_TOKEN_KEY, token)
     }
   }
-}
 
-/**
- * Get refresh token
- */
-export const getRefreshToken = (): string | null => {
-  if (typeof window !== 'undefined') {
+  export const getRefreshToken = (): string | null => {
+    if (typeof window === 'undefined') return null
+
+    const cookieToken = Cookies.get(REFRESH_TOKEN_KEY)
+    if (cookieToken) return cookieToken
+
     if (process.env.NODE_ENV === 'development') {
       return localStorage.getItem(REFRESH_TOKEN_KEY)
-    } else {
-      return Cookies.get(REFRESH_TOKEN_KEY) || null
     }
-  }
-  return null
-}
 
-/**
- * Remove all authentication tokens
- */
-export const removeToken = (): void => {
-  if (typeof window !== 'undefined') {
+    return null
+  }
+
+  export const removeRefreshToken = () => {
+    Cookies.remove(REFRESH_TOKEN_KEY)
+
     if (process.env.NODE_ENV === 'development') {
-      localStorage.removeItem(TOKEN_KEY)
       localStorage.removeItem(REFRESH_TOKEN_KEY)
-      localStorage.removeItem(USER_KEY)
-    } else {
-      Cookies.remove(TOKEN_KEY)
-      Cookies.remove(REFRESH_TOKEN_KEY)
-      Cookies.remove(USER_KEY)
     }
   }
-}
 
-/**
- * Store user data
- */
-export const setUserData = (userData: User): void => {
-  if (typeof window !== 'undefined') {
-    const userString = JSON.stringify(userData)
-    if (process.env.NODE_ENV === 'development') {
-      localStorage.setItem(USER_KEY, userString)
-    } else {
-      Cookies.set(USER_KEY, userString, COOKIE_OPTIONS)
-    }
-  }
-}
 
-/**
- * Get user data
- */
-export const getUserData = (): User | null => {
-  if (typeof window !== 'undefined') {
-    let userString: string | null = null
-
-    if (process.env.NODE_ENV === 'development') {
-      userString = localStorage.getItem(USER_KEY)
-    } else {
-      userString = Cookies.get(USER_KEY) || null
-    }
-
-    if (userString) {
-      try {
-        return JSON.parse(userString) as User
-      } catch (error) {
-        console.error('Error parsing user data:', error)
-        return null
+  /**
+   * Store user data
+   */
+  export const setUserData = (userData: User): void => {
+    if (typeof window !== 'undefined') {
+      const userString = JSON.stringify(userData)
+      if (process.env.NODE_ENV === 'development') {
+        localStorage.setItem(USER_KEY, userString)
+      } else {
+        Cookies.set(USER_KEY, userString, COOKIE_OPTIONS)
       }
     }
   }
-  return null
-}
 
-/**
- * Check if user is authenticated
- */
-export const isAuthenticated = (): boolean => {
-  return !!getToken()
-}
+  /**
+   * Get user data
+   */
+  export const getUserData = (): User | null => {
+    if (typeof window !== 'undefined') {
+      let userString: string | null = null
 
-/**
- * Clear all stored data (logout)
- */
-export const clearAllData = (): void => {
-  removeToken()
-}
+      if (process.env.NODE_ENV === 'development') {
+        userString = localStorage.getItem(USER_KEY)
+      } else {
+        userString = Cookies.get(USER_KEY) || null
+      }
+
+      if (userString) {
+        try {
+          return JSON.parse(userString) as User
+        } catch (error) {
+          console.error('Error parsing user data:', error)
+          return null
+        }
+      }
+    }
+    return null
+  }
+
+  /**
+   * Check if user is authenticated
+   */
+  export const isAuthenticated = (): boolean => {
+    return !!getToken()
+  }
+
+  /**
+   * Clear all stored data (logout)
+   */
+  export const clearAllData = (): void => {
+    removeToken()
+  }

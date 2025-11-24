@@ -17,16 +17,16 @@ export default function RegisterPage() {
   }, [isAuthenticated, isLoading, router])
 
   // Show loading state while checking authentication
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
-        </div>
-      </div>
-    )
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+  //       <div className="text-center">
+  //         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+  //         <p className="text-gray-600">Loading...</p>
+  //       </div>
+  //     </div>
+  //   )
+  // }
 
   // Don't render register form if authenticated
   if (isAuthenticated) {
@@ -36,7 +36,7 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       {/* Background decoration */}
-      <div className="absolute inset-0 bg-linear-to-br from-blue-50 to-indigo-100 opacity-60" />
+      <div className="absolute inset-0 bg-linear-to-br from-blue-500 to-indigo-100 opacity-60" />
 
       <div className="relative sm:mx-auto sm:w-full sm:max-w-md">
         {/* Logo */}

@@ -36,7 +36,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       {/* Background decoration */}
-      <div className="absolute inset-0 bg-linear-to-br from-blue-50 to-indigo-100 opacity-60" />
+      <div className="absolute inset-0 bg-linear-to-br from-blue-500 to-indigo-100 opacity-60" />
 
       <div className="relative sm:mx-auto sm:w-full sm:max-w-md">
         {/* Logo */}
