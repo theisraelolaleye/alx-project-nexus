@@ -78,9 +78,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         validated_data.pop('password_confirm', None)
         password = validated_data.pop('password')
         
-        # prevent admin being chosen as a role during registration
-        if validated_data.get('role') == 'admin':
-            validated_data['role'] = 'job_seeker'
+        # make employer and jobseeker the only roles during registration
+        role = validated_data.get('role', 'job_seeker')
+        if role not in ['job_seeker', 'employer']:
+            role = 'job_seeker'
+        validated_data['role'] = role
         user = CustomUser.objects.create(**validated_data)
         
         # Set password properly
