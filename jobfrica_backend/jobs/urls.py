@@ -18,7 +18,7 @@ urlpatterns = [
     # Detailed job view
     #path('<int:pk>/', JobDetailView.as_view(), name='job_detail'),
     # Job list view
-    #path('list/', JobListView.as_view(), name='job_list'),
+    # path('list/', JobListView.as_view(), name='job_list'),
     # Application endpoints
     path('my-applications/', ApplicationViewSet.as_view({'get': 'my_applications'}), name='my_applications'),
 ]
