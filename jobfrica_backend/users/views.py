@@ -170,9 +170,10 @@ class UserLoginView(generics.CreateAPIView):
         }, status=status.HTTP_200_OK)
 
 
-class UserLogoutView(APIView):
+class UserLogoutView(generics.GenericAPIView):
     """Logout view that blacklists the refresh token"""
     permission_classes = []  # Remove IsAuthenticated to handle expired tokens
+    serializer_class = UserLogoutSerializer
 
     def post(self, request):
         refresh_token = request.data.get('refresh_token')
