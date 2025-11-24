@@ -8,7 +8,7 @@ from applications.views import ApplicationViewSet
 router = DefaultRouter()
 router.register(r'categories', JobCategoryViewSet, basename='category')
 router.register(r'skills', SkillViewSet, basename='skill')
-router.register(r'', JobViewSet, basename='job')
+router.register(r'', JobViewSet, basename='jobs')
 
 app_name = 'jobs'
 
