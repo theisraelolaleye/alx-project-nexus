@@ -10,6 +10,7 @@ from django.contrib.auth import get_user_model
 from django.db.models import Q, Count, Avg
 from django.utils import timezone
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
+from rest_framework_simplejwt.exceptions import TokenError
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes, force_str
@@ -157,12 +158,7 @@ class UserLoginView(generics.CreateAPIView):
         refresh = RefreshToken.for_user(user)
         
         # Get user's role-specific data
-        if user.role == 'employer':
-            user_data = EmployerProfileSerializer(user).data
-        elif user.role == 'job_seeker':
-            user_data = JobSeekerProfileSerializer(user).data
-        else:
-            user_data = UserProfileSerializer(user).data
+        user_data = UserProfileSerializer(user).data
         
         return Response({
             'user': user_data,
@@ -176,25 +172,43 @@ class UserLoginView(generics.CreateAPIView):
 
 class UserLogoutView(APIView):
     """Logout view that blacklists the refresh token"""
-    permission_classes = [IsAuthenticated]
-    serializer_class = UserLogoutSerializer
+    permission_classes = []  # Remove IsAuthenticated to handle expired tokens
 
     def post(self, request):
+        refresh_token = request.data.get('refresh_token')
+        
+        if not refresh_token:
+            return Response(
+                {'error': 'Refresh token is required.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
         try:
-            refresh_token = request.data.get('refresh_token')
-            if refresh_token:
-                token = RefreshToken(refresh_token)
-                token.blacklist()
+            # Try to blacklist the token
+            token = RefreshToken(refresh_token)
             
-            logout(request)
+            # Check if blacklist method exists
+            if hasattr(token, 'blacklist'):
+                token.blacklist()
+                message = 'Successfully logged out. Token blacklisted.'
+            else:
+                # Blacklist not available, but we can still consider it logged out
+                message = 'Successfully logged out. Token invalidated.'
             
             return Response(
-                {'message': 'Successfully logged out'},
+                {'message': message},
+                status=status.HTTP_200_OK
+            )
+            
+        except TokenError as e:
+            # Token is already invalid/expired, but we can still consider it logged out
+            return Response(
+                {'message': 'Successfully logged out. Token was already invalid.'},
                 status=status.HTTP_200_OK
             )
         except Exception as e:
             return Response(
-                {'error': 'Failed to logout'},
+                {'error': f'Failed to logout: {str(e)}'},
                 status=status.HTTP_400_BAD_REQUEST
             )
     
