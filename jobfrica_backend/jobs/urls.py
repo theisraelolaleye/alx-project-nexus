@@ -1,7 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import (JobCategoryViewSet, SkillViewSet, 
-                    JobDetailView, JobListView, JobViewSet)
+from .views import (JobCategoryViewSet, SkillViewSet, JobViewSet)
 from applications.views import ApplicationViewSet
 
 
@@ -9,7 +8,7 @@ from applications.views import ApplicationViewSet
 router = DefaultRouter()
 router.register(r'categories', JobCategoryViewSet, basename='category')
 router.register(r'skills', SkillViewSet, basename='skill')
-router.register(r'listings', JobViewSet, basename='job')
+router.register(r'', JobViewSet, basename='jobs')
 
 app_name = 'jobs'
 
@@ -17,9 +16,9 @@ urlpatterns = [
     # ViewSet routes
     path('', include(router.urls)),
     # Detailed job view
-    path('<int:pk>/', JobDetailView.as_view(), name='job_detail'),
+    #path('<int:pk>/', JobDetailView.as_view(), name='job_detail'),
     # Job list view
-    path('list/', JobListView.as_view(), name='job_list'),
+    # path('list/', JobListView.as_view(), name='job_list'),
     # Application endpoints
     path('my-applications/', ApplicationViewSet.as_view({'get': 'my_applications'}), name='my_applications'),
 ]

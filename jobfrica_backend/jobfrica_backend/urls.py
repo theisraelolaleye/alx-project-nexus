@@ -22,6 +22,7 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from django.http import JsonResponse
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -46,8 +47,12 @@ schema_view = get_schema_view(
     authentication_classes=[],
 )
 
+def health_check(request):
+    return JsonResponse({'status': 'healthy'})
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/health/', health_check),
     # App-Specific URLs
     path('api/auth/', include('users.urls')),
     path('api/jobs/', include('jobs.urls')),

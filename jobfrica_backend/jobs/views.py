@@ -25,7 +25,7 @@ class JobCategoryViewSet(viewsets.ModelViewSet):
     """API endpoint that allows job categories to be viewed."""
     queryset = JobCategory.objects.all().order_by('name')
     serializer_class = CategorySerializer
-    permission_classes = [permissions.AllowAny]  # Anyone can see categories
+    permission_classes = [AllowAny]  # Anyone can see categories
     pagination_class = None
 
     def jobs(self, request, slug=None):
@@ -46,7 +46,7 @@ class SkillViewSet(viewsets.ModelViewSet):
     """API endpoint that allows skills to be viewed."""
     queryset = Skill.objects.all().order_by('name')
     serializer_class = SkillSerializer
-    permission_classes = [permissions.AllowAny]  # Anyone can see skills
+    permission_classes = [AllowAny]  # Anyone can see skills
     pagination_class = None
 
 class JobViewSet(viewsets.ModelViewSet):
@@ -59,37 +59,42 @@ class JobViewSet(viewsets.ModelViewSet):
     ordering = ['-created_at']
 
     def get_permissions(self):
-        if self.action in ['list', 'retrieve', 'similar']:
-            permission_classes = [AllowAny]
-        elif self.action in ['create', 'update', 'partial_update', 'destroy']:
-            permission_classes = [IsEmployerOrAdmin]
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            return [IsEmployerOrAdmin()]
         elif self.action == 'apply':
-            permission_classes = [IsJobSeekerOrAdmin]
-        else:
-            permission_classes = [IsAuthenticated]
-        return [permission() for permission in permission_classes]
+            return [IsAuthenticated()]
+        return [AllowAny()]  # Default to public access
 
     def get_serializer_class(self):
         if self.action == 'create':
             return JobCreateSerializer
         elif self.action == 'list':
             return JobListSerializer
+        elif self.action == 'retrieve':
+            return JobDetailSerializer  # Use detail serializer for single job view
         return JobDetailSerializer
 
     def get_queryset(self):
-        queryset = Job.objects.filter(application_deadline__gte=timezone.now()).select_related('category', 'employer')
+        """
+        Return active jobs for public, all jobs for authenticated users.
+        """
+        queryset = Job.objects.all()
         
-        # Advanced filtering
-        salary_min = self.request.query_params.get('salary_min')
-        salary_max = self.request.query_params.get('salary_max')
-        
-        if salary_min:
-            queryset = queryset.filter(salary_min__gte=salary_min)
-        if salary_max:
-            queryset = queryset.filter(salary_max__lte=salary_max)
+        # Public users only see active jobs (not expired)
+        if not self.request.user.is_authenticated:
+            queryset = queryset.filter(application_deadline__gte=timezone.now())
+        # Employers can see all their jobs (even expired ones)
+        elif hasattr(self.request.user, 'role') and self.request.user.role == 'employer':
+            # For list view, show all jobs; for detail view, show specific job
+            if self.action == 'list':
+                queryset = queryset.filter(employer=self.request.user)
+        # Job seekers see only active jobs
+        else:
+            queryset = queryset.filter(application_deadline__gte=timezone.now())
             
-        return queryset
+        return queryset.select_related('employer', 'category')
 
+    
     def perform_create(self, serializer):
         serializer.save(employer=self.request.user)
     
@@ -159,16 +164,5 @@ class JobViewSet(viewsets.ModelViewSet):
         if page is not None:
             serializer = JobListSerializer(page, many=True)
             return self.get_paginated_response(serializer.data)
+        
 
-class JobListView(generics.ListAPIView):
-    queryset = Job.objects.all()
-    serializer_class = JobListSerializer
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
-    search_fields = ['title', 'description', 'company__name', 'location']
-    ordering_fields = ['posted_at', 'title']
-    permission_classes = []
-
-class JobDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Job.objects.all()
-    serializer_class = JobSerializer
-    permission_classes = [IsOwnerOrAdmin]

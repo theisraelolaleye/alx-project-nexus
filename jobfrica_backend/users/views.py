@@ -8,6 +8,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model
 from django.db.models import Q, Count, Avg
+from django.db import models
 from django.utils import timezone
 from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
 from rest_framework_simplejwt.exceptions import TokenError
@@ -170,9 +171,10 @@ class UserLoginView(generics.CreateAPIView):
         }, status=status.HTTP_200_OK)
 
 
-class UserLogoutView(APIView):
+class UserLogoutView(generics.GenericAPIView):
     """Logout view that blacklists the refresh token"""
     permission_classes = []  # Remove IsAuthenticated to handle expired tokens
+    serializer_class = UserLogoutSerializer
 
     def post(self, request):
         refresh_token = request.data.get('refresh_token')
@@ -580,48 +582,62 @@ class PublicDashboardView(APIView):
     
     def get(self, request):
         # Basic platform statistics
-        total_jobs = Job.objects.count()
+        from jobs.models import Job
+        try:
+            total_jobs = Job.objects.count()
         
-        # Use a subquery or direct Job model filtering
-        total_companies = CustomUser.objects.filter(
-            role='employer', 
-            is_active=True,
-            id__in=Job.objects.filter(application_deadline__gte=timezone.now()).values('employer')
-        ).distinct().count()
+            # Use a subquery or direct Job model filtering
+            total_companies = CustomUser.objects.filter(
+                role='employer', 
+                is_active=True,
+                id__in=Job.objects.filter(application_deadline__gte=timezone.now()).values('employer')
+            ).distinct().count()
+            
+            # Recent job postings
+            recent_jobs = self.get_recent_jobs()
+            
+            dashboard_data = {
+                'platform_statistics': {
+                    'total_jobs': total_jobs,
+                    'total_companies': total_companies,
+                    'new_jobs_today': Job.objects.filter(
+                        created_at__date=timezone.now().date(),
+                    ).count(),
+                },
+                'recent_jobs': recent_jobs,
+            }
+            
+            return Response(dashboard_data)
+        except Exception as e:
+            # Graceful fallback if jobs table doesn't exist
+            return Response({
+                'platform_statistics': {
+                    'total_jobs': 0,
+                    'total_companies': 0,
+                    'new_jobs_today': 0,
+                },
+                'recent_jobs': [],
+                'message': 'Platform data is being initialized'
+            })
         
-        # Recent job postings
-        recent_jobs = self.get_recent_jobs()
-        
-        dashboard_data = {
-            'platform_statistics': {
-                'total_jobs': total_jobs,
-                'total_companies': total_companies,
-                'new_jobs_today': Job.objects.filter(
-                    created_at__date=timezone.now().date(),
-                ).count(),
-            },
-            'recent_jobs': recent_jobs,
-        }
-        
-        return Response(dashboard_data)
-    
     def get_recent_jobs(self):
         """Get recently posted jobs"""
-        jobs = Job.objects.filter(
-            application_deadline__gte=timezone.now(),
-        ).select_related('employer').order_by('-created_at')[:8]
-        
-        return [{
-            'id': job.id,
-            'title': job.title,
-            'company': job.employer.company_name,
-            'location': job.location,
-            'job_type': job.job_type,
-            'salary_min': job.salary_min,
-            'salary_max': job.salary_max,
-            'created_at': job.created_at,
-            'is_new': job.created_at.date() == timezone.now().date()
-        } for job in jobs]
+        from jobs.models import Job
+        try:
+            jobs = Job.objects.filter(
+                application_deadline__gte=timezone.now()
+            ).select_related('employer').order_by('-created_at')[:10]
+            
+            return [{
+                'id': job.id,
+                'title': job.title,
+                'company_name': job.employer.company_name,
+                'location': job.location,
+                'posted_at': job.created_at,
+                'application_deadline': job.application_deadline,
+            } for job in jobs]
+        except Exception as e:
+            return [] # Graceful fallback if jobs table doesn't exist
 
 class CombinedDashboardView(APIView):
     """
