@@ -164,4 +164,5 @@ class JobViewSet(viewsets.ModelViewSet):
         if page is not None:
             serializer = JobListSerializer(page, many=True)
             return self.get_paginated_response(serializer.data)
+        
 
