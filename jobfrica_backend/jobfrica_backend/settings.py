@@ -37,6 +37,8 @@ DEBUG = env.bool('DEBUG', default=True)
 ALLOWED_HOSTS = [
     'localhost',
     '.onrender.com',
+    '127.0.0.1:8000',
+    '127.0.0.1'
 ]
 
 RENDER_EXTERNAL_HOSTNAME = env('RENDER_EXTERNAL_HOSTNAME', default=None)
