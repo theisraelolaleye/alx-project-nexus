@@ -3,7 +3,7 @@ from rest_framework import viewsets, generics, filters
 from rest_framework import viewsets, permissions
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny, IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Job
 from users.permissions import IsEmployerOrAdmin, IsOwnerOrAdmin, IsJobSeekerOrAdmin
@@ -59,16 +59,11 @@ class JobViewSet(viewsets.ModelViewSet):
     ordering = ['-created_at']
 
     def get_permissions(self):
-        if self.action in ['list', 'retrieve']:
-            permission_classes = [AllowAny]  # Public access to view jobs
+        if self.action in ['create', 'update', 'partial_update', 'destroy']:
+            return [IsEmployerOrAdmin()]
         elif self.action == 'apply':
-            permission_classes = [IsAuthenticated]
-        elif self.action in ['create', 'update', 'partial_update', 'destroy', 'applications']:
-            permission_classes = [IsEmployerOrAdmin]
-        else:
-            permission_classes = [AllowAny]  # Default to public access
-        
-        return [permission() for permission in permission_classes]
+            return [IsAuthenticated()]
+        return [AllowAny()]  # Default to public access
 
     def get_serializer_class(self):
         if self.action == 'create':
