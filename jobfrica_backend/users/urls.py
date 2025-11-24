@@ -9,6 +9,7 @@ from .views import (CustomTokenObtainPairView, UserRegistrationView, UserLogoutV
 
 # Router for ViewSets
 router = DefaultRouter()
+router.register(r'users', CombinedDashboardView, basename='user')
 
 app_name = 'users'
 
