@@ -54,7 +54,6 @@ class Job(models.Model):
     search_vector = SearchVectorField(null=True)
 
     class Meta:
-        db_table = 'jobs'
         indexes = [
             models.Index(fields=['created_at']),
             models.Index(fields=['category']),
