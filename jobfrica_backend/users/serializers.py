@@ -32,7 +32,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         read_only_fields = ('id',)
         extra_kwargs = {
             'email': {'required': True},
-            'username': {'required': True},
+            'username': {'required': False},
         }
     
     def validate_email(self, value):
@@ -108,35 +108,36 @@ class UserLoginSerializer(serializers.Serializer):
         return value.strip().lower()
     
     def validate(self, attrs):
-        email_or_username = attrs.get('email')
+        email = attrs.get('email')
         password = attrs.get('password')
         
-        if not email_or_username or not password:
-            raise serializers.ValidationError('Must include email/username and password')
+        if not email or not password:
+            raise serializers.ValidationError('Must include email and password')
         
         user = None
         request = self.context.get('request')
         
-        # Check if it's an email or username
-        if '@' in email_or_username:
+        # Check if it's an email
+        if '@' in email:
             try:
                 # Find user by email
-                user_obj = CustomUser.objects.get(email__iexact=email_or_username)
-                # Django's authenticate uses username by default
+                user_obj = CustomUser.objects.get(email__iexact=email)
+                # Authenticate with email and password
                 user = authenticate(
                     request=request,
-                    username=user_obj.username,
+                    username=user_obj.email,
                     password=password
                 )
             except CustomUser.DoesNotExist:
                 raise serializers.ValidationError('Invalid credentials')
         else:
-            # Authenticate with username
+            # Authenticate with username and password
             user = authenticate(
                 request=request,
-                username=email_or_username,
+                username=email,
                 password=password
             )
+            
         
         if not user:
             raise serializers.ValidationError('Invalid credentials')
