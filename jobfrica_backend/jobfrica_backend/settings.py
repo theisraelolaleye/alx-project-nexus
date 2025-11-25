@@ -38,7 +38,9 @@ ALLOWED_HOSTS = [
     'localhost',
     '.onrender.com',
     '127.0.0.1:8000',
-    '127.0.0.1'
+    '127.0.0.1',
+    'jobfrica-backend.onrender.com',
+    'jobfrica.vercel.app',
 ]
 
 RENDER_EXTERNAL_HOSTNAME = env('RENDER_EXTERNAL_HOSTNAME', default=None)
@@ -48,6 +50,7 @@ if RENDER_EXTERNAL_HOSTNAME:
 CSRF_TRUSTED_ORIGINS = [
     'https://*.onrender.com',
     'https://jobfrica-backend.onrender.com',
+    'https://jobfrica.vercel.app',
 ]
 
 # Session settings
