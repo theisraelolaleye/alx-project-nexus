@@ -20,33 +20,51 @@ const COOKIE_OPTIONS = {
   expires: 7, // 7 days
 }
 
-/**
- * Set authentication token
- * Uses localStorage for development and secure cookies for production
- */
-export const setToken = (token: string): void => {
-  if (typeof window !== 'undefined') {
-    if (process.env.NODE_ENV === 'development') {
-      localStorage.setItem(TOKEN_KEY, token)
-    } else {
-      Cookies.set(TOKEN_KEY, token, COOKIE_OPTIONS)
-    }
+export const setToken = (token: string) => {
+  console.log('🔐 Setting auth token')
+
+  // Always set cookie for middleware access
+  Cookies.set(TOKEN_KEY, token, {
+    expires: 7, // 7 days
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict'
+  })
+  console.log('✅ Token stored in cookie')
+
+  // Also store in localStorage for development convenience
+  if (process.env.NODE_ENV === 'development') {
+    localStorage.setItem(TOKEN_KEY, token)
+    console.log('✅ Token also stored in localStorage (dev only)')
   }
 }
 
-/**
- * Get authentication token
- */
+
 export const getToken = (): string | null => {
-  if (typeof window !== 'undefined') {
-    if (process.env.NODE_ENV === 'development') {
-      return localStorage.getItem(TOKEN_KEY)
-    } else {
-      return Cookies.get(TOKEN_KEY) || null
+  if (typeof window === 'undefined') return null
+
+  // Try cookie first (works everywhere including middleware)
+  const cookieToken = Cookies.get(TOKEN_KEY)
+  if (cookieToken) {
+    console.log('🔍 Token retrieved from cookie')
+    return cookieToken
+  }
+
+  // Fallback to localStorage in development
+  if (process.env.NODE_ENV === 'development') {
+    const localToken = localStorage.getItem(TOKEN_KEY)
+    if (localToken) {
+      console.log('🔍 Token retrieved from localStorage')
+      return localToken
     }
   }
+
+  console.log('⚠️ No token found')
   return null
 }
+
+
+
+
 
 /**
  * Set refresh token

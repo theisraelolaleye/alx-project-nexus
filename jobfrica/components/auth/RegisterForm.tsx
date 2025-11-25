@@ -1,10 +1,4 @@
 'use client'
-
-/**
- * Registration form component with react-hook-form and zod validation
- * Provides a professional registration interface with role selection
- */
-
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -28,11 +22,12 @@ export function RegisterForm({ onSuccess, redirectPath = '/dashboard' }: Registe
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     watch,
     reset
   } = useForm<RegisterFormData>({
-    resolver: zodResolver(registerSchema)
+    resolver: zodResolver(registerSchema),
+    mode: 'onChange'
   })
 
   const selectedRole = watch('role')
@@ -40,12 +35,11 @@ export function RegisterForm({ onSuccess, redirectPath = '/dashboard' }: Registe
   const onSubmit = async (data: RegisterFormData) => {
     try {
       clearError()
+      console.log(data)
       await registerUser(data)
 
       if (onSuccess) {
         onSuccess()
-      } else {
-        router.push(redirectPath)
       }
 
       reset()
@@ -54,9 +48,9 @@ export function RegisterForm({ onSuccess, redirectPath = '/dashboard' }: Registe
       console.error('Registration failed:', error)
     }
   }
-
+console.log('Rendering RegisterForm, isValid:', isValid)
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full max-w-lg mx-auto">
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
         {/* Header */}
         <div className="text-center mb-8">
@@ -85,14 +79,14 @@ export function RegisterForm({ onSuccess, redirectPath = '/dashboard' }: Registe
             <div className="grid grid-cols-2 gap-3">
               <label className={`
                 relative flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors
-                ${selectedRole === 'jobseeker'
+                ${selectedRole === 'job_seeker'
                   ? 'border-blue-500 bg-blue-50'
                   : 'border-gray-200 hover:border-gray-300'}
               `}>
                 <input
                   {...register('role')}
                   type="radio"
-                  value="jobseeker"
+                  value="job_seeker"
                   className="sr-only"
                 />
                 <Briefcase className="h-5 w-5 text-blue-600 mr-3" />
@@ -126,30 +120,84 @@ export function RegisterForm({ onSuccess, redirectPath = '/dashboard' }: Registe
             )}
           </div>
 
-          {/* Full Name Field */}
+          {/* First Name Field */}
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-              Full Name
+              First Name
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <User className="h-5 w-5 text-gray-400" />
               </div>
               <input
-                {...register('name')}
+                {...register('fname')}
                 type="text"
-                id="name"
-                autoComplete="name"
+                id="fname"
+                autoComplete="fname"
                 className={`
                   block w-full pl-10 pr-3 py-3 border rounded-lg shadow-sm placeholder-gray-400
                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
-                  ${errors.name ? 'border-red-300' : 'border-gray-300'}
+                  ${errors.fname ? 'border-red-300' : 'border-gray-300'}
                 `}
-                placeholder="Enter your full name"
+                placeholder="Enter your first name"
               />
             </div>
-            {errors.name && (
-              <p className="mt-2 text-sm text-red-600">{errors.name.message}</p>
+            {errors.fname && (
+              <p className="mt-2 text-sm text-red-600">{errors.fname.message}</p>
+            )}
+          </div>
+
+          {/* Last Name Field */}
+          <div>
+            <label htmlFor="lname" className="block text-sm font-medium text-gray-700 mb-2">
+              Last Name
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <User className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                {...register('lname')}
+                type="text"
+                id="lname"
+                autoComplete="lname"
+                className={`
+                  block w-full pl-10 pr-3 py-3 border rounded-lg shadow-sm placeholder-gray-400
+                  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+                  ${errors.lname ? 'border-red-300' : 'border-gray-300'}
+                `}
+                placeholder="Enter your last name"
+              />
+            </div>
+            {errors.lname && (
+              <p className="mt-2 text-sm text-red-600">{errors.lname.message}</p>
+            )}
+          </div>
+
+          {/* Username Field */}
+          <div>
+            <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+              Username
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <User className="h-5 w-5 text-gray-400" />
+              </div>
+              <input
+                {...register('username')}
+                type="text"
+                id="username"
+                autoComplete="username"
+                className={`
+        block w-full pl-10 pr-3 py-3 border rounded-lg shadow-sm placeholder-gray-400
+        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+        ${errors.username ? 'border-red-300' : 'border-gray-300'}
+      `}
+                placeholder="Choose a username"
+              />
+            </div>
+            {errors.username && (
+              <p className="mt-2 text-sm text-red-600">{errors.username.message}</p>
             )}
           </div>
 
@@ -228,14 +276,14 @@ export function RegisterForm({ onSuccess, redirectPath = '/dashboard' }: Registe
                 <Lock className="h-5 w-5 text-gray-400" />
               </div>
               <input
-                {...register('confirmPassword')}
+                {...register('password_confirm')}
                 type={showConfirmPassword ? 'text' : 'password'}
                 id="confirmPassword"
                 autoComplete="new-password"
                 className={`
                   block w-full pl-10 pr-10 py-3 border rounded-lg shadow-sm placeholder-gray-400
                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
-                  ${errors.confirmPassword ? 'border-red-300' : 'border-gray-300'}
+                  ${errors.password_confirm ? 'border-red-300' : 'border-gray-300'}
                 `}
                 placeholder="Confirm your password"
               />
@@ -251,8 +299,8 @@ export function RegisterForm({ onSuccess, redirectPath = '/dashboard' }: Registe
                 )}
               </button>
             </div>
-            {errors.confirmPassword && (
-              <p className="mt-2 text-sm text-red-600">{errors.confirmPassword.message}</p>
+            {errors.password_confirm && (
+              <p className="mt-2 text-sm text-red-600">{errors.password_confirm.message}</p>
             )}
           </div>
 
@@ -304,26 +352,6 @@ export function RegisterForm({ onSuccess, redirectPath = '/dashboard' }: Registe
               'Create Account'
             )}
           </button>
-
-          {/* Divider */}
-          {/* <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300" />
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">Already have an account?</span>
-            </div>
-          </div> */}
-
-          {/* Login Link */}
-          {/* <div className="text-center">
-            <Link
-              href="/auth/login"
-              className="text-blue-600 hover:text-blue-500 font-medium"
-            >
-              Sign in instead
-            </Link>
-          </div> */}
         </form>
       </div>
     </div>

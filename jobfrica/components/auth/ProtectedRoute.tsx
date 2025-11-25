@@ -1,10 +1,4 @@
 'use client'
-
-/**
- * Protected Route component for route-level authentication
- * Redirects unauthenticated users to login page
- */
-
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/store/authStore'

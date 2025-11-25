@@ -8,10 +8,45 @@ export const mockJobs: Job[] = [
     location: 'Lagos, Nigeria',
     type: 'Full-time',
     experienceLevel: 'Senior',
-    salary: '$60,000 - $80,000',
-    description: 'Join our team to build innovative web applications using React and TypeScript.',
+    salary: '₦5M - ₦8M/year',
+    description: `We are looking for an experienced Senior Frontend Developer to join our dynamic team. You will be responsible for building cutting-edge web applications using modern JavaScript frameworks.
+
+As a Senior Frontend Developer, you will work closely with our design and backend teams to create seamless user experiences. You'll have the opportunity to mentor junior developers and contribute to architectural decisions.
+
+The ideal candidate has a strong portfolio of web applications, deep knowledge of React and modern frontend tooling, and a passion for creating beautiful, performant user interfaces.`,
+    requirements: [
+      '5+ years of experience in frontend development',
+      'Expert knowledge of React, TypeScript, and modern JavaScript',
+      'Strong understanding of HTML5, CSS3, and responsive design',
+      'Experience with state management libraries (Redux, Zustand, etc.)',
+      'Proficiency with build tools and bundlers (Webpack, Vite, etc.)',
+      'Experience with testing frameworks (Jest, React Testing Library)',
+      'Strong problem-solving and debugging skills',
+      'Excellent communication and teamwork abilities',
+    ],
+    responsibilities: [
+      'Develop and maintain high-quality frontend applications',
+      'Collaborate with designers to implement pixel-perfect UIs',
+      'Write clean, maintainable, and well-documented code',
+      'Optimize applications for maximum speed and scalability',
+      'Mentor junior developers and conduct code reviews',
+      'Participate in architectural decisions and technical planning',
+      'Stay up-to-date with emerging frontend technologies',
+      'Contribute to improving development processes and best practices',
+    ],
+    benefits: [
+      'Competitive salary with annual performance bonuses',
+      'Health insurance coverage for you and your family',
+      'Flexible working hours and remote work options',
+      'Professional development budget for courses and conferences',
+      '25 days of paid vacation plus public holidays',
+      'Modern office with ergonomic workstations',
+      'Team building activities and company events',
+      'Stock options and equity participation',
+    ],
     tags: ['React', 'TypeScript', 'Next.js', 'TailwindCSS'],
-    postedDate: '2 days ago'
+    postedDate: '2 days ago',
+    isRemote: true,
   },
   {
     id: '2',

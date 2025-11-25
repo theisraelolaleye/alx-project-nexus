@@ -5,15 +5,20 @@ export interface Job {
   id: string
   title: string
   company: string
+  companyLogo?: string
   location: string
   type: JobType
   experienceLevel: ExperienceLevel
   salary?: string //min sal & max salary
   description?: string
+  requirements?: string[]
+  responsibilities?: string[]
+  benefits?: string[]
   logo?: string
   tags: string[]
   postedDate: string
   category?: JobCategory
+  isRemote?: boolean
 }
 
 /**
@@ -87,19 +92,20 @@ export interface LoadingState {
 /**
  * User role enumeration
  */
-export type UserRole = 'jobseeker' | 'employer' | 'admin'
+export type UserRole = 'job_seeker' | 'employer' | 'admin'
 
 /**
  * User interface for authenticated users
  */
 export interface User {
   id: string
+  first_name: string
+  last_name: string
+  username: string
   email: string
-  name: string
-  // firstname & lastname 
   role: UserRole
   avatar?: string
-  emailVerified: boolean
+  companyName?: string
   profile?: UserProfile
   createdAt: string
   updatedAt: string
@@ -135,10 +141,12 @@ export interface LoginCredentials {
  * Registration data interface
  */
 export interface RegisterData {
-  name: string
+  fname: string
+  lname: string
+  username: string
   email: string
   password: string
-  confirmPassword: string
+  password_confirm: string
   role: UserRole
   acceptTerms: boolean
 }
@@ -150,7 +158,7 @@ export interface AuthResponse {
   user: User
   token: string
   refreshToken?: string
-  expiresAt: string
+  message?: string
 }
 
 /**

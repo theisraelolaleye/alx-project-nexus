@@ -20,13 +20,8 @@ export function Navbar() {
     setIsUserMenuOpen(false)
   }
 
-  const getUserInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map(n => n[0])
-      .join('')
-      .toUpperCase()
-      .slice(0, 2)
+  const getUserInitials = (first_name: string, last_name: string) => {
+    return `${first_name[0]}${last_name[0]}`.toUpperCase()
   }
 
   return (
@@ -76,18 +71,18 @@ export function Navbar() {
                   {user?.avatar ? (
                     <Image
                       src={user.avatar}
-                      alt={user.name || 'User avatar'}
+                      alt={user.first_name || 'User avatar'}
                       width={32}
                       height={32}
                       className="w-8 h-8 rounded-full object-cover"
                     />
                   ) : (
                     <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-medium">
-                      {user?.name ? getUserInitials(user.name) : 'U'}
+                      {user?.first_name ? getUserInitials(user.first_name, user.last_name) : 'U'}
                     </div>
                   )}
                   <div className="text-left">
-                    <div className="text-sm font-medium text-gray-900">{user?.name}</div>
+                    <div className="text-sm font-medium text-gray-900">{user?.first_name} {user?.last_name}</div>
                     <div className="text-xs text-gray-500 capitalize">{user?.role}</div>
                   </div>
                 </button>
@@ -111,7 +106,7 @@ export function Navbar() {
                       <Settings className="w-4 h-4 mr-3" />
                       Profile
                     </Link>
-                    {user?.role === 'jobseeker' && (
+                    {user?.role === 'job_seeker' && (
                       <>
                         <Link
                           href="/saved-jobs"
@@ -213,18 +208,18 @@ export function Navbar() {
                   {user?.avatar ? (
                     <Image
                       src={user.avatar}
-                      alt={user.name || 'User avatar'}
+                      alt={`${user.first_name} ${user.last_name}` || 'User avatar'}
                       width={40}
                       height={40}
                       className="w-10 h-10 rounded-full object-cover mr-3"
                     />
                   ) : (
                     <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white text-sm font-medium mr-3">
-                      {user?.name ? getUserInitials(user.name) : 'U'}
+                      {user?.first_name ? getUserInitials(user.first_name, user.last_name) : 'U'}
                     </div>
                   )}
                   <div>
-                    <div className="text-base font-medium text-gray-900">{user?.name}</div>
+                    <div className="text-base font-medium text-gray-900">{user?.first_name} {user?.last_name}</div>
                     <div className="text-sm text-gray-500 capitalize">{user?.role}</div>
                   </div>
                 </div>
@@ -235,7 +230,7 @@ export function Navbar() {
                 <Link href="/profile" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
                   Profile
                 </Link>
-                {user?.role === 'jobseeker' && (
+                {user?.role === 'job_seeker' && (
                   <>
                     <Link href="/saved-jobs" className="text-gray-600 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium">
                       Saved Jobs

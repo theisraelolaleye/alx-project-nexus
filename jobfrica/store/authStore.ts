@@ -1,8 +1,3 @@
-/**
- * Authentication store using Zustand for JobFrica platform
- * Handles authentication state, user data, and auth-related actions
- */
-
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import { authApi } from '@/lib/auth'

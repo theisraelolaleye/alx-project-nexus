@@ -7,7 +7,7 @@ import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'ax
 import { getToken, removeToken, getRefreshToken } from './storage'
 
 // API base URL - configure based on environment
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL
 
 /**
  * Main API instance with authentication and error handling
