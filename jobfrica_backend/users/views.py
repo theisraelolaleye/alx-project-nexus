@@ -72,7 +72,7 @@ class UserRegistrationView(generics.CreateAPIView):
         # Generate tokens for auto-login
         refresh = RefreshToken.for_user(user)
         
-        # Prepare response
+        # Prepare response data with message in frontend
         response_data = {
             'user': {
                 'id': user.id,
@@ -87,7 +87,7 @@ class UserRegistrationView(generics.CreateAPIView):
                 'refresh': str(refresh),
                 'access': str(refresh.access_token),
             },
-            'message': 'Registration successful. Please check your email for verification.'
+            'message': ''
         }
         
         return Response(response_data, status=status.HTTP_201_CREATED)
@@ -416,9 +416,7 @@ class ResendVerificationEmailView(generics.GenericAPIView):
                 fail_silently=False,
             )
             
-            return Response({
-                'message': 'Verification email resent. Please check your inbox.'
-            }, status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_200_OK)
         except CustomUser.DoesNotExist:
             # Don't reveal whether email exists for security
             return Response({
