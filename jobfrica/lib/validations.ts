@@ -10,7 +10,7 @@ export const loginSchema = z.object({
     .string()
     .min(1, 'Password is required')
     .min(6, 'Password must be at least 6 characters'),
-  rememberMe: z.boolean().optional().default(false)
+  rememberMe: z.boolean().optional()
 })
 
 export type LoginFormData = z.infer<typeof loginSchema>
@@ -18,30 +18,30 @@ export type LoginFormData = z.infer<typeof loginSchema>
 
 // registration form validation schema
 export const registerSchema = z.object({
-  
+
   fname: z
-  .string()
-  .min(1, 'First name is required')
-  .min(2, 'First name must be at least 2 characters')
-  .max(50, 'First name must be less than 50 characters'),
-  
+    .string()
+    .min(1, 'First name is required')
+    .min(2, 'First name must be at least 2 characters')
+    .max(50, 'First name must be less than 50 characters'),
+
   lname: z
-  .string()
-  .min(1, 'Last name is required')
-  .min(2, 'Last name must be at least 2 characters')
-  .max(50, 'Last name must be less than 50 characters'),
-  
+    .string()
+    .min(1, 'Last name is required')
+    .min(2, 'Last name must be at least 2 characters')
+    .max(50, 'Last name must be less than 50 characters'),
+
   email: z
-  .string()
-  .min(1, 'Email is required')
-  .email('Please enter a valid email address'),
-  
+    .string()
+    .min(1, 'Email is required')
+    .email('Please enter a valid email address'),
+
   username: z
     .string()
     .min(3, 'Username must be at least 3 characters')
     .max(30, 'Username must be less than 30 characters')
     .regex(/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores'),
-  
+
   password: z
     .string()
     .min(1, 'Password is required')
@@ -49,12 +49,12 @@ export const registerSchema = z.object({
     .regex(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
       'Password must contain at least one uppercase letter, one lowercase letter, and one number'
-  ),
-  
+    ),
+
   password_confirm: z
     .string()
     .min(1, 'Please confirm your password'),
-  
+
   role: z.enum(['job_seeker', 'employer'], {
     message: 'Please select your account type'
   }),
