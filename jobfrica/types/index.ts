@@ -5,15 +5,20 @@ export interface Job {
   id: string
   title: string
   company: string
+  companyLogo?: string
   location: string
   type: JobType
   experienceLevel: ExperienceLevel
   salary?: string //min sal & max salary
   description?: string
+  requirements?: string[]
+  responsibilities?: string[]
+  benefits?: string[]
   logo?: string
   tags: string[]
   postedDate: string
   category?: JobCategory
+  isRemote?: boolean
 }
 
 /**

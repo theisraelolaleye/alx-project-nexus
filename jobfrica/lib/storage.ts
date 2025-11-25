@@ -62,99 +62,106 @@ export const getToken = (): string | null => {
   return null
 }
 
-export const removeToken = (): void => {
-  console.log('🗑️ Removing auth token')
-  Cookies.remove(TOKEN_KEY)
-
-  if (process.env.NODE_ENV === 'development') {
-    localStorage.removeItem(TOKEN_KEY)
-    console.log('✅ Token removed from localStorage (dev only)')
-  }
 
 
-  export const setRefreshToken = (token: string) => {
-    Cookies.set(REFRESH_TOKEN_KEY, token, {
-      expires: 30, // 30 days
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict'
-    })
 
+
+/**
+ * Set refresh token
+ */
+export const setRefreshToken = (refreshToken: string): void => {
+  if (typeof window !== 'undefined') {
     if (process.env.NODE_ENV === 'development') {
-      localStorage.setItem(REFRESH_TOKEN_KEY, token)
+      localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken)
+    } else {
+      Cookies.set(REFRESH_TOKEN_KEY, refreshToken, {
+        ...COOKIE_OPTIONS,
+        expires: 30, // 30 days for refresh token
+      })
     }
   }
+}
 
-  export const getRefreshToken = (): string | null => {
-    if (typeof window === 'undefined') return null
-
-    const cookieToken = Cookies.get(REFRESH_TOKEN_KEY)
-    if (cookieToken) return cookieToken
-
+/**
+ * Get refresh token
+ */
+export const getRefreshToken = (): string | null => {
+  if (typeof window !== 'undefined') {
     if (process.env.NODE_ENV === 'development') {
       return localStorage.getItem(REFRESH_TOKEN_KEY)
+    } else {
+      return Cookies.get(REFRESH_TOKEN_KEY) || null
     }
-
-    return null
   }
+  return null
+}
 
-  export const removeRefreshToken = () => {
-    Cookies.remove(REFRESH_TOKEN_KEY)
+/**
+ * Remove all authentication tokens
+ */
+export const removeToken = (): void => {
+  if (typeof window !== 'undefined') {
+    if (process.env.NODE_ENV === 'development') {
+      localStorage.removeItem(TOKEN_KEY)
+      localStorage.removeItem(REFRESH_TOKEN_KEY)
+      localStorage.removeItem(USER_KEY)
+    } else {
+      Cookies.remove(TOKEN_KEY)
+      Cookies.remove(REFRESH_TOKEN_KEY)
+      Cookies.remove(USER_KEY)
+    }
+  }
+}
+
+/**
+ * Store user data
+ */
+export const setUserData = (userData: User): void => {
+  if (typeof window !== 'undefined') {
+    const userString = JSON.stringify(userData)
+    if (process.env.NODE_ENV === 'development') {
+      localStorage.setItem(USER_KEY, userString)
+    } else {
+      Cookies.set(USER_KEY, userString, COOKIE_OPTIONS)
+    }
+  }
+}
+
+/**
+ * Get user data
+ */
+export const getUserData = (): User | null => {
+  if (typeof window !== 'undefined') {
+    let userString: string | null = null
 
     if (process.env.NODE_ENV === 'development') {
-      localStorage.removeItem(REFRESH_TOKEN_KEY)
+      userString = localStorage.getItem(USER_KEY)
+    } else {
+      userString = Cookies.get(USER_KEY) || null
     }
-  }
 
-
-  /**
-   * Store user data
-   */
-  export const setUserData = (userData: User): void => {
-    if (typeof window !== 'undefined') {
-      const userString = JSON.stringify(userData)
-      if (process.env.NODE_ENV === 'development') {
-        localStorage.setItem(USER_KEY, userString)
-      } else {
-        Cookies.set(USER_KEY, userString, COOKIE_OPTIONS)
+    if (userString) {
+      try {
+        return JSON.parse(userString) as User
+      } catch (error) {
+        console.error('Error parsing user data:', error)
+        return null
       }
     }
   }
+  return null
+}
 
-  /**
-   * Get user data
-   */
-  export const getUserData = (): User | null => {
-    if (typeof window !== 'undefined') {
-      let userString: string | null = null
+/**
+ * Check if user is authenticated
+ */
+export const isAuthenticated = (): boolean => {
+  return !!getToken()
+}
 
-      if (process.env.NODE_ENV === 'development') {
-        userString = localStorage.getItem(USER_KEY)
-      } else {
-        userString = Cookies.get(USER_KEY) || null
-      }
-
-      if (userString) {
-        try {
-          return JSON.parse(userString) as User
-        } catch (error) {
-          console.error('Error parsing user data:', error)
-          return null
-        }
-      }
-    }
-    return null
-  }
-
-  /**
-   * Check if user is authenticated
-   */
-  export const isAuthenticated = (): boolean => {
-    return !!getToken()
-  }
-
-  /**
-   * Clear all stored data (logout)
-   */
-  export const clearAllData = (): void => {
-    removeToken()
-  }
+/**
+ * Clear all stored data (logout)
+ */
+export const clearAllData = (): void => {
+  removeToken()
+}

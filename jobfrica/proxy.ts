@@ -41,7 +41,7 @@ const publicRoutes = [
   '/unauthorized'
 ]
 
-export function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   // Get token from cookies
@@ -61,7 +61,12 @@ export function middleware(request: NextRequest) {
 
   const isAuthenticated = !!token
 
-  console.log('🔐 Middleware:', { pathname, isAuthenticated, userRole: user?.role, isVerified: user?.isVerified })
+  console.log('🔐 Proxy:', {
+    pathname,
+    isAuthenticated,
+    userRole: user?.role,
+    isVerified: user?.isVerified
+  })
 
   // 1. Redirect authenticated users away from auth pages
   if (isAuthenticated && pathname.startsWith('/auth')) {
@@ -72,11 +77,13 @@ export function middleware(request: NextRequest) {
 
     // If verified, redirect away from auth pages
     if (user?.isVerified) {
+      console.log('✅ User verified, redirecting to dashboard')
       return NextResponse.redirect(new URL('/dashboard', request.url))
     }
 
     // If not verified and not on verify page, go to verify page
     if (!pathname.startsWith('/auth/verify-email')) {
+      console.log('⚠️ User not verified, redirecting to verify page')
       return NextResponse.redirect(new URL('/auth/verify-email', request.url))
     }
   }
@@ -87,6 +94,7 @@ export function middleware(request: NextRequest) {
   )
 
   if (isProtectedRoute && !isAuthenticated) {
+    console.log('🚫 Protected route, not authenticated, redirecting to login')
     // Store the original URL to redirect after login
     const redirectUrl = new URL('/auth/login', request.url)
     redirectUrl.searchParams.set('redirect', pathname)
@@ -97,6 +105,7 @@ export function middleware(request: NextRequest) {
   if (isAuthenticated && isProtectedRoute && user && !user.isVerified) {
     // Unverified users can only access verification page
     if (!pathname.startsWith('/auth/verify-email')) {
+      console.log('⚠️ Unverified user accessing protected route, redirecting')
       return NextResponse.redirect(new URL('/auth/verify-email', request.url))
     }
   }
@@ -109,6 +118,7 @@ export function middleware(request: NextRequest) {
     )
 
     if (isEmployerRoute && user.role !== 'employer') {
+      console.log('🚫 Employer route accessed by non-employer')
       return NextResponse.redirect(new URL('/unauthorized', request.url))
     }
 
@@ -118,15 +128,17 @@ export function middleware(request: NextRequest) {
     )
 
     if (isJobseekerRoute && user.role !== 'jobseeker') {
+      console.log('🚫 Jobseeker route accessed by non-jobseeker')
       return NextResponse.redirect(new URL('/unauthorized', request.url))
     }
   }
 
   // 5. Allow the request to proceed
+  console.log('✅ Request allowed to proceed')
   return NextResponse.next()
 }
 
-// Configure which routes middleware runs on
+// Configure which routes proxy runs on
 export const config = {
   matcher: [
     /*
@@ -134,8 +146,7 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
-     * - public folder
-     * - api routes (optional)
+     * - public folder files
      */
     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ]

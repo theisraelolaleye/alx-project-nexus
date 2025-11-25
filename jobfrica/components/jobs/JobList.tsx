@@ -1,3 +1,6 @@
+'use client'
+
+import { useRouter } from 'next/navigation'
 import { Search } from 'lucide-react'
 import { JobCard } from './JobCard'
 import { Job } from '@/types'
@@ -11,10 +14,11 @@ interface JobListProps {
 }
 
 export function JobList({ jobs, loading = false, emptyStateMessage = "No jobs found. Try adjusting your filters.", viewMode = 'grid' }: JobListProps) {
+  const router = useRouter()
+
   const handleJobClick = (job: Job) => {
-    // Navigate to job details page or open modal
-    console.log('Job clicked:', job)
-    // In a real app, you would navigate to /jobs/[id] or open a modal
+    // Navigate to job details page
+    router.push(`/jobs/${job.id}`)
   }
 
   if (loading) {
