@@ -18,6 +18,8 @@ def user_avatar_upload_path(instance, filename):
 
 # Create your models here.
 class CustomUser(AbstractUser):
+    username = None  # Remove the default username
+    email = models.EmailField(unique=True, max_length=254)  # Make email unique
     ROLES_CHOICES = (
         ('job_seeker', 'Job Seeker'),
         ('employer', 'Employer'),
@@ -28,6 +30,9 @@ class CustomUser(AbstractUser):
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []  # Remove username from required fields
 
     # Avatar field
     avatar = models.ImageField(
