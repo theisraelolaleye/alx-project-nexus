@@ -311,7 +311,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
                 {
                     'id': job.id,
                     'title': job.title,
-                    'status': job.status,
+                    'company': job.company,
                     'applications_count': job.applications.count()
                 }
                 for job in recent
