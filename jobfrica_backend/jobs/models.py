@@ -34,9 +34,15 @@ class Job(models.Model):
         ('senior', 'Senior Level'),
     )
 
+    STATUS_CHOICES = (
+        ('open', 'Open'),
+        ('closed', 'Closed'),
+        ('paused', 'Paused'),
+    )
+
     title = models.CharField(max_length=200)
     description = models.TextField()
-    employer = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='jobs')
+    employer = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=False, blank=False, related_name='jobs')
     company = models.CharField(max_length=200)
     location = models.CharField(max_length=255)
     job_type = models.CharField(max_length=20, choices=JOB_TYPE_CHOICES)
@@ -46,7 +52,7 @@ class Job(models.Model):
     application_url = models.URLField(blank=True, null=True)
     application_email = models.EmailField(blank=True, null=True)
     posted_at = models.DateTimeField(auto_now_add=True)
-    application_deadline = models.DateTimeField(blank=True, null=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')
     category = models.ForeignKey(JobCategory, on_delete=models.PROTECT, related_name='jobs')
     tags = models.ManyToManyField(Skill, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -58,6 +64,7 @@ class Job(models.Model):
         indexes = [
             models.Index(fields=['created_at']),
             models.Index(fields=['category']),
+            models.Index(fields=['status']),
             models.Index(fields=['location']),
             models.Index(fields=['job_type']),
             models.Index(fields=['company']),

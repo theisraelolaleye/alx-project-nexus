@@ -73,7 +73,7 @@ class JobCreateSerializer(serializers.ModelSerializer):
         fields = [
             'id','title', 'description', 'company', 'location', 
             'experience_level', 'job_type', 'category', 'posted_by',
-            'salary_min', 'salary_max', 'application_deadline', 'tags'
+            'salary_min', 'salary_max', 'status', 'tags'
         ]
         read_only_fields = ['id', 'posted_by', 'created_at']
         

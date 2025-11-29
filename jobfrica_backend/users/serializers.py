@@ -284,7 +284,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
                 {
                     'id': app.id,
                     'job_title': app.job.title,
-                    'company': app.job.company_name,
+                    'company': app.job.company,
                     'status': app.status,
                     'applied_at': app.applied_at
                 }
