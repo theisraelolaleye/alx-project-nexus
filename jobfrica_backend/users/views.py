@@ -466,7 +466,7 @@ class UserDashboardView(APIView):
                 ).count(),
                 'pending_applications': Application.objects.filter(
                     job__posted_by=user,
-                    status='pending'
+                    status='under_review'
                 ).count(),
                 'recent_applications': self.get_recent_applications_for_employer(user),
                 'job_performance': self.get_job_performance(user),
@@ -476,7 +476,7 @@ class UserDashboardView(APIView):
             # Job seeker dashboard data
             dashboard_data['statistics'] = {
                 'total_applications': user.applications.count(),
-                'pending_applications': user.applications.filter(status='pending').count(),
+                'pending_applications': user.applications.filter(status='under_review').count(),
                 'shortlisted_applications': user.applications.filter(status='shortlisted').count(),
                 'rejected_applications': user.applications.filter(status='rejected').count(),
                 'recent_applications': self.get_recent_applications_for_jobseeker(user),
@@ -489,7 +489,7 @@ class UserDashboardView(APIView):
                 'total_users': CustomUser.objects.count(),
                 'total_jobs': Job.objects.count(),
                 'total_applications': Application.objects.count(),
-                'pending_job_approvals': Job.objects.filter(status='draft').count(),
+                'pending_job_approvals': Application.objects.filter(status='under_review').count(),
                 'recent_users': self.get_recent_users(),
                 'platform_metrics': self.get_platform_metrics(),
             }
@@ -568,7 +568,7 @@ class UserDashboardView(APIView):
             'jobs_posted_today': Job.objects.filter(created_at__date=today).count(),
             'applications_today': Application.objects.filter(applied_at__date=today).count(),
             'new_users_today': CustomUser.objects.filter(date_joined__date=today).count(),
-            'active_jobs': Job.objects.filter(status='published').count(),
+            'active_jobs': Job.objects.filter(application_deadline__gte=today).count(),
         }
 
 class PublicDashboardView(APIView):
