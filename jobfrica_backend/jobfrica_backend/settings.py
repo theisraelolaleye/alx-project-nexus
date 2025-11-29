@@ -38,7 +38,9 @@ ALLOWED_HOSTS = [
     'localhost',
     '.onrender.com',
     '127.0.0.1:8000',
-    '127.0.0.1'
+    '127.0.0.1',
+    'jobfrica-backend.onrender.com',
+    'jobfrica.vercel.app',
 ]
 
 RENDER_EXTERNAL_HOSTNAME = env('RENDER_EXTERNAL_HOSTNAME', default=None)
@@ -48,7 +50,9 @@ if RENDER_EXTERNAL_HOSTNAME:
 CSRF_TRUSTED_ORIGINS = [
     'https://*.onrender.com',
     'https://jobfrica-backend.onrender.com',
+    'https://jobfrica.vercel.app',
 ]
+
 
 # Session settings
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
@@ -95,6 +99,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -102,7 +107,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
@@ -214,12 +218,12 @@ SIMPLE_JWT = {
 
 # CORS Configuration
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "http://localhost:3000",
-    "http://127.0.0.1:8000", 
-    "http://127.0.0.1:3000",
+    'http://localhost:3000',
+    'http://localhost:8000',
+    'https://jobfrica.vercel.app',
 ]
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 # Swagger
@@ -258,6 +262,10 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 
