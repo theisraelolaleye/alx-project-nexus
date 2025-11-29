@@ -67,9 +67,6 @@ export function ProtectedRoute({
   return <>{children}</>
 }
 
-/**
- * Hook to protect individual components or sections
- */
 export function useProtectedAccess(requiredRole?: UserRole) {
   const { isAuthenticated, user } = useAuthStore()
 
@@ -83,9 +80,6 @@ export function useProtectedAccess(requiredRole?: UserRole) {
   }
 }
 
-/**
- * Higher-order component for protecting components
- */
 export function withAuth<P extends object>(
   Component: React.ComponentType<P>,
   requiredRole?: UserRole

@@ -3,47 +3,21 @@ import Image from 'next/image'
 import { MapPin, Clock, Building2, ArrowRight } from 'lucide-react'
 import { Job } from '@/types'
 import { ViewMode } from './ViewToggle'
+import { SafeDateDisplay } from '@/components/common/ClientOnlyDate'
 
-/**
- * Props for the JobCard component
- */
 interface JobCardProps {
-  /** Job object containing all job information */
   job: Job
-  /** Optional callback function called when the job card is clicked */
   onClick?: (job: Job) => void
-  /** View mode for the job card layout */
   viewMode?: ViewMode
 }
 
-/**
- * JobCard component displays job information in a card format
- * 
- * @component
- * @example
- * ```tsx
- * <JobCard 
- *   job={jobData} 
- *   onClick={(job) => navigateToJobDetails(job.id)} 
- * />
- * ```
- */
 const JobCard = memo<JobCardProps>(({ job, onClick, viewMode = 'grid' }) => {
-  /**
-   * Handles job card click events
-   * Calls the onClick prop if provided
-   */
   const handleClick = () => {
     if (onClick) {
       onClick(job)
     }
   }
 
-  /**
-   * Returns appropriate CSS classes for experience level badges
-   * @param level - Experience level string
-   * @returns CSS class string for styling the badge
-   */
   const getExperienceLevelColor = (level: string) => {
     switch (level.toLowerCase()) {
       case 'entry':
@@ -59,11 +33,6 @@ const JobCard = memo<JobCardProps>(({ job, onClick, viewMode = 'grid' }) => {
     }
   }
 
-  /**
-   * Returns appropriate CSS classes for job type badges
-   * @param type - Job type string
-   * @returns CSS class string for styling the badge
-   */
   const getJobTypeColor = (type: string) => {
     switch (type.toLowerCase()) {
       case 'full-time':
@@ -83,14 +52,18 @@ const JobCard = memo<JobCardProps>(({ job, onClick, viewMode = 'grid' }) => {
   if (viewMode === 'grid') {
     return (
       <div
+        data-testid="job-card"
+        data-job-id={job.id}
         className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer group"
         onClick={handleClick}
+        role="article"
+        aria-label={`Job: ${job.title} at ${job.company}`}
       >
         {/* Header */}
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-3">
             {/* Company Logo */}
-            <div className="w-12 h-12 bg-linear-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shrink-0">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shrink-0">
               {job.logo ? (
                 <Image
                   src={job.logo}
@@ -112,11 +85,6 @@ const JobCard = memo<JobCardProps>(({ job, onClick, viewMode = 'grid' }) => {
               <p className="text-gray-600 text-sm font-medium">{job.company}</p>
             </div>
           </div>
-
-          {/* Job Type Badge */}
-          <span className={`px-3 py-1 rounded-full text-xs font-medium ${getJobTypeColor(job.type)} whitespace-nowrap`}>
-            {job.type}
-          </span>
         </div>
 
         {/* Location and Posted Date */}
@@ -127,14 +95,19 @@ const JobCard = memo<JobCardProps>(({ job, onClick, viewMode = 'grid' }) => {
           </div>
           <div className="flex items-center gap-1">
             <Clock className="w-4 h-4" />
-            <span>{job.postedDate}</span>
+            <SafeDateDisplay dateString={job.postedDate} />
           </div>
         </div>
 
-        {/* Experience Level */}
-        <div className="mb-4">
+        <div className="mb-4 flex items-center gap-2">
+          {/* Experience Level */}
           <span className={`px-3 py-1 rounded-full text-xs font-medium ${getExperienceLevelColor(job.experienceLevel)}`}>
             {job.experienceLevel}
+          </span>
+
+          {/* Job Type Badge */}
+          <span className={`px-3 py-1 rounded-full text-xs font-medium ${getJobTypeColor(job.type)} whitespace-nowrap`}>
+            {job.type}
           </span>
         </div>
 
@@ -182,12 +155,16 @@ const JobCard = memo<JobCardProps>(({ job, onClick, viewMode = 'grid' }) => {
   // List view (horizontal layout)
   return (
     <div
+      data-testid="job-card"
+      data-job-id={job.id}
       className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-all duration-300 cursor-pointer group"
       onClick={handleClick}
+      role="article"
+      aria-label={`Job: ${job.title} at ${job.company}`}
     >
       <div className="flex items-center gap-6">
         {/* Company Logo */}
-        <div className="w-16 h-16 bg-linear-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shrink-0">
+        <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center shrink-0">
           {job.logo ? (
             <Image
               src={job.logo}
@@ -227,7 +204,7 @@ const JobCard = memo<JobCardProps>(({ job, onClick, viewMode = 'grid' }) => {
             </div>
             <div className="flex items-center gap-1">
               <Clock className="w-4 h-4" />
-              <span>{job.postedDate}</span>
+              <SafeDateDisplay dateString={job.postedDate} />
             </div>
             <span className={`px-3 py-1 rounded-full text-xs font-medium ${getJobTypeColor(job.type)}`}>
               {job.type}

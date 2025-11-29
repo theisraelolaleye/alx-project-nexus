@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Eye, EyeOff, Loader2, Mail, Lock } from 'lucide-react'
+import { Eye, EyeOff, Loader2, User, Lock } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/store/authStore'
@@ -29,7 +29,7 @@ export function LoginForm({ onSuccess, redirectPath = '/dashboard' }: LoginFormP
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
       rememberMe: false
     }
@@ -40,7 +40,7 @@ export function LoginForm({ onSuccess, redirectPath = '/dashboard' }: LoginFormP
       clearError()
 
       const loginData = {
-        email: data.email,
+        username: data.username,
         password: data.password,
         rememberMe: data.rememberMe ?? false
       }
@@ -85,30 +85,30 @@ export function LoginForm({ onSuccess, redirectPath = '/dashboard' }: LoginFormP
 
         {/* Login Form */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-          {/* Email Field */}
+          {/* Username Field */}
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-              Email Address
+            <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+              Username
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Mail className="h-5 w-5 text-gray-400" />
+                <User className="h-5 w-5 text-gray-400" />
               </div>
               <input
-                {...register('email')}
-                type="email"
-                id="email"
-                autoComplete="email"
+                {...register('username')}
+                type="text"
+                id="username"
+                autoComplete="username"
                 className={`
                   block w-full pl-10 pr-3 py-3 border rounded-lg shadow-sm placeholder-gray-400
                   focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
-                  ${errors.email ? 'border-red-300' : 'border-gray-300'}
+                  ${errors.username ? 'border-red-300' : 'border-gray-300'}
                 `}
-                placeholder="Enter your email"
+                placeholder="Enter your username"
               />
             </div>
-            {errors.email && (
-              <p className="mt-2 text-sm text-red-600">{errors.email.message}</p>
+            {errors.username && (
+              <p className="mt-2 text-sm text-red-600">{errors.username.message}</p>
             )}
           </div>
 

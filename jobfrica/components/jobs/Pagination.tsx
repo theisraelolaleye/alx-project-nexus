@@ -49,12 +49,13 @@ export function Pagination({
 
   if (showLoadMore) {
     return (
-      <div className="text-center">
+      <div className="text-center" data-testid="pagination">
         {hasMore && (
           <button
             onClick={onLoadMore}
             disabled={loading}
             className="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            data-testid="load-more-button"
           >
             {loading ? (
               <div className="flex items-center gap-2">
@@ -75,7 +76,7 @@ export function Pagination({
   }
 
   return (
-    <div className="flex items-center justify-center space-x-2">
+    <div className="flex items-center justify-center space-x-2" data-testid="pagination">
       {/* Previous Button */}
       <button
         onClick={() => onPageChange(currentPage - 1)}
@@ -105,8 +106,8 @@ export function Pagination({
               key={pageNumber}
               onClick={() => onPageChange(pageNumber)}
               className={`w-10 h-10 text-sm font-medium rounded-lg transition-colors ${isActive
-                  ? 'bg-blue-600 text-white'
-                  : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 hover:text-gray-700'
+                ? 'bg-blue-600 text-white'
+                : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 hover:text-gray-700'
                 }`}
             >
               {pageNumber}

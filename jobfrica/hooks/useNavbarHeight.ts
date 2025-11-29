@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react'
 
-/**
- * Custom hook to track the height of the navbar for sticky positioning
- * @param selector - CSS selector for the navbar element
- * @returns The current height of the navbar in pixels
- */
 export function useNavbarHeight(selector: string = 'nav'): number {
   const [navbarHeight, setNavbarHeight] = useState(64) // Default fallback
+  const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
+    setIsMounted(true)
+
     const updateHeight = () => {
       const navbar = document.querySelector(selector) as HTMLElement
       if (navbar) {
@@ -40,5 +38,6 @@ export function useNavbarHeight(selector: string = 'nav'): number {
     }
   }, [selector])
 
-  return navbarHeight
+  // Return consistent height during SSR and initial client render
+  return isMounted ? navbarHeight : 64
 }

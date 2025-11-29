@@ -1,0 +1,351 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e9]: JobFrica
+      - generic [ref=e11]:
+        - link "Home" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - text: Home
+        - link "Find Jobs" [ref=e13] [cursor=pointer]:
+          - /url: /jobs
+          - text: Find Jobs
+        - link "Companies" [ref=e14] [cursor=pointer]:
+          - /url: /companies
+          - text: Companies
+        - link "Career Resources" [ref=e15] [cursor=pointer]:
+          - /url: /resources
+          - text: Career Resources
+        - link "For Employers" [ref=e16] [cursor=pointer]:
+          - /url: /employers
+          - text: For Employers
+      - generic [ref=e18]:
+        - link "Sign In" [ref=e19] [cursor=pointer]:
+          - /url: /auth/login
+        - link "Get Started" [ref=e20] [cursor=pointer]:
+          - /url: /auth/register
+  - main [ref=e21]:
+    - generic [ref=e22]:
+      - generic [ref=e24]:
+        - heading "Find Your Next Opportunity" [level=1] [ref=e25]
+        - paragraph [ref=e26]: Discover 12 amazing job opportunities
+      - generic [ref=e28]:
+        - complementary [ref=e29]:
+          - generic [ref=e31]:
+            - heading "Filter Jobs" [level=2] [ref=e33]:
+              - img [ref=e34]
+              - text: Filter Jobs
+            - generic [ref=e36]:
+              - generic [ref=e37]: Search
+              - generic [ref=e38]:
+                - img [ref=e39]
+                - textbox "Search Search" [ref=e42]:
+                  - /placeholder: Search by title or keyword
+                - generic [ref=e43]: Enter job title or keywords to filter job listings
+            - generic [ref=e44]:
+              - generic [ref=e45]: Category
+              - generic [ref=e46]:
+                - img [ref=e47]
+                - combobox "Category Category" [ref=e50]:
+                  - option "All Categories" [selected]
+                  - option "Design"
+                  - option "Engineering"
+                  - option "Marketing"
+                  - option "Sales"
+                  - option "Product"
+                  - option "Customer Support"
+                  - option "Finance"
+                  - option "Human Resources"
+                - generic [ref=e51]: Select a job category to filter results
+            - generic [ref=e52]:
+              - generic [ref=e53]: Location
+              - generic [ref=e54]:
+                - img [ref=e55]
+                - combobox "Location Location" [ref=e58]:
+                  - option "All Locations" [selected]
+                  - option "Lagos, Nigeria"
+                  - option "Cape Town, South Africa"
+                  - option "Nairobi, Kenya"
+                  - option "Accra, Ghana"
+                  - option "Cairo, Egypt"
+                  - option "Johannesburg, South Africa"
+                  - option "Casablanca, Morocco"
+                  - option "Remote"
+                - generic [ref=e59]: Select a location to filter job results
+            - group "Experience Level" [ref=e60]:
+              - generic [ref=e61]: Experience Level
+              - radiogroup [ref=e62]:
+                - generic [ref=e63] [cursor=pointer]:
+                  - radio "All Levels" [ref=e64]
+                  - generic [ref=e65]: All Levels
+                - generic [ref=e66] [cursor=pointer]:
+                  - radio "Entry-Level" [ref=e67]
+                  - generic [ref=e68]: Entry-Level
+                - generic [ref=e69] [cursor=pointer]:
+                  - radio "Mid-Level" [ref=e70]
+                  - generic [ref=e71]: Mid-Level
+                - generic [ref=e72] [cursor=pointer]:
+                  - radio "Senior" [ref=e73]
+                  - generic [ref=e74]: Senior
+              - generic [ref=e75]: Select your experience level to filter relevant jobs
+            - button "Reset Filters" [ref=e76]
+            - generic [ref=e77]: Clear all active filters and reset the search
+        - main [ref=e78]:
+          - generic [ref=e79]:
+            - heading "Job Results" [level=2] [ref=e81]
+            - generic [ref=e82]:
+              - button "Grid view" [pressed] [ref=e83]:
+                - img [ref=e84]
+              - button "List view" [ref=e86]:
+                - img [ref=e87]
+          - generic [ref=e88]:
+            - generic [ref=e89]:
+              - paragraph [ref=e90]: Showing 6 jobs
+              - generic [ref=e91]:
+                - generic [ref=e92]: "Sort by:"
+                - combobox [ref=e93]:
+                  - option "Most Recent" [selected]
+                  - option "Relevance"
+                  - option "Salary"
+            - generic [ref=e94]:
+              - 'article "Job: Job Title 1 at Company 1" [ref=e95] [cursor=pointer]':
+                - generic [ref=e97]:
+                  - img [ref=e99]
+                  - generic [ref=e103]:
+                    - heading "Job Title 1" [level=3] [ref=e104]
+                    - paragraph [ref=e105]: Company 1
+                - generic [ref=e106]:
+                  - generic [ref=e107]:
+                    - img [ref=e108]
+                    - generic [ref=e111]: Lagos, Nigeria
+                  - generic [ref=e112]:
+                    - img [ref=e113]
+                    - generic [ref=e116]: Today
+                - generic [ref=e117]:
+                  - generic [ref=e118]: Mid-Level
+                  - generic [ref=e119]: Full-time
+                - generic [ref=e120]: $50,000 - $70,000
+                - generic [ref=e121]:
+                  - generic [ref=e122]: React
+                  - generic [ref=e123]: TypeScript
+                - button "View Details" [ref=e124]:
+                  - generic [ref=e125]: View Details
+                  - img [ref=e126]
+              - 'article "Job: Job Title 2 at Company 2" [ref=e128] [cursor=pointer]':
+                - generic [ref=e130]:
+                  - img [ref=e132]
+                  - generic [ref=e136]:
+                    - heading "Job Title 2" [level=3] [ref=e137]
+                    - paragraph [ref=e138]: Company 2
+                - generic [ref=e139]:
+                  - generic [ref=e140]:
+                    - img [ref=e141]
+                    - generic [ref=e144]: Lagos, Nigeria
+                  - generic [ref=e145]:
+                    - img [ref=e146]
+                    - generic [ref=e149]: Today
+                - generic [ref=e150]:
+                  - generic [ref=e151]: Mid-Level
+                  - generic [ref=e152]: Full-time
+                - generic [ref=e153]: $50,000 - $70,000
+                - generic [ref=e154]:
+                  - generic [ref=e155]: React
+                  - generic [ref=e156]: TypeScript
+                - button "View Details" [ref=e157]:
+                  - generic [ref=e158]: View Details
+                  - img [ref=e159]
+              - 'article "Job: Job Title 3 at Company 3" [ref=e161] [cursor=pointer]':
+                - generic [ref=e163]:
+                  - img [ref=e165]
+                  - generic [ref=e169]:
+                    - heading "Job Title 3" [level=3] [ref=e170]
+                    - paragraph [ref=e171]: Company 3
+                - generic [ref=e172]:
+                  - generic [ref=e173]:
+                    - img [ref=e174]
+                    - generic [ref=e177]: Lagos, Nigeria
+                  - generic [ref=e178]:
+                    - img [ref=e179]
+                    - generic [ref=e182]: Today
+                - generic [ref=e183]:
+                  - generic [ref=e184]: Mid-Level
+                  - generic [ref=e185]: Full-time
+                - generic [ref=e186]: $50,000 - $70,000
+                - generic [ref=e187]:
+                  - generic [ref=e188]: React
+                  - generic [ref=e189]: TypeScript
+                - button "View Details" [ref=e190]:
+                  - generic [ref=e191]: View Details
+                  - img [ref=e192]
+              - 'article "Job: Job Title 4 at Company 4" [ref=e194] [cursor=pointer]':
+                - generic [ref=e196]:
+                  - img [ref=e198]
+                  - generic [ref=e202]:
+                    - heading "Job Title 4" [level=3] [ref=e203]
+                    - paragraph [ref=e204]: Company 4
+                - generic [ref=e205]:
+                  - generic [ref=e206]:
+                    - img [ref=e207]
+                    - generic [ref=e210]: Lagos, Nigeria
+                  - generic [ref=e211]:
+                    - img [ref=e212]
+                    - generic [ref=e215]: Today
+                - generic [ref=e216]:
+                  - generic [ref=e217]: Mid-Level
+                  - generic [ref=e218]: Full-time
+                - generic [ref=e219]: $50,000 - $70,000
+                - generic [ref=e220]:
+                  - generic [ref=e221]: React
+                  - generic [ref=e222]: TypeScript
+                - button "View Details" [ref=e223]:
+                  - generic [ref=e224]: View Details
+                  - img [ref=e225]
+              - 'article "Job: Job Title 5 at Company 5" [ref=e227] [cursor=pointer]':
+                - generic [ref=e229]:
+                  - img [ref=e231]
+                  - generic [ref=e235]:
+                    - heading "Job Title 5" [level=3] [ref=e236]
+                    - paragraph [ref=e237]: Company 5
+                - generic [ref=e238]:
+                  - generic [ref=e239]:
+                    - img [ref=e240]
+                    - generic [ref=e243]: Lagos, Nigeria
+                  - generic [ref=e244]:
+                    - img [ref=e245]
+                    - generic [ref=e248]: Today
+                - generic [ref=e249]:
+                  - generic [ref=e250]: Mid-Level
+                  - generic [ref=e251]: Full-time
+                - generic [ref=e252]: $50,000 - $70,000
+                - generic [ref=e253]:
+                  - generic [ref=e254]: React
+                  - generic [ref=e255]: TypeScript
+                - button "View Details" [ref=e256]:
+                  - generic [ref=e257]: View Details
+                  - img [ref=e258]
+              - 'article "Job: Job Title 6 at Company 6" [ref=e260] [cursor=pointer]':
+                - generic [ref=e262]:
+                  - img [ref=e264]
+                  - generic [ref=e268]:
+                    - heading "Job Title 6" [level=3] [ref=e269]
+                    - paragraph [ref=e270]: Company 6
+                - generic [ref=e271]:
+                  - generic [ref=e272]:
+                    - img [ref=e273]
+                    - generic [ref=e276]: Lagos, Nigeria
+                  - generic [ref=e277]:
+                    - img [ref=e278]
+                    - generic [ref=e281]: Today
+                - generic [ref=e282]:
+                  - generic [ref=e283]: Mid-Level
+                  - generic [ref=e284]: Full-time
+                - generic [ref=e285]: $50,000 - $70,000
+                - generic [ref=e286]:
+                  - generic [ref=e287]: React
+                  - generic [ref=e288]: TypeScript
+                - button "View Details" [ref=e289]:
+                  - generic [ref=e290]: View Details
+                  - img [ref=e291]
+          - generic [ref=e294]:
+            - button "Previous" [disabled] [ref=e295]:
+              - img [ref=e296]
+              - text: Previous
+            - generic [ref=e298]:
+              - button "1" [ref=e299]
+              - button "2" [ref=e300]
+            - button "Next" [ref=e301]:
+              - text: Next
+              - img [ref=e302]
+  - contentinfo [ref=e304]:
+    - generic [ref=e305]:
+      - generic [ref=e306]:
+        - generic [ref=e307]:
+          - generic [ref=e308]:
+            - img [ref=e309]
+            - generic [ref=e312]: JobFrica
+          - paragraph [ref=e313]: Connecting talented professionals with leading companies across Africa. Build your career and find opportunities that match your skills and ambitions.
+          - generic [ref=e314]:
+            - link [ref=e315] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e316]
+            - link [ref=e318] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e319]
+            - link [ref=e321] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e322]
+            - link [ref=e326] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e327]
+        - generic [ref=e330]:
+          - heading "Quick Links" [level=3] [ref=e331]
+          - list [ref=e332]:
+            - listitem [ref=e333]:
+              - link "Browse Jobs" [ref=e334] [cursor=pointer]:
+                - /url: /jobs
+            - listitem [ref=e335]:
+              - link "Companies" [ref=e336] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e337]:
+              - link "Post a Job" [ref=e338] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e339]:
+              - link "Career Resources" [ref=e340] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e341]:
+              - link "Salary Guide" [ref=e342] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e343]:
+          - heading "Categories" [level=3] [ref=e344]
+          - list [ref=e345]:
+            - listitem [ref=e346]:
+              - link "Design" [ref=e347] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e348]:
+              - link "Engineering" [ref=e349] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e350]:
+              - link "Marketing" [ref=e351] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e352]:
+              - link "Sales" [ref=e353] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e354]:
+              - link "View All" [ref=e355] [cursor=pointer]:
+                - /url: /jobs
+        - generic [ref=e356]:
+          - heading "Contact Us" [level=3] [ref=e357]
+          - generic [ref=e358]:
+            - generic [ref=e359]:
+              - img [ref=e360]
+              - generic [ref=e363]: hello@jobfrica.com
+            - generic [ref=e364]:
+              - img [ref=e365]
+              - generic [ref=e367]: +234 (0) 123 456 7890
+            - generic [ref=e368]:
+              - img [ref=e369]
+              - generic [ref=e372]: Lagos, Nigeria
+          - generic [ref=e373]:
+            - heading "Stay Updated" [level=4] [ref=e374]
+            - generic [ref=e375]:
+              - textbox "Your email" [ref=e376]
+              - button "Subscribe" [ref=e377]
+      - generic [ref=e379]:
+        - generic [ref=e380]: © 2024 JobFrica. All rights reserved.
+        - generic [ref=e381]:
+          - link "Privacy Policy" [ref=e382] [cursor=pointer]:
+            - /url: "#"
+          - link "Terms of Service" [ref=e383] [cursor=pointer]:
+            - /url: "#"
+          - link "Cookie Policy" [ref=e384] [cursor=pointer]:
+            - /url: "#"
+          - link "Help Center" [ref=e385] [cursor=pointer]:
+            - /url: "#"
+  - button "Open Next.js Dev Tools" [ref=e391] [cursor=pointer]:
+    - img [ref=e392]
+  - alert [ref=e395]
+```

@@ -16,7 +16,8 @@ import {
   CheckCircle2
 } from 'lucide-react'
 import { Job } from '@/types'
-import { mockJobs } from '@/data/mockJobs'
+import { externalJobsApi } from '@/lib/api'
+import { useJobStore } from '@/store/jobStore'
 
 export default function JobDetailsPage() {
   const params = useParams()
@@ -25,28 +26,48 @@ export default function JobDetailsPage() {
 
   const [job, setJob] = useState<Job | null>(null)
   const [loading, setLoading] = useState(true)
+  const getJobById = useJobStore(state => state.getJobById)
+  const upsertJob = useJobStore(state => state.upsertJob)
   const [isSaved, setIsSaved] = useState(false)
+  const [allJobs, setAllJobs] = useState<Job[]>([])
 
   useEffect(() => {
-    // Fetch job details from mock data
-    const fetchJobDetails = async () => {
+    const fetchJobs = async () => {
       try {
         setLoading(true)
-
-        // Simulate API delay
-        setTimeout(() => {
-          const foundJob = mockJobs.find(j => j.id === jobId)
-          setJob(foundJob || null)
+        // Try store first for instant detail rendering
+        const existing = getJobById(jobId)
+        if (existing) {
+          setJob(existing)
           setLoading(false)
-        }, 500)
+          return
+        }
+
+        // Fetch full details for this job id via API
+        const detailedJob = await externalJobsApi.getJobDetails(jobId)
+        if (detailedJob) {
+          upsertJob(detailedJob)
+          setJob(detailedJob)
+          setLoading(false)
+          return
+        }
+
+        // As a final fallback: fetch list and find by id
+        const jobsData = await externalJobsApi.getJobs()
+        setAllJobs(jobsData)
+        const foundJob = jobsData.find((j: Job) => j.id === jobId)
+        if (foundJob) upsertJob(foundJob)
+        setJob(foundJob || null)
       } catch (error) {
-        console.error('Failed to fetch job:', error)
+        console.error('Failed to fetch jobs:', error)
+        setJob(null)
+      } finally {
         setLoading(false)
       }
     }
 
     if (jobId) {
-      fetchJobDetails()
+      fetchJobs()
     }
   }, [jobId])
 
@@ -190,8 +211,8 @@ export default function JobDetailsPage() {
                 <button
                   onClick={handleSave}
                   className={`p-3 border rounded-lg transition-colors ${isSaved
-                      ? 'border-blue-600 text-blue-600 bg-blue-50'
-                      : 'border-gray-300 text-gray-600 hover:border-gray-400'
+                    ? 'border-blue-600 text-blue-600 bg-blue-50'
+                    : 'border-gray-300 text-gray-600 hover:border-gray-400'
                     }`}
                   title={isSaved ? 'Saved' : 'Save job'}
                 >

@@ -219,7 +219,7 @@ export function JobFilters({ onFiltersChange, isMobile = false, isOpen = false, 
 
   if (isMobile) {
     return (
-      <div className={`fixed inset-0 z-50 ${isOpen ? 'block' : 'hidden'}`}>
+      <div className={`fixed inset-0 z-50 ${isOpen ? 'block' : 'hidden'}`} data-testid="mobile-filters">
         <div className="fixed inset-0 bg-black bg-opacity-50" onClick={onToggle} />
         <div className="fixed top-0 left-0 right-0 bg-white p-6 max-h-screen overflow-y-auto">
           {filterContent}

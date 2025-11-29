@@ -2,10 +2,9 @@ import { z } from 'zod'
 
 // login form validation schema
 export const loginSchema = z.object({
-  email: z
+  username: z
     .string()
-    .min(1, 'Email is required')
-    .email('Please enter a valid email address'),
+    .min(1, 'Username is required'),
   password: z
     .string()
     .min(1, 'Password is required')
@@ -69,9 +68,6 @@ export const registerSchema = z.object({
 
 export type RegisterFormData = z.infer<typeof registerSchema>
 
-/**
- * Forgot password form validation schema
- */
 export const forgotPasswordSchema = z.object({
   email: z
     .string()
@@ -81,9 +77,6 @@ export const forgotPasswordSchema = z.object({
 
 export type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>
 
-/**
- * Reset password form validation schema
- */
 export const resetPasswordSchema = z.object({
   password: z
     .string()
@@ -103,9 +96,6 @@ export const resetPasswordSchema = z.object({
 
 export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>
 
-/**
- * Change password form validation schema
- */
 export const changePasswordSchema = z.object({
   currentPassword: z
     .string()
@@ -131,9 +121,6 @@ export const changePasswordSchema = z.object({
 
 export type ChangePasswordFormData = z.infer<typeof changePasswordSchema>
 
-/**
- * Profile update form validation schema
- */
 export const profileUpdateSchema = z.object({
   name: z
     .string()

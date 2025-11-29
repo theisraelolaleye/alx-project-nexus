@@ -1,0 +1,173 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e9]: JobFrica
+      - button [ref=e11]:
+        - img [ref=e12]
+  - main [ref=e13]:
+    - generic [ref=e14]:
+      - generic [ref=e16]:
+        - heading "Find Your Next Opportunity" [level=1] [ref=e17]
+        - paragraph [ref=e18]: Discover 2 amazing job opportunities
+      - generic [ref=e20]:
+        - button "Filters" [ref=e22]:
+          - img [ref=e23]
+          - text: Filters
+        - main [ref=e25]:
+          - generic [ref=e26]:
+            - heading "Job Results" [level=2] [ref=e28]
+            - generic [ref=e29]:
+              - button "Grid view" [pressed] [ref=e30]:
+                - img [ref=e31]
+              - button "List view" [ref=e33]:
+                - img [ref=e34]
+          - generic [ref=e35]:
+            - generic [ref=e36]:
+              - paragraph [ref=e37]: Showing 2 jobs
+              - generic [ref=e38]:
+                - generic [ref=e39]: "Sort by:"
+                - combobox [ref=e40]:
+                  - option "Most Recent" [selected]
+                  - option "Relevance"
+                  - option "Salary"
+            - generic [ref=e41]:
+              - 'article "Job: Software Engineer 1 at Company 1" [ref=e42] [cursor=pointer]':
+                - generic [ref=e44]:
+                  - img [ref=e46]
+                  - generic [ref=e50]:
+                    - heading "Software Engineer 1" [level=3] [ref=e51]
+                    - paragraph [ref=e52]: Company 1
+                - generic [ref=e53]:
+                  - generic [ref=e54]:
+                    - img [ref=e55]
+                    - generic [ref=e58]: Lagos, Nigeria
+                  - generic [ref=e59]:
+                    - img [ref=e60]
+                    - generic [ref=e63]: Today
+                - generic [ref=e64]:
+                  - generic [ref=e65]: Mid-Level
+                  - generic [ref=e66]: Full-time
+                - generic [ref=e67]: $50,000 - $70,000
+                - generic [ref=e68]:
+                  - generic [ref=e69]: React
+                  - generic [ref=e70]: TypeScript
+                - button "View Details" [ref=e71]:
+                  - generic [ref=e72]: View Details
+                  - img [ref=e73]
+              - 'article "Job: Software Engineer 2 at Company 2" [ref=e75] [cursor=pointer]':
+                - generic [ref=e77]:
+                  - img [ref=e79]
+                  - generic [ref=e83]:
+                    - heading "Software Engineer 2" [level=3] [ref=e84]
+                    - paragraph [ref=e85]: Company 2
+                - generic [ref=e86]:
+                  - generic [ref=e87]:
+                    - img [ref=e88]
+                    - generic [ref=e91]: Lagos, Nigeria
+                  - generic [ref=e92]:
+                    - img [ref=e93]
+                    - generic [ref=e96]: Today
+                - generic [ref=e97]:
+                  - generic [ref=e98]: Mid-Level
+                  - generic [ref=e99]: Full-time
+                - generic [ref=e100]: $50,000 - $70,000
+                - generic [ref=e101]:
+                  - generic [ref=e102]: React
+                  - generic [ref=e103]: TypeScript
+                - button "View Details" [ref=e104]:
+                  - generic [ref=e105]: View Details
+                  - img [ref=e106]
+  - contentinfo [ref=e108]:
+    - generic [ref=e109]:
+      - generic [ref=e110]:
+        - generic [ref=e111]:
+          - generic [ref=e112]:
+            - img [ref=e113]
+            - generic [ref=e116]: JobFrica
+          - paragraph [ref=e117]: Connecting talented professionals with leading companies across Africa. Build your career and find opportunities that match your skills and ambitions.
+          - generic [ref=e118]:
+            - link [ref=e119] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e120]
+            - link [ref=e122] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e123]
+            - link [ref=e125] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e126]
+            - link [ref=e130] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e131]
+        - generic [ref=e134]:
+          - heading "Quick Links" [level=3] [ref=e135]
+          - list [ref=e136]:
+            - listitem [ref=e137]:
+              - link "Browse Jobs" [ref=e138] [cursor=pointer]:
+                - /url: /jobs
+            - listitem [ref=e139]:
+              - link "Companies" [ref=e140] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e141]:
+              - link "Post a Job" [ref=e142] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e143]:
+              - link "Career Resources" [ref=e144] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e145]:
+              - link "Salary Guide" [ref=e146] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e147]:
+          - heading "Categories" [level=3] [ref=e148]
+          - list [ref=e149]:
+            - listitem [ref=e150]:
+              - link "Design" [ref=e151] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e152]:
+              - link "Engineering" [ref=e153] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e154]:
+              - link "Marketing" [ref=e155] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e156]:
+              - link "Sales" [ref=e157] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e158]:
+              - link "View All" [ref=e159] [cursor=pointer]:
+                - /url: /jobs
+        - generic [ref=e160]:
+          - heading "Contact Us" [level=3] [ref=e161]
+          - generic [ref=e162]:
+            - generic [ref=e163]:
+              - img [ref=e164]
+              - generic [ref=e167]: hello@jobfrica.com
+            - generic [ref=e168]:
+              - img [ref=e169]
+              - generic [ref=e171]: +234 (0) 123 456 7890
+            - generic [ref=e172]:
+              - img [ref=e173]
+              - generic [ref=e176]: Lagos, Nigeria
+          - generic [ref=e177]:
+            - heading "Stay Updated" [level=4] [ref=e178]
+            - generic [ref=e179]:
+              - textbox "Your email" [ref=e180]
+              - button "Subscribe" [ref=e181]
+      - generic [ref=e183]:
+        - generic [ref=e184]: © 2024 JobFrica. All rights reserved.
+        - generic [ref=e185]:
+          - link "Privacy Policy" [ref=e186] [cursor=pointer]:
+            - /url: "#"
+          - link "Terms of Service" [ref=e187] [cursor=pointer]:
+            - /url: "#"
+          - link "Cookie Policy" [ref=e188] [cursor=pointer]:
+            - /url: "#"
+          - link "Help Center" [ref=e189] [cursor=pointer]:
+            - /url: "#"
+  - button "Open Next.js Dev Tools" [ref=e195] [cursor=pointer]:
+    - img [ref=e196]
+  - alert [ref=e199]
+```

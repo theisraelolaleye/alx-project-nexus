@@ -1,0 +1,232 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e9]: JobFrica
+      - generic [ref=e11]:
+        - link "Home" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - text: Home
+        - link "Find Jobs" [ref=e13] [cursor=pointer]:
+          - /url: /jobs
+          - text: Find Jobs
+        - link "Companies" [ref=e14] [cursor=pointer]:
+          - /url: /companies
+          - text: Companies
+        - link "Career Resources" [ref=e15] [cursor=pointer]:
+          - /url: /resources
+          - text: Career Resources
+        - link "For Employers" [ref=e16] [cursor=pointer]:
+          - /url: /employers
+          - text: For Employers
+      - generic [ref=e18]:
+        - link "Sign In" [ref=e19] [cursor=pointer]:
+          - /url: /auth/login
+        - link "Get Started" [ref=e20] [cursor=pointer]:
+          - /url: /auth/register
+  - main [ref=e21]:
+    - generic [ref=e23]:
+      - button "Back to Jobs" [ref=e24]:
+        - img [ref=e25]
+        - text: Back to Jobs
+      - generic [ref=e28]:
+        - generic [ref=e29]:
+          - generic [ref=e30]:
+            - generic [ref=e31]:
+              - img [ref=e33]
+              - generic [ref=e39]:
+                - heading "Frontend Developer" [level=1] [ref=e40]
+                - generic [ref=e41]:
+                  - generic [ref=e42]:
+                    - img [ref=e43]
+                    - text: Interactive Corp
+                  - generic [ref=e49]:
+                    - img [ref=e50]
+                    - text: Remote
+                  - generic [ref=e53]:
+                    - img [ref=e54]
+                    - text: 2025-11-28T16:26:48.048Z
+                - generic [ref=e57]:
+                  - generic [ref=e58]: Full-time
+                  - generic [ref=e59]:
+                    - img [ref=e60]
+                    - text: $50,000 - $70,000
+            - generic [ref=e63]:
+              - button "Apply Now" [ref=e64]
+              - button "Save job" [ref=e65]:
+                - img [ref=e66]
+              - button "Share job" [ref=e68]:
+                - img [ref=e69]
+          - generic [ref=e75]:
+            - heading "Job Description" [level=2] [ref=e76]
+            - generic [ref=e77]: This is a mock job description for job interactive-job
+          - generic [ref=e78]:
+            - heading "Requirements" [level=2] [ref=e79]
+            - list [ref=e80]:
+              - listitem [ref=e81]:
+                - img [ref=e82]
+                - generic [ref=e85]: Requirement 1
+              - listitem [ref=e86]:
+                - img [ref=e87]
+                - generic [ref=e90]: Requirement 2
+          - generic [ref=e91]:
+            - heading "Responsibilities" [level=2] [ref=e92]
+            - list [ref=e93]:
+              - listitem [ref=e94]:
+                - img [ref=e95]
+                - generic [ref=e98]: Responsibility 1
+              - listitem [ref=e99]:
+                - img [ref=e100]
+                - generic [ref=e103]: Responsibility 2
+          - generic [ref=e104]:
+            - heading "Benefits & Perks" [level=2] [ref=e105]
+            - list [ref=e106]:
+              - listitem [ref=e107]:
+                - img [ref=e108]
+                - generic [ref=e111]: Benefit 1
+              - listitem [ref=e112]:
+                - img [ref=e113]
+                - generic [ref=e116]: Benefit 2
+          - generic [ref=e117]:
+            - heading "Required Skills" [level=2] [ref=e118]
+            - generic [ref=e119]:
+              - generic [ref=e120]: React
+              - generic [ref=e121]: TypeScript
+        - generic [ref=e122]:
+          - generic [ref=e123]:
+            - heading "Job Overview" [level=3] [ref=e124]
+            - generic [ref=e125]:
+              - generic [ref=e126]:
+                - img [ref=e127]
+                - generic [ref=e132]:
+                  - paragraph [ref=e133]: Posted
+                  - paragraph [ref=e134]: 2025-11-28T16:26:48.048Z
+              - generic [ref=e135]:
+                - img [ref=e136]
+                - generic [ref=e139]:
+                  - paragraph [ref=e140]: Job Type
+                  - paragraph [ref=e141]: Full-time
+              - generic [ref=e142]:
+                - img [ref=e143]
+                - generic [ref=e146]:
+                  - paragraph [ref=e147]: Location
+                  - paragraph [ref=e148]: Remote
+              - generic [ref=e149]:
+                - img [ref=e150]
+                - generic [ref=e153]:
+                  - paragraph [ref=e154]: Salary Range
+                  - paragraph [ref=e155]: $50,000 - $70,000
+              - generic [ref=e156]:
+                - img [ref=e157]
+                - generic [ref=e162]:
+                  - paragraph [ref=e163]: Experience Level
+                  - paragraph [ref=e164]: Mid-Level
+            - button "Apply for this Job" [ref=e166]
+          - generic [ref=e167]:
+            - heading "About Interactive Corp" [level=3] [ref=e168]
+            - generic [ref=e169]:
+              - img [ref=e171]
+              - generic [ref=e177]:
+                - paragraph [ref=e178]: Interactive Corp
+                - paragraph [ref=e179]: Remote
+            - paragraph [ref=e180]: Learn more about the company and explore other opportunities.
+            - button "View Company Profile" [ref=e181]
+          - generic [ref=e182]:
+            - heading "Share this Job" [level=3] [ref=e183]
+            - paragraph [ref=e184]: Help someone find their dream job
+            - button "Share Job" [ref=e185]:
+              - img [ref=e186]
+              - text: Share Job
+  - contentinfo [ref=e192]:
+    - generic [ref=e193]:
+      - generic [ref=e194]:
+        - generic [ref=e195]:
+          - generic [ref=e196]:
+            - img [ref=e197]
+            - generic [ref=e200]: JobFrica
+          - paragraph [ref=e201]: Connecting talented professionals with leading companies across Africa. Build your career and find opportunities that match your skills and ambitions.
+          - generic [ref=e202]:
+            - link [ref=e203] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e204]
+            - link [ref=e206] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e207]
+            - link [ref=e209] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e210]
+            - link [ref=e214] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e215]
+        - generic [ref=e219]:
+          - heading "Quick Links" [level=3] [ref=e220]
+          - list [ref=e221]:
+            - listitem [ref=e222]:
+              - link "Browse Jobs" [ref=e223] [cursor=pointer]:
+                - /url: /jobs
+            - listitem [ref=e224]:
+              - link "Companies" [ref=e225] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e226]:
+              - link "Post a Job" [ref=e227] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e228]:
+              - link "Career Resources" [ref=e229] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e230]:
+              - link "Salary Guide" [ref=e231] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e232]:
+          - heading "Categories" [level=3] [ref=e233]
+          - list [ref=e234]:
+            - listitem [ref=e235]:
+              - link "Design" [ref=e236] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e237]:
+              - link "Engineering" [ref=e238] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e239]:
+              - link "Marketing" [ref=e240] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e241]:
+              - link "Sales" [ref=e242] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e243]:
+              - link "View All" [ref=e244] [cursor=pointer]:
+                - /url: /jobs
+        - generic [ref=e245]:
+          - heading "Contact Us" [level=3] [ref=e246]
+          - generic [ref=e247]:
+            - generic [ref=e248]:
+              - img [ref=e249]
+              - generic [ref=e252]: hello@jobfrica.com
+            - generic [ref=e253]:
+              - img [ref=e254]
+              - generic [ref=e256]: +234 (0) 123 456 7890
+            - generic [ref=e257]:
+              - img [ref=e258]
+              - generic [ref=e261]: Lagos, Nigeria
+          - generic [ref=e262]:
+            - heading "Stay Updated" [level=4] [ref=e263]
+            - generic [ref=e264]:
+              - textbox "Your email" [ref=e265]
+              - button "Subscribe" [ref=e266]
+      - generic [ref=e268]:
+        - generic [ref=e269]: © 2024 JobFrica. All rights reserved.
+        - generic [ref=e270]:
+          - link "Privacy Policy" [ref=e271] [cursor=pointer]:
+            - /url: "#"
+          - link "Terms of Service" [ref=e272] [cursor=pointer]:
+            - /url: "#"
+          - link "Cookie Policy" [ref=e273] [cursor=pointer]:
+            - /url: "#"
+          - link "Help Center" [ref=e274] [cursor=pointer]:
+            - /url: "#"
+  - button "Open Next.js Dev Tools" [ref=e280] [cursor=pointer]:
+    - img [ref=e281]
+  - alert [ref=e285]
+```

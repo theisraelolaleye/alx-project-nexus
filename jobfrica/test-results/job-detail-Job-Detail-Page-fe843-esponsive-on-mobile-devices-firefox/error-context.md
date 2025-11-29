@@ -1,0 +1,213 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e9]: JobFrica
+      - button [ref=e11]:
+        - img [ref=e12]
+  - main [ref=e16]:
+    - generic [ref=e18]:
+      - button "Back to Jobs" [ref=e19]:
+        - img [ref=e20]
+        - text: Back to Jobs
+      - generic [ref=e23]:
+        - generic [ref=e24]:
+          - generic [ref=e25]:
+            - generic [ref=e26]:
+              - img [ref=e28]
+              - generic [ref=e34]:
+                - heading "Responsive Developer" [level=1] [ref=e35]
+                - generic [ref=e36]:
+                  - generic [ref=e37]:
+                    - img [ref=e38]
+                    - text: Responsive Corp
+                  - generic [ref=e44]:
+                    - img [ref=e45]
+                    - text: Lagos, Nigeria
+                  - generic [ref=e48]:
+                    - img [ref=e49]
+                    - text: 2025-11-28T16:27:15.575Z
+                - generic [ref=e52]:
+                  - generic [ref=e53]: Full-time
+                  - generic [ref=e54]:
+                    - img [ref=e55]
+                    - text: $50,000 - $70,000
+            - generic [ref=e58]:
+              - button "Apply Now" [ref=e59]
+              - button "Save job" [ref=e60]:
+                - img [ref=e61]
+              - button "Share job" [ref=e63]:
+                - img [ref=e64]
+          - generic [ref=e70]:
+            - heading "Job Description" [level=2] [ref=e71]
+            - generic [ref=e72]: This is a mock job description for job responsive-job
+          - generic [ref=e73]:
+            - heading "Requirements" [level=2] [ref=e74]
+            - list [ref=e75]:
+              - listitem [ref=e76]:
+                - img [ref=e77]
+                - generic [ref=e80]: Requirement 1
+              - listitem [ref=e81]:
+                - img [ref=e82]
+                - generic [ref=e85]: Requirement 2
+          - generic [ref=e86]:
+            - heading "Responsibilities" [level=2] [ref=e87]
+            - list [ref=e88]:
+              - listitem [ref=e89]:
+                - img [ref=e90]
+                - generic [ref=e93]: Responsibility 1
+              - listitem [ref=e94]:
+                - img [ref=e95]
+                - generic [ref=e98]: Responsibility 2
+          - generic [ref=e99]:
+            - heading "Benefits & Perks" [level=2] [ref=e100]
+            - list [ref=e101]:
+              - listitem [ref=e102]:
+                - img [ref=e103]
+                - generic [ref=e106]: Benefit 1
+              - listitem [ref=e107]:
+                - img [ref=e108]
+                - generic [ref=e111]: Benefit 2
+          - generic [ref=e112]:
+            - heading "Required Skills" [level=2] [ref=e113]
+            - generic [ref=e114]:
+              - generic [ref=e115]: React
+              - generic [ref=e116]: TypeScript
+        - generic [ref=e117]:
+          - generic [ref=e118]:
+            - heading "Job Overview" [level=3] [ref=e119]
+            - generic [ref=e120]:
+              - generic [ref=e121]:
+                - img [ref=e122]
+                - generic [ref=e127]:
+                  - paragraph [ref=e128]: Posted
+                  - paragraph [ref=e129]: 2025-11-28T16:27:15.575Z
+              - generic [ref=e130]:
+                - img [ref=e131]
+                - generic [ref=e134]:
+                  - paragraph [ref=e135]: Job Type
+                  - paragraph [ref=e136]: Full-time
+              - generic [ref=e137]:
+                - img [ref=e138]
+                - generic [ref=e141]:
+                  - paragraph [ref=e142]: Location
+                  - paragraph [ref=e143]: Lagos, Nigeria
+              - generic [ref=e144]:
+                - img [ref=e145]
+                - generic [ref=e148]:
+                  - paragraph [ref=e149]: Salary Range
+                  - paragraph [ref=e150]: $50,000 - $70,000
+              - generic [ref=e151]:
+                - img [ref=e152]
+                - generic [ref=e157]:
+                  - paragraph [ref=e158]: Experience Level
+                  - paragraph [ref=e159]: Mid-Level
+            - button "Apply for this Job" [ref=e161]
+          - generic [ref=e162]:
+            - heading "About Responsive Corp" [level=3] [ref=e163]
+            - generic [ref=e164]:
+              - img [ref=e166]
+              - generic [ref=e172]:
+                - paragraph [ref=e173]: Responsive Corp
+                - paragraph [ref=e174]: Lagos, Nigeria
+            - paragraph [ref=e175]: Learn more about the company and explore other opportunities.
+            - button "View Company Profile" [ref=e176]
+          - generic [ref=e177]:
+            - heading "Share this Job" [level=3] [ref=e178]
+            - paragraph [ref=e179]: Help someone find their dream job
+            - button "Share Job" [ref=e180]:
+              - img [ref=e181]
+              - text: Share Job
+  - contentinfo [ref=e187]:
+    - generic [ref=e188]:
+      - generic [ref=e189]:
+        - generic [ref=e190]:
+          - generic [ref=e191]:
+            - img [ref=e192]
+            - generic [ref=e195]: JobFrica
+          - paragraph [ref=e196]: Connecting talented professionals with leading companies across Africa. Build your career and find opportunities that match your skills and ambitions.
+          - generic [ref=e197]:
+            - link [ref=e198] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e199]
+            - link [ref=e201] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e202]
+            - link [ref=e204] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e205]
+            - link [ref=e209] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e210]
+        - generic [ref=e214]:
+          - heading "Quick Links" [level=3] [ref=e215]
+          - list [ref=e216]:
+            - listitem [ref=e217]:
+              - link "Browse Jobs" [ref=e218] [cursor=pointer]:
+                - /url: /jobs
+            - listitem [ref=e219]:
+              - link "Companies" [ref=e220] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e221]:
+              - link "Post a Job" [ref=e222] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e223]:
+              - link "Career Resources" [ref=e224] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e225]:
+              - link "Salary Guide" [ref=e226] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e227]:
+          - heading "Categories" [level=3] [ref=e228]
+          - list [ref=e229]:
+            - listitem [ref=e230]:
+              - link "Design" [ref=e231] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e232]:
+              - link "Engineering" [ref=e233] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e234]:
+              - link "Marketing" [ref=e235] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e236]:
+              - link "Sales" [ref=e237] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e238]:
+              - link "View All" [ref=e239] [cursor=pointer]:
+                - /url: /jobs
+        - generic [ref=e240]:
+          - heading "Contact Us" [level=3] [ref=e241]
+          - generic [ref=e242]:
+            - generic [ref=e243]:
+              - img [ref=e244]
+              - generic [ref=e247]: hello@jobfrica.com
+            - generic [ref=e248]:
+              - img [ref=e249]
+              - generic [ref=e251]: +234 (0) 123 456 7890
+            - generic [ref=e252]:
+              - img [ref=e253]
+              - generic [ref=e256]: Lagos, Nigeria
+          - generic [ref=e257]:
+            - heading "Stay Updated" [level=4] [ref=e258]
+            - generic [ref=e259]:
+              - textbox "Your email" [ref=e260]
+              - button "Subscribe" [ref=e261]
+      - generic [ref=e263]:
+        - generic [ref=e264]: © 2024 JobFrica. All rights reserved.
+        - generic [ref=e265]:
+          - link "Privacy Policy" [ref=e266] [cursor=pointer]:
+            - /url: "#"
+          - link "Terms of Service" [ref=e267] [cursor=pointer]:
+            - /url: "#"
+          - link "Cookie Policy" [ref=e268] [cursor=pointer]:
+            - /url: "#"
+          - link "Help Center" [ref=e269] [cursor=pointer]:
+            - /url: "#"
+  - button "Open Next.js Dev Tools" [ref=e275] [cursor=pointer]:
+    - img [ref=e276]
+  - alert [ref=e280]
+```

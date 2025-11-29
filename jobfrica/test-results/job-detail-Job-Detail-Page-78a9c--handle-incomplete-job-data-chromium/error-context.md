@@ -1,0 +1,196 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e9]: JobFrica
+      - generic [ref=e11]:
+        - link "Home" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - text: Home
+        - link "Find Jobs" [ref=e13] [cursor=pointer]:
+          - /url: /jobs
+          - text: Find Jobs
+        - link "Companies" [ref=e14] [cursor=pointer]:
+          - /url: /companies
+          - text: Companies
+        - link "Career Resources" [ref=e15] [cursor=pointer]:
+          - /url: /resources
+          - text: Career Resources
+        - link "For Employers" [ref=e16] [cursor=pointer]:
+          - /url: /employers
+          - text: For Employers
+      - generic [ref=e18]:
+        - link "Sign In" [ref=e19] [cursor=pointer]:
+          - /url: /auth/login
+        - link "Get Started" [ref=e20] [cursor=pointer]:
+          - /url: /auth/register
+  - main [ref=e21]:
+    - generic [ref=e23]:
+      - button "Back to Jobs" [ref=e24]:
+        - img [ref=e25]
+        - text: Back to Jobs
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - generic [ref=e29]:
+            - generic [ref=e30]:
+              - img [ref=e32]
+              - generic [ref=e36]:
+                - heading "Basic Job" [level=1] [ref=e37]
+                - generic [ref=e38]:
+                  - generic [ref=e39]:
+                    - img [ref=e40]
+                    - text: Basic Corp
+                  - generic [ref=e44]:
+                    - img [ref=e45]
+                    - text: Somewhere
+                  - generic [ref=e48]:
+                    - img [ref=e49]
+                    - text: 2025-11-28T16:24:47.645Z
+                - generic [ref=e52]:
+                  - generic [ref=e53]: Full-time
+                  - img [ref=e55]
+            - generic [ref=e57]:
+              - button "Apply Now" [ref=e58]
+              - button "Save job" [ref=e59]:
+                - img [ref=e60]
+              - button "Share job" [ref=e62]:
+                - img [ref=e63]
+          - heading "Job Description" [level=2] [ref=e70]
+        - generic [ref=e71]:
+          - generic [ref=e72]:
+            - heading "Job Overview" [level=3] [ref=e73]
+            - generic [ref=e74]:
+              - generic [ref=e75]:
+                - img [ref=e76]
+                - generic [ref=e78]:
+                  - paragraph [ref=e79]: Posted
+                  - paragraph [ref=e80]: 2025-11-28T16:24:47.645Z
+              - generic [ref=e81]:
+                - img [ref=e82]
+                - generic [ref=e85]:
+                  - paragraph [ref=e86]: Job Type
+                  - paragraph [ref=e87]: Full-time
+              - generic [ref=e88]:
+                - img [ref=e89]
+                - generic [ref=e92]:
+                  - paragraph [ref=e93]: Location
+                  - paragraph [ref=e94]: Somewhere
+              - generic [ref=e95]:
+                - img [ref=e96]
+                - generic [ref=e98]:
+                  - paragraph [ref=e99]: Salary Range
+                  - paragraph
+              - generic [ref=e100]:
+                - img [ref=e101]
+                - generic [ref=e106]:
+                  - paragraph [ref=e107]: Experience Level
+                  - paragraph [ref=e108]: Mid-Level
+            - button "Apply for this Job" [ref=e110]
+          - generic [ref=e111]:
+            - heading "About Basic Corp" [level=3] [ref=e112]
+            - generic [ref=e113]:
+              - img [ref=e115]
+              - generic [ref=e119]:
+                - paragraph [ref=e120]: Basic Corp
+                - paragraph [ref=e121]: Somewhere
+            - paragraph [ref=e122]: Learn more about the company and explore other opportunities.
+            - button "View Company Profile" [ref=e123]
+          - generic [ref=e124]:
+            - heading "Share this Job" [level=3] [ref=e125]
+            - paragraph [ref=e126]: Help someone find their dream job
+            - button "Share Job" [ref=e127]:
+              - img [ref=e128]
+              - text: Share Job
+  - contentinfo [ref=e134]:
+    - generic [ref=e135]:
+      - generic [ref=e136]:
+        - generic [ref=e137]:
+          - generic [ref=e138]:
+            - img [ref=e139]
+            - generic [ref=e142]: JobFrica
+          - paragraph [ref=e143]: Connecting talented professionals with leading companies across Africa. Build your career and find opportunities that match your skills and ambitions.
+          - generic [ref=e144]:
+            - link [ref=e145] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e146]
+            - link [ref=e148] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e149]
+            - link [ref=e151] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e152]
+            - link [ref=e156] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e157]
+        - generic [ref=e160]:
+          - heading "Quick Links" [level=3] [ref=e161]
+          - list [ref=e162]:
+            - listitem [ref=e163]:
+              - link "Browse Jobs" [ref=e164] [cursor=pointer]:
+                - /url: /jobs
+            - listitem [ref=e165]:
+              - link "Companies" [ref=e166] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e167]:
+              - link "Post a Job" [ref=e168] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e169]:
+              - link "Career Resources" [ref=e170] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e171]:
+              - link "Salary Guide" [ref=e172] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e173]:
+          - heading "Categories" [level=3] [ref=e174]
+          - list [ref=e175]:
+            - listitem [ref=e176]:
+              - link "Design" [ref=e177] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e178]:
+              - link "Engineering" [ref=e179] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e180]:
+              - link "Marketing" [ref=e181] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e182]:
+              - link "Sales" [ref=e183] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e184]:
+              - link "View All" [ref=e185] [cursor=pointer]:
+                - /url: /jobs
+        - generic [ref=e186]:
+          - heading "Contact Us" [level=3] [ref=e187]
+          - generic [ref=e188]:
+            - generic [ref=e189]:
+              - img [ref=e190]
+              - generic [ref=e193]: hello@jobfrica.com
+            - generic [ref=e194]:
+              - img [ref=e195]
+              - generic [ref=e197]: +234 (0) 123 456 7890
+            - generic [ref=e198]:
+              - img [ref=e199]
+              - generic [ref=e202]: Lagos, Nigeria
+          - generic [ref=e203]:
+            - heading "Stay Updated" [level=4] [ref=e204]
+            - generic [ref=e205]:
+              - textbox "Your email" [ref=e206]
+              - button "Subscribe" [ref=e207]
+      - generic [ref=e209]:
+        - generic [ref=e210]: © 2024 JobFrica. All rights reserved.
+        - generic [ref=e211]:
+          - link "Privacy Policy" [ref=e212] [cursor=pointer]:
+            - /url: "#"
+          - link "Terms of Service" [ref=e213] [cursor=pointer]:
+            - /url: "#"
+          - link "Cookie Policy" [ref=e214] [cursor=pointer]:
+            - /url: "#"
+          - link "Help Center" [ref=e215] [cursor=pointer]:
+            - /url: "#"
+  - button "Open Next.js Dev Tools" [ref=e221] [cursor=pointer]:
+    - img [ref=e222]
+  - alert [ref=e225]
+```

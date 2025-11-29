@@ -1,45 +1,20 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-// Define protected routes
+// Define protected routes (require authentication, accessible by all authenticated users)
 const protectedRoutes = [
-  '/dashboard',
-  '/profile',
-  '/settings',
-  '/jobs/saved',
-  '/jobs/applied',
-  '/applications'
-]
-
-// Define employer-only routes
-const employerRoutes = [
-  '/employer/dashboard',
-  '/employer/post-job',
-  '/employer/applications',
-  '/employer/company'
+  '/dashboard'
 ]
 
 // Define jobseeker-only routes
 const jobseekerRoutes = [
   '/applications',
-  '/jobs/saved',
-  '/resume'
+  '/saved-jobs'
 ]
 
-// Define public routes (no auth needed)
-const publicRoutes = [
-  '/',
-  '/auth/login',
-  '/auth/register',
-  '/auth/forgot-password',
-  '/auth/reset-password',
-  '/auth/verify-email',
-  '/jobs',
-  '/companies',
-  '/resources',
-  '/employers',
-  '/unauthorized'
-]
+// Public routes: /, /jobs, /jobs/[id], /companies, /resources, /employers
+// Auth routes: /auth/login, /auth/register, /auth/forgot-password
+// Protected routes require authentication and are listed above
 
 export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -61,75 +36,47 @@ export default function proxy(request: NextRequest) {
 
   const isAuthenticated = !!token
 
+  // Log middleware execution for debugging
   console.log('🔐 Proxy:', {
     pathname,
     isAuthenticated,
-    userRole: user?.role,
-    isVerified: user?.isVerified
+    userRole: user?.role
   })
 
-  // 1. Redirect authenticated users away from auth pages
-  if (isAuthenticated && pathname.startsWith('/auth')) {
-    // Allow access to verify-email page if not verified
-    if (!user?.isVerified && pathname.startsWith('/auth/verify-email')) {
-      return NextResponse.next()
-    }
+  // 1. Redirect authenticated users away from auth pages (login, register, forgot-password)
+  if (isAuthenticated && pathname.startsWith('/auth/')) {
+    const allowedAuthPaths = ['/auth/verify-email']
+    const isAllowedAuthPath = allowedAuthPaths.some(path => pathname.startsWith(path))
 
-    // If verified, redirect away from auth pages
-    if (user?.isVerified) {
-      console.log('✅ User verified, redirecting to dashboard')
+    if (!isAllowedAuthPath) {
+      console.log('✅ Authenticated user accessing auth page, redirecting to dashboard')
       return NextResponse.redirect(new URL('/dashboard', request.url))
-    }
-
-    // If not verified and not on verify page, go to verify page
-    if (!pathname.startsWith('/auth/verify-email')) {
-      console.log('⚠️ User not verified, redirecting to verify page')
-      return NextResponse.redirect(new URL('/auth/verify-email', request.url))
     }
   }
 
-  // 2. Check if route requires authentication
-  const isProtectedRoute = protectedRoutes.some(route =>
-    pathname.startsWith(route)
-  )
+  // 2. Redirect /profile to /dashboard/profile
+  if (pathname === '/profile') {
+    console.log('↪️ Redirecting /profile to /dashboard/profile')
+    return NextResponse.redirect(new URL('/dashboard/profile', request.url))
+  }
+
+  // 3. Check if route requires authentication
+  const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route))
 
   if (isProtectedRoute && !isAuthenticated) {
     console.log('🚫 Protected route, not authenticated, redirecting to login')
-    // Store the original URL to redirect after login
     const redirectUrl = new URL('/auth/login', request.url)
     redirectUrl.searchParams.set('redirect', pathname)
     return NextResponse.redirect(redirectUrl)
   }
 
-  // 3. Check if user is verified for protected routes
-  if (isAuthenticated && isProtectedRoute && user && !user.isVerified) {
-    // Unverified users can only access verification page
-    if (!pathname.startsWith('/auth/verify-email')) {
-      console.log('⚠️ Unverified user accessing protected route, redirecting')
-      return NextResponse.redirect(new URL('/auth/verify-email', request.url))
-    }
-  }
-
-  // 4. Role-based route protection
+  // 4. Role-based route protection (jobseeker-only routes)
   if (isAuthenticated && user) {
-    // Check employer-only routes
-    const isEmployerRoute = employerRoutes.some(route =>
-      pathname.startsWith(route)
-    )
+    const isJobseekerRoute = jobseekerRoutes.some(route => pathname.startsWith(route))
 
-    if (isEmployerRoute && user.role !== 'employer') {
-      console.log('🚫 Employer route accessed by non-employer')
-      return NextResponse.redirect(new URL('/unauthorized', request.url))
-    }
-
-    // Check jobseeker-only routes
-    const isJobseekerRoute = jobseekerRoutes.some(route =>
-      pathname.startsWith(route)
-    )
-
-    if (isJobseekerRoute && user.role !== 'jobseeker') {
+    if (isJobseekerRoute && user.role !== 'job_seeker') {
       console.log('🚫 Jobseeker route accessed by non-jobseeker')
-      return NextResponse.redirect(new URL('/unauthorized', request.url))
+      return NextResponse.redirect(new URL('/', request.url))
     }
   }
 

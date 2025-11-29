@@ -1,17 +1,9 @@
-/**
- * Axios API configuration and interceptors for JobFrica platform
- * Handles authentication, request/response interceptors, and error handling
- */
-
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 import { getToken, removeToken, getRefreshToken } from './storage'
 
 // API base URL - configure based on environment
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL
 
-/**
- * Main API instance with authentication and error handling
- */
 export const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -20,9 +12,6 @@ export const api = axios.create({
   timeout: 15000, // 15 seconds timeout
 })
 
-/**
- * Request interceptor to add authentication token
- */
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = getToken()
@@ -36,9 +25,6 @@ api.interceptors.request.use(
   }
 )
 
-/**
- * Response interceptor to handle authentication errors and token refresh
- */
 api.interceptors.response.use(
   (response: AxiosResponse) => {
     return response
@@ -89,9 +75,6 @@ api.interceptors.response.use(
   }
 )
 
-/**
- * API error interface for consistent error handling
- */
 export interface ApiError {
   message: string
   status?: number
@@ -99,9 +82,6 @@ export interface ApiError {
   code?: string
 }
 
-/**
- * Helper function to extract error message from API response
- */
 export const getErrorMessage = (error: AxiosError | Error): string => {
   if (axios.isAxiosError(error)) {
     if (error.response?.data?.message) {
@@ -114,14 +94,61 @@ export const getErrorMessage = (error: AxiosError | Error): string => {
   return 'An unexpected error occurred'
 }
 
-/**
- * Helper function to check if error is network related
- */
 export const isNetworkError = (error: AxiosError | Error): boolean => {
   if (axios.isAxiosError(error)) {
     return !error.response && error.code === 'NETWORK_ERROR'
   }
   return false
+}
+
+// External Jobs API for client-side usage
+export const externalJobsApi = {
+  async getJobs(params?: { query?: string; location?: string; page?: string }) {
+    try {
+      const query = new URLSearchParams({
+        ...(params?.query ? { query: params.query } : {}),
+        ...(params?.location ? { location: params.location } : {}),
+        ...(params?.page ? { page: params.page } : {}),
+      }).toString()
+      const response = await axios.get(`/api/jobs${query ? `?${query}` : ''}`)
+      const data = response.data
+      // Support either an array response or an object with jobs array
+      if (Array.isArray(data)) return data
+      if (Array.isArray(data?.jobs)) return data.jobs
+      if (Array.isArray(data?.data)) return data.data
+      return []
+    } catch (error) {
+      console.error('Failed to fetch jobs:', error)
+      throw new Error('Failed to fetch jobs')
+    }
+  },
+
+  async searchJobs(filters: {
+    search?: string
+    category?: string
+    location?: string
+    experienceLevel?: string
+  }) {
+    try {
+      const response = await axios.post('/api/jobs', filters)
+      return response.data.data || []
+    } catch (error) {
+      console.error('Failed to search jobs:', error)
+      throw new Error('Failed to search jobs')
+    }
+  },
+
+  async getJobDetails(id: string) {
+    try {
+      const response = await axios.get(`/api/job-details`, { params: { id } })
+      const data = response.data
+      if (data?.job) return data.job
+      return data
+    } catch (error) {
+      console.error('Failed to fetch job details:', error)
+      throw new Error('Failed to fetch job details')
+    }
+  }
 }
 
 export default api

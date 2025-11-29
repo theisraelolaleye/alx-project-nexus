@@ -3,12 +3,14 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { Menu, X, Briefcase, User, LogOut, Settings, Heart, FileText } from 'lucide-react'
 import { useAuthStore } from '@/store/authStore'
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false)
+  const router = useRouter()
 
   const { isAuthenticated, user, logout } = useAuthStore()
 
@@ -18,6 +20,7 @@ export function Navbar() {
   const handleLogout = () => {
     logout()
     setIsUserMenuOpen(false)
+    router.push('/')
   }
 
   const getUserInitials = (first_name: string, last_name: string) => {

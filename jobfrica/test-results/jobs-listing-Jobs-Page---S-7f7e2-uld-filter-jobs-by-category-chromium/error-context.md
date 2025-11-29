@@ -1,0 +1,347 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e9]: JobFrica
+      - generic [ref=e11]:
+        - link "Home" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - text: Home
+        - link "Find Jobs" [ref=e13] [cursor=pointer]:
+          - /url: /jobs
+          - text: Find Jobs
+        - link "Companies" [ref=e14] [cursor=pointer]:
+          - /url: /companies
+          - text: Companies
+        - link "Career Resources" [ref=e15] [cursor=pointer]:
+          - /url: /resources
+          - text: Career Resources
+        - link "For Employers" [ref=e16] [cursor=pointer]:
+          - /url: /employers
+          - text: For Employers
+      - generic [ref=e18]:
+        - link "Sign In" [ref=e19] [cursor=pointer]:
+          - /url: /auth/login
+        - link "Get Started" [ref=e20] [cursor=pointer]:
+          - /url: /auth/register
+  - main [ref=e21]:
+    - generic [ref=e22]:
+      - generic [ref=e24]:
+        - heading "Find Your Next Opportunity" [level=1] [ref=e25]
+        - paragraph [ref=e26]: Discover 6 amazing job opportunities
+      - generic [ref=e28]:
+        - complementary [ref=e29]:
+          - generic [ref=e31]:
+            - heading "Filter Jobs" [level=2] [ref=e33]:
+              - img [ref=e34]
+              - text: Filter Jobs
+            - generic [ref=e36]:
+              - generic [ref=e37]: Search
+              - generic [ref=e38]:
+                - img [ref=e39]
+                - textbox "Search Search" [ref=e42]:
+                  - /placeholder: Search by title or keyword
+                - generic [ref=e43]: Enter job title or keywords to filter job listings
+            - generic [ref=e44]:
+              - generic [ref=e45]: Category
+              - generic [ref=e46]:
+                - img [ref=e47]
+                - combobox "Category Category" [ref=e50]:
+                  - option "All Categories" [selected]
+                  - option "Design"
+                  - option "Engineering"
+                  - option "Marketing"
+                  - option "Sales"
+                  - option "Product"
+                  - option "Customer Support"
+                  - option "Finance"
+                  - option "Human Resources"
+                - generic [ref=e51]: Select a job category to filter results
+            - generic [ref=e52]:
+              - generic [ref=e53]: Location
+              - generic [ref=e54]:
+                - img [ref=e55]
+                - combobox "Location Location" [ref=e58]:
+                  - option "All Locations" [selected]
+                  - option "Lagos, Nigeria"
+                  - option "Cape Town, South Africa"
+                  - option "Nairobi, Kenya"
+                  - option "Accra, Ghana"
+                  - option "Cairo, Egypt"
+                  - option "Johannesburg, South Africa"
+                  - option "Casablanca, Morocco"
+                  - option "Remote"
+                - generic [ref=e59]: Select a location to filter job results
+            - group "Experience Level" [ref=e60]:
+              - generic [ref=e61]: Experience Level
+              - radiogroup [ref=e62]:
+                - generic [ref=e63] [cursor=pointer]:
+                  - radio "All Levels" [ref=e64]
+                  - generic [ref=e65]: All Levels
+                - generic [ref=e66] [cursor=pointer]:
+                  - radio "Entry-Level" [ref=e67]
+                  - generic [ref=e68]: Entry-Level
+                - generic [ref=e69] [cursor=pointer]:
+                  - radio "Mid-Level" [ref=e70]
+                  - generic [ref=e71]: Mid-Level
+                - generic [ref=e72] [cursor=pointer]:
+                  - radio "Senior" [ref=e73]
+                  - generic [ref=e74]: Senior
+              - generic [ref=e75]: Select your experience level to filter relevant jobs
+            - button "Reset Filters" [ref=e76]
+            - generic [ref=e77]: Clear all active filters and reset the search
+        - main [ref=e78]:
+          - generic [ref=e79]:
+            - heading "Job Results" [level=2] [ref=e81]
+            - generic [ref=e82]:
+              - button "Grid view" [pressed] [ref=e83]:
+                - img [ref=e84]
+              - button "List view" [ref=e86]:
+                - img [ref=e87]
+          - generic [ref=e88]:
+            - generic [ref=e89]:
+              - paragraph [ref=e90]: Showing 6 jobs
+              - generic [ref=e91]:
+                - generic [ref=e92]: "Sort by:"
+                - combobox [ref=e93]:
+                  - option "Most Recent" [selected]
+                  - option "Relevance"
+                  - option "Salary"
+            - generic [ref=e94]:
+              - 'article "Job: Senior React Developer at TechCorp" [ref=e95] [cursor=pointer]':
+                - generic [ref=e97]:
+                  - img [ref=e99]
+                  - generic [ref=e103]:
+                    - heading "Senior React Developer" [level=3] [ref=e104]
+                    - paragraph [ref=e105]: TechCorp
+                - generic [ref=e106]:
+                  - generic [ref=e107]:
+                    - img [ref=e108]
+                    - generic [ref=e111]: Lagos, Nigeria
+                  - generic [ref=e112]:
+                    - img [ref=e113]
+                    - generic [ref=e116]: Today
+                - generic [ref=e117]:
+                  - generic [ref=e118]: Senior
+                  - generic [ref=e119]: Full-time
+                - generic [ref=e120]: $50,000 - $70,000
+                - generic [ref=e121]:
+                  - generic [ref=e122]: React
+                  - generic [ref=e123]: JavaScript
+                  - generic [ref=e124]: Frontend
+                - button "View Details" [ref=e125]:
+                  - generic [ref=e126]: View Details
+                  - img [ref=e127]
+              - 'article "Job: Product Manager at StartupHub" [ref=e129] [cursor=pointer]':
+                - generic [ref=e131]:
+                  - img [ref=e133]
+                  - generic [ref=e137]:
+                    - heading "Product Manager" [level=3] [ref=e138]
+                    - paragraph [ref=e139]: StartupHub
+                - generic [ref=e140]:
+                  - generic [ref=e141]:
+                    - img [ref=e142]
+                    - generic [ref=e145]: Cape Town, South Africa
+                  - generic [ref=e146]:
+                    - img [ref=e147]
+                    - generic [ref=e150]: Today
+                - generic [ref=e151]:
+                  - generic [ref=e152]: Mid-Level
+                  - generic [ref=e153]: Full-time
+                - generic [ref=e154]: $50,000 - $70,000
+                - generic [ref=e155]:
+                  - generic [ref=e156]: Product
+                  - generic [ref=e157]: Strategy
+                  - generic [ref=e158]: Management
+                - button "View Details" [ref=e159]:
+                  - generic [ref=e160]: View Details
+                  - img [ref=e161]
+              - 'article "Job: UX Designer at DesignLab" [ref=e163] [cursor=pointer]':
+                - generic [ref=e165]:
+                  - img [ref=e167]
+                  - generic [ref=e171]:
+                    - heading "UX Designer" [level=3] [ref=e172]
+                    - paragraph [ref=e173]: DesignLab
+                - generic [ref=e174]:
+                  - generic [ref=e175]:
+                    - img [ref=e176]
+                    - generic [ref=e179]: Remote
+                  - generic [ref=e180]:
+                    - img [ref=e181]
+                    - generic [ref=e184]: Today
+                - generic [ref=e185]:
+                  - generic [ref=e186]: Entry-Level
+                  - generic [ref=e187]: Full-time
+                - generic [ref=e188]: $50,000 - $70,000
+                - generic [ref=e189]:
+                  - generic [ref=e190]: Design
+                  - generic [ref=e191]: UX
+                  - generic [ref=e192]: Figma
+                - button "View Details" [ref=e193]:
+                  - generic [ref=e194]: View Details
+                  - img [ref=e195]
+              - 'article "Job: Backend Engineer at TechCorp" [ref=e197] [cursor=pointer]':
+                - generic [ref=e199]:
+                  - img [ref=e201]
+                  - generic [ref=e205]:
+                    - heading "Backend Engineer" [level=3] [ref=e206]
+                    - paragraph [ref=e207]: TechCorp
+                - generic [ref=e208]:
+                  - generic [ref=e209]:
+                    - img [ref=e210]
+                    - generic [ref=e213]: Lagos, Nigeria
+                  - generic [ref=e214]:
+                    - img [ref=e215]
+                    - generic [ref=e218]: Today
+                - generic [ref=e219]:
+                  - generic [ref=e220]: Senior
+                  - generic [ref=e221]: Full-time
+                - generic [ref=e222]: $50,000 - $70,000
+                - generic [ref=e223]:
+                  - generic [ref=e224]: Node.js
+                  - generic [ref=e225]: Python
+                  - generic [ref=e226]: Backend
+                - button "View Details" [ref=e227]:
+                  - generic [ref=e228]: View Details
+                  - img [ref=e229]
+              - 'article "Job: Marketing Specialist at GrowthCo" [ref=e231] [cursor=pointer]':
+                - generic [ref=e233]:
+                  - img [ref=e235]
+                  - generic [ref=e239]:
+                    - heading "Marketing Specialist" [level=3] [ref=e240]
+                    - paragraph [ref=e241]: GrowthCo
+                - generic [ref=e242]:
+                  - generic [ref=e243]:
+                    - img [ref=e244]
+                    - generic [ref=e247]: Nairobi, Kenya
+                  - generic [ref=e248]:
+                    - img [ref=e249]
+                    - generic [ref=e252]: Today
+                - generic [ref=e253]:
+                  - generic [ref=e254]: Mid-Level
+                  - generic [ref=e255]: Full-time
+                - generic [ref=e256]: $50,000 - $70,000
+                - generic [ref=e257]:
+                  - generic [ref=e258]: Marketing
+                  - generic [ref=e259]: Social Media
+                  - generic [ref=e260]: Content
+                - button "View Details" [ref=e261]:
+                  - generic [ref=e262]: View Details
+                  - img [ref=e263]
+              - 'article "Job: Data Scientist at DataLab" [ref=e265] [cursor=pointer]':
+                - generic [ref=e267]:
+                  - img [ref=e269]
+                  - generic [ref=e273]:
+                    - heading "Data Scientist" [level=3] [ref=e274]
+                    - paragraph [ref=e275]: DataLab
+                - generic [ref=e276]:
+                  - generic [ref=e277]:
+                    - img [ref=e278]
+                    - generic [ref=e281]: Cairo, Egypt
+                  - generic [ref=e282]:
+                    - img [ref=e283]
+                    - generic [ref=e286]: Today
+                - generic [ref=e287]:
+                  - generic [ref=e288]: Senior
+                  - generic [ref=e289]: Full-time
+                - generic [ref=e290]: $50,000 - $70,000
+                - generic [ref=e291]:
+                  - generic [ref=e292]: Data Science
+                  - generic [ref=e293]: Python
+                  - generic [ref=e294]: Machine Learning
+                - button "View Details" [ref=e295]:
+                  - generic [ref=e296]: View Details
+                  - img [ref=e297]
+  - contentinfo [ref=e299]:
+    - generic [ref=e300]:
+      - generic [ref=e301]:
+        - generic [ref=e302]:
+          - generic [ref=e303]:
+            - img [ref=e304]
+            - generic [ref=e307]: JobFrica
+          - paragraph [ref=e308]: Connecting talented professionals with leading companies across Africa. Build your career and find opportunities that match your skills and ambitions.
+          - generic [ref=e309]:
+            - link [ref=e310] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e311]
+            - link [ref=e313] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e314]
+            - link [ref=e316] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e317]
+            - link [ref=e321] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e322]
+        - generic [ref=e325]:
+          - heading "Quick Links" [level=3] [ref=e326]
+          - list [ref=e327]:
+            - listitem [ref=e328]:
+              - link "Browse Jobs" [ref=e329] [cursor=pointer]:
+                - /url: /jobs
+            - listitem [ref=e330]:
+              - link "Companies" [ref=e331] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e332]:
+              - link "Post a Job" [ref=e333] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e334]:
+              - link "Career Resources" [ref=e335] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e336]:
+              - link "Salary Guide" [ref=e337] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e338]:
+          - heading "Categories" [level=3] [ref=e339]
+          - list [ref=e340]:
+            - listitem [ref=e341]:
+              - link "Design" [ref=e342] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e343]:
+              - link "Engineering" [ref=e344] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e345]:
+              - link "Marketing" [ref=e346] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e347]:
+              - link "Sales" [ref=e348] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e349]:
+              - link "View All" [ref=e350] [cursor=pointer]:
+                - /url: /jobs
+        - generic [ref=e351]:
+          - heading "Contact Us" [level=3] [ref=e352]
+          - generic [ref=e353]:
+            - generic [ref=e354]:
+              - img [ref=e355]
+              - generic [ref=e358]: hello@jobfrica.com
+            - generic [ref=e359]:
+              - img [ref=e360]
+              - generic [ref=e362]: +234 (0) 123 456 7890
+            - generic [ref=e363]:
+              - img [ref=e364]
+              - generic [ref=e367]: Lagos, Nigeria
+          - generic [ref=e368]:
+            - heading "Stay Updated" [level=4] [ref=e369]
+            - generic [ref=e370]:
+              - textbox "Your email" [ref=e371]
+              - button "Subscribe" [ref=e372]
+      - generic [ref=e374]:
+        - generic [ref=e375]: © 2024 JobFrica. All rights reserved.
+        - generic [ref=e376]:
+          - link "Privacy Policy" [ref=e377] [cursor=pointer]:
+            - /url: "#"
+          - link "Terms of Service" [ref=e378] [cursor=pointer]:
+            - /url: "#"
+          - link "Cookie Policy" [ref=e379] [cursor=pointer]:
+            - /url: "#"
+          - link "Help Center" [ref=e380] [cursor=pointer]:
+            - /url: "#"
+  - button "Open Next.js Dev Tools" [ref=e386] [cursor=pointer]:
+    - img [ref=e387]
+  - alert [ref=e390]
+```

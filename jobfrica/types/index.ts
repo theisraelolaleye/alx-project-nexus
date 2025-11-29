@@ -1,6 +1,3 @@
-/**
- * Core job interface used throughout the application
- */
 export interface Job {
   id: string
   title: string
@@ -21,19 +18,10 @@ export interface Job {
   isRemote?: boolean
 }
 
-/**
- * Job type enumeration
- */
 export type JobType = 'Full-time' | 'Part-time' | 'Contract' | 'Remote' | 'Internship'
 
-/**
- * Experience level enumeration
- */
 export type ExperienceLevel = 'Entry-Level' | 'Mid-Level' | 'Senior' | 'Lead' | 'Executive'
 
-/**
- * Job category enumeration
- */
 export type JobCategory =
   | 'Design'
   | 'Engineering'
@@ -44,9 +32,6 @@ export type JobCategory =
   | 'Finance'
   | 'Human Resources'
 
-/**
- * Filter interface for job searching and filtering
- */
 export interface JobFilters {
   search: string
   category: string
@@ -54,9 +39,57 @@ export interface JobFilters {
   experienceLevel: string
 }
 
-/**
- * Pagination interface for job listings
- */
+export interface JobApplication {
+  id: string
+  jobId: string
+  applicantId: string
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  resume: string // URL or base64
+  coverLetter: string
+  portfolio?: string
+  linkedIn?: string
+  github?: string
+  availableStartDate: string
+  expectedSalary?: string
+  workAuthorization: WorkAuthorizationType
+  isWillingToRelocate: boolean
+  appliedDate: string
+  status: ApplicationStatus
+}
+
+export type WorkAuthorizationType =
+  | 'Citizen'
+  | 'Permanent Resident'
+  | 'Work Visa'
+  | 'Student Visa'
+  | 'Requires Sponsorship'
+
+export type ApplicationStatus =
+  | 'pending'
+  | 'reviewing'
+  | 'interviewing'
+  | 'rejected'
+  | 'accepted'
+
+export interface ApplicationFormData {
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  resume: File | null
+  coverLetter: string
+  portfolio?: string
+  linkedIn?: string
+  github?: string
+  availableStartDate: string
+  expectedSalary?: string
+  workAuthorization: WorkAuthorizationType
+  isWillingToRelocate: boolean
+}
+
 export interface PaginationProps {
   currentPage: number
   totalPages: number
@@ -67,9 +100,6 @@ export interface PaginationProps {
   loading?: boolean
 }
 
-/**
- * API response wrapper for consistent data handling
- */
 export interface ApiResponse<T> {
   data: T
   message?: string
@@ -77,9 +107,6 @@ export interface ApiResponse<T> {
   error?: string
 }
 
-/**
- * Loading state interface for components
- */
 export interface LoadingState {
   loading: boolean
   error?: string | null
@@ -89,14 +116,8 @@ export interface LoadingState {
 // AUTHENTICATION TYPES
 // ============================================================================
 
-/**
- * User role enumeration
- */
 export type UserRole = 'job_seeker' | 'employer' | 'admin'
 
-/**
- * User interface for authenticated users
- */
 export interface User {
   id: string
   first_name: string
@@ -111,9 +132,6 @@ export interface User {
   updatedAt: string
 }
 
-/**
- * User profile interface for extended user information
- */
 export interface UserProfile {
   bio?: string
   phone?: string
@@ -128,18 +146,12 @@ export interface UserProfile {
   industry?: string
 }
 
-/**
- * Login credentials interface
- */
 export interface LoginCredentials {
-  email: string
+  username: string
   password: string
   rememberMe?: boolean
 }
 
-/**
- * Registration data interface
- */
 export interface RegisterData {
   fname: string
   lname: string
@@ -151,19 +163,15 @@ export interface RegisterData {
   acceptTerms: boolean
 }
 
-/**
- * Authentication response interface
- */
 export interface AuthResponse {
   user: User
-  token: string
-  refreshToken?: string
+  tokens: {
+    access: string
+    refresh: string
+  }
   message?: string
 }
 
-/**
- * Password reset interfaces
- */
 export interface ForgotPasswordData {
   email: string
 }
@@ -174,18 +182,12 @@ export interface ResetPasswordData {
   confirmPassword: string
 }
 
-/**
- * Authentication error interface
- */
 export interface AuthError {
   message: string
   field?: string
   code?: string
 }
 
-/**
- * Auth state interface for global state management
- */
 export interface AuthState {
   user: User | null
   isAuthenticated: boolean

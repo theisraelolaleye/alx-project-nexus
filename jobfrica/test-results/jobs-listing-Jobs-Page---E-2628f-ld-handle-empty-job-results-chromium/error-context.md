@@ -1,0 +1,197 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e9]: JobFrica
+      - generic [ref=e11]:
+        - link "Home" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - text: Home
+        - link "Find Jobs" [ref=e13] [cursor=pointer]:
+          - /url: /jobs
+          - text: Find Jobs
+        - link "Companies" [ref=e14] [cursor=pointer]:
+          - /url: /companies
+          - text: Companies
+        - link "Career Resources" [ref=e15] [cursor=pointer]:
+          - /url: /resources
+          - text: Career Resources
+        - link "For Employers" [ref=e16] [cursor=pointer]:
+          - /url: /employers
+          - text: For Employers
+      - generic [ref=e18]:
+        - link "Sign In" [ref=e19] [cursor=pointer]:
+          - /url: /auth/login
+        - link "Get Started" [ref=e20] [cursor=pointer]:
+          - /url: /auth/register
+  - main [ref=e21]:
+    - generic [ref=e22]:
+      - generic [ref=e24]:
+        - heading "Find Your Next Opportunity" [level=1] [ref=e25]
+        - paragraph [ref=e26]: Discover 0 amazing job opportunities
+      - generic [ref=e28]:
+        - complementary [ref=e29]:
+          - generic [ref=e31]:
+            - heading "Filter Jobs" [level=2] [ref=e33]:
+              - img [ref=e34]
+              - text: Filter Jobs
+            - generic [ref=e36]:
+              - generic [ref=e37]: Search
+              - generic [ref=e38]:
+                - img [ref=e39]
+                - textbox "Search Search" [ref=e42]:
+                  - /placeholder: Search by title or keyword
+                - generic [ref=e43]: Enter job title or keywords to filter job listings
+            - generic [ref=e44]:
+              - generic [ref=e45]: Category
+              - generic [ref=e46]:
+                - img [ref=e47]
+                - combobox "Category Category" [ref=e50]:
+                  - option "All Categories" [selected]
+                  - option "Design"
+                  - option "Engineering"
+                  - option "Marketing"
+                  - option "Sales"
+                  - option "Product"
+                  - option "Customer Support"
+                  - option "Finance"
+                  - option "Human Resources"
+                - generic [ref=e51]: Select a job category to filter results
+            - generic [ref=e52]:
+              - generic [ref=e53]: Location
+              - generic [ref=e54]:
+                - img [ref=e55]
+                - combobox "Location Location" [ref=e58]:
+                  - option "All Locations" [selected]
+                  - option "Lagos, Nigeria"
+                  - option "Cape Town, South Africa"
+                  - option "Nairobi, Kenya"
+                  - option "Accra, Ghana"
+                  - option "Cairo, Egypt"
+                  - option "Johannesburg, South Africa"
+                  - option "Casablanca, Morocco"
+                  - option "Remote"
+                - generic [ref=e59]: Select a location to filter job results
+            - group "Experience Level" [ref=e60]:
+              - generic [ref=e61]: Experience Level
+              - radiogroup [ref=e62]:
+                - generic [ref=e63] [cursor=pointer]:
+                  - radio "All Levels" [ref=e64]
+                  - generic [ref=e65]: All Levels
+                - generic [ref=e66] [cursor=pointer]:
+                  - radio "Entry-Level" [ref=e67]
+                  - generic [ref=e68]: Entry-Level
+                - generic [ref=e69] [cursor=pointer]:
+                  - radio "Mid-Level" [ref=e70]
+                  - generic [ref=e71]: Mid-Level
+                - generic [ref=e72] [cursor=pointer]:
+                  - radio "Senior" [ref=e73]
+                  - generic [ref=e74]: Senior
+              - generic [ref=e75]: Select your experience level to filter relevant jobs
+            - button "Reset Filters" [ref=e76]
+            - generic [ref=e77]: Clear all active filters and reset the search
+        - main [ref=e78]:
+          - generic [ref=e79]:
+            - heading "Job Results" [level=2] [ref=e81]
+            - generic [ref=e82]:
+              - button "Grid view" [pressed] [ref=e83]:
+                - img [ref=e84]
+              - button "List view" [ref=e86]:
+                - img [ref=e87]
+          - generic [ref=e88]:
+            - img [ref=e90]
+            - heading "No jobs found" [level=3] [ref=e93]
+            - paragraph [ref=e94]: No jobs found. Try adjusting your filters.
+  - contentinfo [ref=e95]:
+    - generic [ref=e96]:
+      - generic [ref=e97]:
+        - generic [ref=e98]:
+          - generic [ref=e99]:
+            - img [ref=e100]
+            - generic [ref=e103]: JobFrica
+          - paragraph [ref=e104]: Connecting talented professionals with leading companies across Africa. Build your career and find opportunities that match your skills and ambitions.
+          - generic [ref=e105]:
+            - link [ref=e106] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e107]
+            - link [ref=e109] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e110]
+            - link [ref=e112] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e113]
+            - link [ref=e117] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e118]
+        - generic [ref=e121]:
+          - heading "Quick Links" [level=3] [ref=e122]
+          - list [ref=e123]:
+            - listitem [ref=e124]:
+              - link "Browse Jobs" [ref=e125] [cursor=pointer]:
+                - /url: /jobs
+            - listitem [ref=e126]:
+              - link "Companies" [ref=e127] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e128]:
+              - link "Post a Job" [ref=e129] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e130]:
+              - link "Career Resources" [ref=e131] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e132]:
+              - link "Salary Guide" [ref=e133] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e134]:
+          - heading "Categories" [level=3] [ref=e135]
+          - list [ref=e136]:
+            - listitem [ref=e137]:
+              - link "Design" [ref=e138] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e139]:
+              - link "Engineering" [ref=e140] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e141]:
+              - link "Marketing" [ref=e142] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e143]:
+              - link "Sales" [ref=e144] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e145]:
+              - link "View All" [ref=e146] [cursor=pointer]:
+                - /url: /jobs
+        - generic [ref=e147]:
+          - heading "Contact Us" [level=3] [ref=e148]
+          - generic [ref=e149]:
+            - generic [ref=e150]:
+              - img [ref=e151]
+              - generic [ref=e154]: hello@jobfrica.com
+            - generic [ref=e155]:
+              - img [ref=e156]
+              - generic [ref=e158]: +234 (0) 123 456 7890
+            - generic [ref=e159]:
+              - img [ref=e160]
+              - generic [ref=e163]: Lagos, Nigeria
+          - generic [ref=e164]:
+            - heading "Stay Updated" [level=4] [ref=e165]
+            - generic [ref=e166]:
+              - textbox "Your email" [ref=e167]
+              - button "Subscribe" [ref=e168]
+      - generic [ref=e170]:
+        - generic [ref=e171]: © 2024 JobFrica. All rights reserved.
+        - generic [ref=e172]:
+          - link "Privacy Policy" [ref=e173] [cursor=pointer]:
+            - /url: "#"
+          - link "Terms of Service" [ref=e174] [cursor=pointer]:
+            - /url: "#"
+          - link "Cookie Policy" [ref=e175] [cursor=pointer]:
+            - /url: "#"
+          - link "Help Center" [ref=e176] [cursor=pointer]:
+            - /url: "#"
+  - button "Open Next.js Dev Tools" [ref=e182] [cursor=pointer]:
+    - img [ref=e183]
+  - alert [ref=e186]
+```

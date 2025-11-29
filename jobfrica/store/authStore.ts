@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 import { authApi } from '@/lib/auth'
-import { setToken, removeToken, setRefreshToken, setUserData, getUserData } from '@/lib/storage'
+import { setToken, removeToken, setRefreshToken, setUserData, getUserData, getToken } from '@/lib/storage'
 import { getErrorMessage } from '@/lib/api'
 import type {
   User,
@@ -43,17 +43,15 @@ export const useAuthStore = create<AuthStore>()(
 
           const response = await authApi.login(credentials)
 
-          // Store tokens
-          setToken(response.token)
-          if (response.refreshToken) {
-            setRefreshToken(response.refreshToken)
-          }
+          // Store tokens (backend returns tokens.access and tokens.refresh)
+          setToken(response.tokens.access)
+          setRefreshToken(response.tokens.refresh)
 
           // Store user data
           setUserData(response.user)
           set({
             user: response.user,
-            token: response.token,
+            token: response.tokens.access,
             isAuthenticated: true,
             isLoading: false,
             error: null
@@ -84,18 +82,16 @@ export const useAuthStore = create<AuthStore>()(
 
           const response = await authApi.register(data)
 
-          // Store tokens
-          setToken(response.token)
-          if (response.refreshToken) {
-            setRefreshToken(response.refreshToken)
-          }
+          // Store tokens (backend returns tokens.access and tokens.refresh)
+          setToken(response.tokens.access)
+          setRefreshToken(response.tokens.refresh)
 
           // Store user data
           setUserData(response.user)
 
           set({
             user: response.user,
-            token: response.token,
+            token: response.tokens.access,
             isAuthenticated: true,
             isLoading: false,
             error: null
@@ -148,7 +144,7 @@ export const useAuthStore = create<AuthStore>()(
             isAuthenticated: true,
             isLoading: false
           })
-        } catch (error: any) {
+        } catch {
           // If getCurrentUser fails, user might not be authenticated
           removeToken()
 
@@ -242,23 +238,22 @@ export const useAuthStore = create<AuthStore>()(
       // Refresh token
       refreshToken: async (): Promise<boolean> => {
         try {
-          const currentToken = get().token
+          const currentToken = get().token || getToken()
           if (!currentToken) return false
 
           const response = await authApi.refreshToken(currentToken)
 
-          setToken(response.token)
-          if (response.refreshToken) {
-            setRefreshToken(response.refreshToken)
-          }
+          // Backend returns tokens.access and tokens.refresh
+          setToken(response.tokens.access)
+          setRefreshToken(response.tokens.refresh)
 
           set({
-            token: response.token,
+            token: response.tokens.access,
             user: response.user
           })
 
           return true
-        } catch (error) {
+        } catch {
           get().logout()
           return false
         }
@@ -287,12 +282,25 @@ export const useAuthStore = create<AuthStore>()(
     }),
     {
       name: 'auth-storage',
-      storage: createJSONStorage(() => localStorage),
+      storage: createJSONStorage(() => {
+        // Only use localStorage if we're on the client
+        if (typeof window !== 'undefined') {
+          return localStorage
+        }
+        // Return a no-op storage for server-side rendering
+        return {
+          getItem: () => null,
+          setItem: () => { },
+          removeItem: () => { }
+        }
+      }),
       partialize: (state) => ({
         token: state.token,
         user: state.user,
         isAuthenticated: state.isAuthenticated
-      })
+      }),
+      // Skip hydration on initial load to avoid mismatches
+      skipHydration: true
     }
   )
 )

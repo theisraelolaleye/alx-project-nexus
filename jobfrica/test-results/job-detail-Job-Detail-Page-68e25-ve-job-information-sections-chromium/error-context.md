@@ -1,0 +1,252 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e9]: JobFrica
+      - generic [ref=e11]:
+        - link "Home" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - text: Home
+        - link "Find Jobs" [ref=e13] [cursor=pointer]:
+          - /url: /jobs
+          - text: Find Jobs
+        - link "Companies" [ref=e14] [cursor=pointer]:
+          - /url: /companies
+          - text: Companies
+        - link "Career Resources" [ref=e15] [cursor=pointer]:
+          - /url: /resources
+          - text: Career Resources
+        - link "For Employers" [ref=e16] [cursor=pointer]:
+          - /url: /employers
+          - text: For Employers
+      - generic [ref=e18]:
+        - link "Sign In" [ref=e19] [cursor=pointer]:
+          - /url: /auth/login
+        - link "Get Started" [ref=e20] [cursor=pointer]:
+          - /url: /auth/register
+  - main [ref=e21]:
+    - generic [ref=e23]:
+      - button "Back to Jobs" [ref=e24]:
+        - img [ref=e25]
+        - text: Back to Jobs
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - generic [ref=e29]:
+            - generic [ref=e30]:
+              - img [ref=e32]
+              - generic [ref=e36]:
+                - heading "Senior React Developer" [level=1] [ref=e37]
+                - generic [ref=e38]:
+                  - generic [ref=e39]:
+                    - img [ref=e40]
+                    - text: TechCorp Africa
+                  - generic [ref=e44]:
+                    - img [ref=e45]
+                    - text: Lagos, Nigeria
+                  - generic [ref=e48]:
+                    - img [ref=e49]
+                    - text: 2025-11-26T16:24:26.377Z
+                - generic [ref=e52]:
+                  - generic [ref=e53]: Full-time
+                  - generic [ref=e54]:
+                    - img [ref=e55]
+                    - text: $60,000 - $80,000
+            - generic [ref=e57]:
+              - button "Apply Now" [ref=e58]
+              - button "Save job" [ref=e59]:
+                - img [ref=e60]
+              - button "Share job" [ref=e62]:
+                - img [ref=e63]
+          - generic [ref=e69]:
+            - heading "Job Description" [level=2] [ref=e70]
+            - generic [ref=e71]: We are looking for an experienced React developer to join our team and build amazing user interfaces.
+          - generic [ref=e72]:
+            - heading "Requirements" [level=2] [ref=e73]
+            - list [ref=e74]:
+              - listitem [ref=e75]:
+                - img [ref=e76]
+                - generic [ref=e79]: 5+ years of React experience
+              - listitem [ref=e80]:
+                - img [ref=e81]
+                - generic [ref=e84]: TypeScript proficiency
+              - listitem [ref=e85]:
+                - img [ref=e86]
+                - generic [ref=e89]: Experience with Next.js
+              - listitem [ref=e90]:
+                - img [ref=e91]
+                - generic [ref=e94]: Strong CSS skills
+          - generic [ref=e95]:
+            - heading "Responsibilities" [level=2] [ref=e96]
+            - list [ref=e97]:
+              - listitem [ref=e98]:
+                - img [ref=e99]
+                - generic [ref=e102]: Develop user interfaces
+              - listitem [ref=e103]:
+                - img [ref=e104]
+                - generic [ref=e107]: Collaborate with design team
+              - listitem [ref=e108]:
+                - img [ref=e109]
+                - generic [ref=e112]: Maintain code quality
+              - listitem [ref=e113]:
+                - img [ref=e114]
+                - generic [ref=e117]: Mentor junior developers
+          - generic [ref=e118]:
+            - heading "Benefits & Perks" [level=2] [ref=e119]
+            - list [ref=e120]:
+              - listitem [ref=e121]:
+                - img [ref=e122]
+                - generic [ref=e125]: Health insurance
+              - listitem [ref=e126]:
+                - img [ref=e127]
+                - generic [ref=e130]: Remote work options
+              - listitem [ref=e131]:
+                - img [ref=e132]
+                - generic [ref=e135]: Professional development budget
+              - listitem [ref=e136]:
+                - img [ref=e137]
+                - generic [ref=e140]: Flexible working hours
+          - generic [ref=e141]:
+            - heading "Required Skills" [level=2] [ref=e142]
+            - generic [ref=e143]:
+              - generic [ref=e144]: React
+              - generic [ref=e145]: TypeScript
+              - generic [ref=e146]: Next.js
+              - generic [ref=e147]: Frontend
+        - generic [ref=e148]:
+          - generic [ref=e149]:
+            - heading "Job Overview" [level=3] [ref=e150]
+            - generic [ref=e151]:
+              - generic [ref=e152]:
+                - img [ref=e153]
+                - generic [ref=e155]:
+                  - paragraph [ref=e156]: Posted
+                  - paragraph [ref=e157]: 2025-11-26T16:24:26.377Z
+              - generic [ref=e158]:
+                - img [ref=e159]
+                - generic [ref=e162]:
+                  - paragraph [ref=e163]: Job Type
+                  - paragraph [ref=e164]: Full-time
+              - generic [ref=e165]:
+                - img [ref=e166]
+                - generic [ref=e169]:
+                  - paragraph [ref=e170]: Location
+                  - paragraph [ref=e171]: Lagos, Nigeria
+              - generic [ref=e172]:
+                - img [ref=e173]
+                - generic [ref=e175]:
+                  - paragraph [ref=e176]: Salary Range
+                  - paragraph [ref=e177]: $60,000 - $80,000
+              - generic [ref=e178]:
+                - img [ref=e179]
+                - generic [ref=e184]:
+                  - paragraph [ref=e185]: Experience Level
+                  - paragraph [ref=e186]: Senior
+            - button "Apply for this Job" [ref=e188]
+          - generic [ref=e189]:
+            - heading "About TechCorp Africa" [level=3] [ref=e190]
+            - generic [ref=e191]:
+              - img [ref=e193]
+              - generic [ref=e197]:
+                - paragraph [ref=e198]: TechCorp Africa
+                - paragraph [ref=e199]: Lagos, Nigeria
+            - paragraph [ref=e200]: Learn more about the company and explore other opportunities.
+            - button "View Company Profile" [ref=e201]
+          - generic [ref=e202]:
+            - heading "Share this Job" [level=3] [ref=e203]
+            - paragraph [ref=e204]: Help someone find their dream job
+            - button "Share Job" [ref=e205]:
+              - img [ref=e206]
+              - text: Share Job
+  - contentinfo [ref=e212]:
+    - generic [ref=e213]:
+      - generic [ref=e214]:
+        - generic [ref=e215]:
+          - generic [ref=e216]:
+            - img [ref=e217]
+            - generic [ref=e220]: JobFrica
+          - paragraph [ref=e221]: Connecting talented professionals with leading companies across Africa. Build your career and find opportunities that match your skills and ambitions.
+          - generic [ref=e222]:
+            - link [ref=e223] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e224]
+            - link [ref=e226] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e227]
+            - link [ref=e229] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e230]
+            - link [ref=e234] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e235]
+        - generic [ref=e238]:
+          - heading "Quick Links" [level=3] [ref=e239]
+          - list [ref=e240]:
+            - listitem [ref=e241]:
+              - link "Browse Jobs" [ref=e242] [cursor=pointer]:
+                - /url: /jobs
+            - listitem [ref=e243]:
+              - link "Companies" [ref=e244] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e245]:
+              - link "Post a Job" [ref=e246] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e247]:
+              - link "Career Resources" [ref=e248] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e249]:
+              - link "Salary Guide" [ref=e250] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e251]:
+          - heading "Categories" [level=3] [ref=e252]
+          - list [ref=e253]:
+            - listitem [ref=e254]:
+              - link "Design" [ref=e255] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e256]:
+              - link "Engineering" [ref=e257] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e258]:
+              - link "Marketing" [ref=e259] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e260]:
+              - link "Sales" [ref=e261] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e262]:
+              - link "View All" [ref=e263] [cursor=pointer]:
+                - /url: /jobs
+        - generic [ref=e264]:
+          - heading "Contact Us" [level=3] [ref=e265]
+          - generic [ref=e266]:
+            - generic [ref=e267]:
+              - img [ref=e268]
+              - generic [ref=e271]: hello@jobfrica.com
+            - generic [ref=e272]:
+              - img [ref=e273]
+              - generic [ref=e275]: +234 (0) 123 456 7890
+            - generic [ref=e276]:
+              - img [ref=e277]
+              - generic [ref=e280]: Lagos, Nigeria
+          - generic [ref=e281]:
+            - heading "Stay Updated" [level=4] [ref=e282]
+            - generic [ref=e283]:
+              - textbox "Your email" [ref=e284]
+              - button "Subscribe" [ref=e285]
+      - generic [ref=e287]:
+        - generic [ref=e288]: © 2024 JobFrica. All rights reserved.
+        - generic [ref=e289]:
+          - link "Privacy Policy" [ref=e290] [cursor=pointer]:
+            - /url: "#"
+          - link "Terms of Service" [ref=e291] [cursor=pointer]:
+            - /url: "#"
+          - link "Cookie Policy" [ref=e292] [cursor=pointer]:
+            - /url: "#"
+          - link "Help Center" [ref=e293] [cursor=pointer]:
+            - /url: "#"
+  - button "Open Next.js Dev Tools" [ref=e299] [cursor=pointer]:
+    - img [ref=e300]
+  - alert [ref=e303]
+```

@@ -48,7 +48,7 @@ export function RegisterForm({ onSuccess, redirectPath = '/dashboard' }: Registe
       console.error('Registration failed:', error)
     }
   }
-console.log('Rendering RegisterForm, isValid:', isValid)
+// console.log('Rendering RegisterForm, isValid:', isValid)
   return (
     <div className="w-full max-w-lg mx-auto">
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">

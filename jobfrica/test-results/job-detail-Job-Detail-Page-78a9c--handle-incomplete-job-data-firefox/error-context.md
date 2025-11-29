@@ -1,0 +1,117 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e9]: JobFrica
+      - generic [ref=e11]:
+        - link "Home" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - text: Home
+        - link "Find Jobs" [ref=e13] [cursor=pointer]:
+          - /url: /jobs
+          - text: Find Jobs
+        - link "Companies" [ref=e14] [cursor=pointer]:
+          - /url: /companies
+          - text: Companies
+        - link "Career Resources" [ref=e15] [cursor=pointer]:
+          - /url: /resources
+          - text: Career Resources
+        - link "For Employers" [ref=e16] [cursor=pointer]:
+          - /url: /employers
+          - text: For Employers
+      - generic [ref=e18]:
+        - link "Sign In" [ref=e19] [cursor=pointer]:
+          - /url: /auth/login
+        - link "Get Started" [ref=e20] [cursor=pointer]:
+          - /url: /auth/register
+  - main [ref=e21]
+  - contentinfo [ref=e30]:
+    - generic [ref=e31]:
+      - generic [ref=e32]:
+        - generic [ref=e33]:
+          - generic [ref=e34]:
+            - img [ref=e35]
+            - generic [ref=e38]: JobFrica
+          - paragraph [ref=e39]: Connecting talented professionals with leading companies across Africa. Build your career and find opportunities that match your skills and ambitions.
+          - generic [ref=e40]:
+            - link [ref=e41] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e42]
+            - link [ref=e44] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e45]
+            - link [ref=e47] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e48]
+            - link [ref=e52] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e53]
+        - generic [ref=e57]:
+          - heading "Quick Links" [level=3] [ref=e58]
+          - list [ref=e59]:
+            - listitem [ref=e60]:
+              - link "Browse Jobs" [ref=e61] [cursor=pointer]:
+                - /url: /jobs
+            - listitem [ref=e62]:
+              - link "Companies" [ref=e63] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e64]:
+              - link "Post a Job" [ref=e65] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e66]:
+              - link "Career Resources" [ref=e67] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e68]:
+              - link "Salary Guide" [ref=e69] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e70]:
+          - heading "Categories" [level=3] [ref=e71]
+          - list [ref=e72]:
+            - listitem [ref=e73]:
+              - link "Design" [ref=e74] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e75]:
+              - link "Engineering" [ref=e76] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e77]:
+              - link "Marketing" [ref=e78] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e79]:
+              - link "Sales" [ref=e80] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e81]:
+              - link "View All" [ref=e82] [cursor=pointer]:
+                - /url: /jobs
+        - generic [ref=e83]:
+          - heading "Contact Us" [level=3] [ref=e84]
+          - generic [ref=e85]:
+            - generic [ref=e86]:
+              - img [ref=e87]
+              - generic [ref=e90]: hello@jobfrica.com
+            - generic [ref=e91]:
+              - img [ref=e92]
+              - generic [ref=e94]: +234 (0) 123 456 7890
+            - generic [ref=e95]:
+              - img [ref=e96]
+              - generic [ref=e99]: Lagos, Nigeria
+          - generic [ref=e100]:
+            - heading "Stay Updated" [level=4] [ref=e101]
+            - generic [ref=e102]:
+              - textbox "Your email" [ref=e103]
+              - button "Subscribe" [ref=e104]
+      - generic [ref=e106]:
+        - generic [ref=e107]: © 2024 JobFrica. All rights reserved.
+        - generic [ref=e108]:
+          - link "Privacy Policy" [ref=e109] [cursor=pointer]:
+            - /url: "#"
+          - link "Terms of Service" [ref=e110] [cursor=pointer]:
+            - /url: "#"
+          - link "Cookie Policy" [ref=e111] [cursor=pointer]:
+            - /url: "#"
+          - link "Help Center" [ref=e112] [cursor=pointer]:
+            - /url: "#"
+```

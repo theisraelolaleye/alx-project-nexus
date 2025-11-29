@@ -1,12 +1,14 @@
 'use client'
-
-import { useState, useMemo } from 'react'
+import axios from 'axios'
+import { useState, useMemo, useEffect } from 'react'
 import { Filter } from 'lucide-react'
 import { JobFilters } from '@/components/jobs/JobFilters'
 import { JobList } from '@/components/jobs/JobList'
 import { Pagination } from '@/components/jobs/Pagination'
 import { ViewToggle, ViewMode } from '@/components/jobs/ViewToggle'
-import { mockJobs } from '@/data/mockJobs'
+import { externalJobsApi } from '@/lib/api'
+import { useJobStore } from '@/store/jobStore'
+import { Job } from '@/types'
 
 interface Filters {
   search: string
@@ -18,6 +20,9 @@ interface Filters {
 const JOBS_PER_PAGE = 6
 
 export default function JobsPage() {
+  const [jobs, setJobs] = useState<Job[]>([])
+  const setJobsInStore = useJobStore(state => state.setJobs)
+  const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false)
   const [viewMode, setViewMode] = useState<ViewMode>('grid')
@@ -28,43 +33,75 @@ export default function JobsPage() {
     experienceLevel: ''
   })
 
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setLoading(true)
+        console.log('Fetching jobs from external API...')
+        const jobsData = await externalJobsApi.getJobs({
+          query: filters.search || 'developer',
+          location: filters.location || 'chicago',
+          page: String(currentPage)
+        })
+        setJobs(jobsData)
+        setJobsInStore(jobsData)
+
+
+        // const response = await axios.get('https://jobdataapi.com/api/jobs/')
+        // const data = response.data
+        // console.log('Raw jobs data:', data)
+        // setJobs(data)
+
+
+
+      } catch (error) {
+        console.error('Failed to fetch jobs:', error)
+        setJobs([])
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchJobs()
+  }, [filters.search, filters.location, currentPage])
+
   // Filter jobs based on current filters using useMemo
   const filteredJobs = useMemo(() => {
-    let filtered = [...mockJobs]
+    let filtered = [...jobs]
 
     // Search filter
     if (filters.search) {
       const searchTerm = filters.search.toLowerCase()
       filtered = filtered.filter(job =>
-        job.title.toLowerCase().includes(searchTerm) ||
-        job.company.toLowerCase().includes(searchTerm) ||
-        job.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+        job.title?.toLowerCase().includes(searchTerm) ||
+        job.company?.toLowerCase().includes(searchTerm) ||
+        job.tags?.some(tag => tag.toLowerCase().includes(searchTerm))
       )
     }
 
     // Category filter
     if (filters.category) {
       filtered = filtered.filter(job =>
-        job.tags.some(tag => tag.toLowerCase().includes(filters.category.toLowerCase()))
+        job.tags?.some(tag => tag.toLowerCase().includes(filters.category.toLowerCase()))
       )
     }
 
     // Location filter
     if (filters.location) {
       filtered = filtered.filter(job =>
-        job.location.toLowerCase().includes(filters.location.toLowerCase())
+        job.location?.toLowerCase().includes(filters.location.toLowerCase())
       )
     }
 
     // Experience level filter
     if (filters.experienceLevel) {
       filtered = filtered.filter(job =>
-        job.experienceLevel.toLowerCase().includes(filters.experienceLevel.toLowerCase())
+        job.experienceLevel?.toLowerCase().includes(filters.experienceLevel.toLowerCase())
       )
     }
 
     return filtered
-  }, [filters])
+  }, [jobs, filters])
 
   // Get jobs for current page
   const getCurrentPageJobs = () => {
@@ -97,7 +134,7 @@ export default function JobsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Find Your Next Opportunity</h1>
           <p className="text-lg text-gray-600">
-            Discover {mockJobs.length} amazing job opportunities across Africa
+            Discover {loading ? '...' : jobs.length} amazing job opportunities
           </p>
         </div>
       </div>
@@ -150,6 +187,7 @@ export default function JobsPage() {
 
             <JobList
               jobs={getCurrentPageJobs()}
+              loading={loading}
               emptyStateMessage="No jobs found. Try adjusting your filters."
               viewMode={viewMode}
             />

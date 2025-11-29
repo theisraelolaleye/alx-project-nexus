@@ -1,0 +1,348 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e9]: JobFrica
+      - generic [ref=e11]:
+        - link "Home" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - text: Home
+        - link "Find Jobs" [ref=e13] [cursor=pointer]:
+          - /url: /jobs
+          - text: Find Jobs
+        - link "Companies" [ref=e14] [cursor=pointer]:
+          - /url: /companies
+          - text: Companies
+        - link "Career Resources" [ref=e15] [cursor=pointer]:
+          - /url: /resources
+          - text: Career Resources
+        - link "For Employers" [ref=e16] [cursor=pointer]:
+          - /url: /employers
+          - text: For Employers
+      - generic [ref=e18]:
+        - link "Sign In" [ref=e19] [cursor=pointer]:
+          - /url: /auth/login
+        - link "Get Started" [ref=e20] [cursor=pointer]:
+          - /url: /auth/register
+  - main [ref=e21]:
+    - generic [ref=e22]:
+      - generic [ref=e24]:
+        - heading "Find Your Next Opportunity" [level=1] [ref=e25]
+        - paragraph [ref=e26]: Discover 100 amazing job opportunities
+      - generic [ref=e28]:
+        - complementary [ref=e29]:
+          - generic [ref=e31]:
+            - heading "Filter Jobs" [level=2] [ref=e33]:
+              - img [ref=e34]
+              - text: Filter Jobs
+            - generic [ref=e36]:
+              - generic [ref=e37]: Search
+              - generic [ref=e38]:
+                - img [ref=e39]
+                - textbox "Search Search" [ref=e42]:
+                  - /placeholder: Search by title or keyword
+                - generic [ref=e43]: Enter job title or keywords to filter job listings
+            - generic [ref=e44]:
+              - generic [ref=e45]: Category
+              - generic [ref=e46]:
+                - img [ref=e47]
+                - combobox "Category Category" [ref=e50]:
+                  - option "All Categories" [selected]
+                  - option "Design"
+                  - option "Engineering"
+                  - option "Marketing"
+                  - option "Sales"
+                  - option "Product"
+                  - option "Customer Support"
+                  - option "Finance"
+                  - option "Human Resources"
+                - generic [ref=e51]: Select a job category to filter results
+            - generic [ref=e52]:
+              - generic [ref=e53]: Location
+              - generic [ref=e54]:
+                - img [ref=e55]
+                - combobox "Location Location" [ref=e58]:
+                  - option "All Locations" [selected]
+                  - option "Lagos, Nigeria"
+                  - option "Cape Town, South Africa"
+                  - option "Nairobi, Kenya"
+                  - option "Accra, Ghana"
+                  - option "Cairo, Egypt"
+                  - option "Johannesburg, South Africa"
+                  - option "Casablanca, Morocco"
+                  - option "Remote"
+                - generic [ref=e59]: Select a location to filter job results
+            - group "Experience Level" [ref=e60]:
+              - generic [ref=e61]: Experience Level
+              - radiogroup [ref=e62]:
+                - generic [ref=e63] [cursor=pointer]:
+                  - radio "All Levels" [ref=e64]
+                  - generic [ref=e65]: All Levels
+                - generic [ref=e66] [cursor=pointer]:
+                  - radio "Entry-Level" [ref=e67]
+                  - generic [ref=e68]: Entry-Level
+                - generic [ref=e69] [cursor=pointer]:
+                  - radio "Mid-Level" [ref=e70]
+                  - generic [ref=e71]: Mid-Level
+                - generic [ref=e72] [cursor=pointer]:
+                  - radio "Senior" [ref=e73]
+                  - generic [ref=e74]: Senior
+              - generic [ref=e75]: Select your experience level to filter relevant jobs
+            - button "Reset Filters" [ref=e76]
+            - generic [ref=e77]: Clear all active filters and reset the search
+        - main [ref=e78]:
+          - generic [ref=e79]:
+            - heading "Job Results" [level=2] [ref=e81]
+            - generic [ref=e82]:
+              - button "Grid view" [pressed] [ref=e83]:
+                - img [ref=e84]
+              - button "List view" [ref=e86]:
+                - img [ref=e87]
+          - generic [ref=e88]:
+            - generic [ref=e89]:
+              - paragraph [ref=e90]: Showing 6 jobs
+              - generic [ref=e91]:
+                - generic [ref=e92]: "Sort by:"
+                - combobox [ref=e93]:
+                  - option "Most Recent" [selected]
+                  - option "Relevance"
+                  - option "Salary"
+            - generic [ref=e94]:
+              - 'article "Job: IT Security Engineer at NAGA" [ref=e95] [cursor=pointer]':
+                - generic [ref=e97]:
+                  - img [ref=e99]
+                  - generic [ref=e103]:
+                    - heading "IT Security Engineer" [level=3] [ref=e104]
+                    - paragraph [ref=e105]: NAGA
+                - generic [ref=e106]:
+                  - generic [ref=e107]:
+                    - img [ref=e108]
+                    - generic [ref=e111]: Mayfaird, London, City of, United Kingdom
+                  - generic [ref=e112]:
+                    - img [ref=e113]
+                    - generic [ref=e116]: 12 months ago
+                - generic [ref=e117]:
+                  - generic [ref=e118]: Mid-Level
+                  - generic [ref=e119]: Full-time
+                - generic [ref=e120]:
+                  - generic [ref=e121]: IT
+                  - generic [ref=e122]: NAGA
+                - button "View Details" [ref=e123]:
+                  - generic [ref=e124]: View Details
+                  - img [ref=e125]
+              - 'article "Job: IT Security Engineer at Carbon" [ref=e127] [cursor=pointer]':
+                - generic [ref=e129]:
+                  - img [ref=e131]
+                  - generic [ref=e135]:
+                    - heading "IT Security Engineer" [level=3] [ref=e136]
+                    - paragraph [ref=e137]: Carbon
+                - generic [ref=e138]:
+                  - generic [ref=e139]:
+                    - img [ref=e140]
+                    - generic [ref=e143]: Mayfaird, London, City of, United Kingdom
+                  - generic [ref=e144]:
+                    - img [ref=e145]
+                    - generic [ref=e148]: 12 months ago
+                - generic [ref=e149]:
+                  - generic [ref=e150]: Mid-Level
+                  - generic [ref=e151]: Full-time
+                - generic [ref=e152]:
+                  - generic [ref=e153]: IT
+                  - generic [ref=e154]: Carbon
+                - button "View Details" [ref=e155]:
+                  - generic [ref=e156]: View Details
+                  - img [ref=e157]
+              - 'article "Job: Data Scientist ― Advanced Process Modeling Expert at Takeda" [ref=e159] [cursor=pointer]':
+                - generic [ref=e161]:
+                  - img [ref=e163]
+                  - generic [ref=e167]:
+                    - heading "Data Scientist ― Advanced Process Modeling Expert" [level=3] [ref=e168]
+                    - paragraph [ref=e169]: Takeda
+                - generic [ref=e170]:
+                  - generic [ref=e171]:
+                    - img [ref=e172]
+                    - generic [ref=e175]: JPN - Osaka - Osaka Plant, Japan
+                  - generic [ref=e176]:
+                    - img [ref=e177]
+                    - generic [ref=e180]: 12 months ago
+                - generic [ref=e181]:
+                  - generic [ref=e182]: Mid-Level
+                  - generic [ref=e183]: Full-time
+                - generic [ref=e184]:
+                  - generic [ref=e185]: Data
+                  - generic [ref=e186]: Takeda
+                - button "View Details" [ref=e187]:
+                  - generic [ref=e188]: View Details
+                  - img [ref=e189]
+              - 'article "Job: Technical Training Specialist - Flexible Location at Forestry Corporation of NSW" [ref=e191] [cursor=pointer]':
+                - generic [ref=e193]:
+                  - img [ref=e195]
+                  - generic [ref=e199]:
+                    - heading "Technical Training Specialist - Flexible Location" [level=3] [ref=e200]
+                    - paragraph [ref=e201]: Forestry Corporation of NSW
+                - generic [ref=e202]:
+                  - generic [ref=e203]:
+                    - img [ref=e204]
+                    - generic [ref=e207]: Virtual
+                  - generic [ref=e208]:
+                    - img [ref=e209]
+                    - generic [ref=e212]: 12 months ago
+                - generic [ref=e213]:
+                  - generic [ref=e214]: Mid-Level
+                  - generic [ref=e215]: Full-time
+                - generic [ref=e216]:
+                  - generic [ref=e217]: Technical
+                  - generic [ref=e218]: Forestry
+                - button "View Details" [ref=e219]:
+                  - generic [ref=e220]: View Details
+                  - img [ref=e221]
+              - 'article "Job: Primary Teacher | Berwick VIC at OneSchool Global" [ref=e223] [cursor=pointer]':
+                - generic [ref=e225]:
+                  - img [ref=e227]
+                  - generic [ref=e231]:
+                    - heading "Primary Teacher | Berwick VIC" [level=3] [ref=e232]
+                    - paragraph [ref=e233]: OneSchool Global
+                - generic [ref=e234]:
+                  - generic [ref=e235]:
+                    - img [ref=e236]
+                    - generic [ref=e239]: Officer, AU-VIC, 3809, AUS
+                  - generic [ref=e240]:
+                    - img [ref=e241]
+                    - generic [ref=e244]: 12 months ago
+                - generic [ref=e245]:
+                  - generic [ref=e246]: Mid-Level
+                  - generic [ref=e247]: Full-time
+                - generic [ref=e248]:
+                  - generic [ref=e249]: Primary
+                  - generic [ref=e250]: OneSchool
+                - button "View Details" [ref=e251]:
+                  - generic [ref=e252]: View Details
+                  - img [ref=e253]
+              - 'article "Job: Direct Support Professional at Merakey" [ref=e255] [cursor=pointer]':
+                - generic [ref=e257]:
+                  - img [ref=e259]
+                  - generic [ref=e263]:
+                    - heading "Direct Support Professional" [level=3] [ref=e264]
+                    - paragraph [ref=e265]: Merakey
+                - generic [ref=e266]:
+                  - generic [ref=e267]:
+                    - img [ref=e268]
+                    - generic [ref=e271]: Mckees Rocks, PA, United States
+                  - generic [ref=e272]:
+                    - img [ref=e273]
+                    - generic [ref=e276]: 12 months ago
+                - generic [ref=e277]:
+                  - generic [ref=e278]: Mid-Level
+                  - generic [ref=e279]: Full-time
+                - generic [ref=e280]:
+                  - generic [ref=e281]: Direct
+                  - generic [ref=e282]: Merakey
+                - button "View Details" [ref=e283]:
+                  - generic [ref=e284]: View Details
+                  - img [ref=e285]
+          - generic [ref=e288]:
+            - button "Previous" [disabled] [ref=e289]:
+              - img [ref=e290]
+              - text: Previous
+            - generic [ref=e292]:
+              - button "1" [ref=e293]
+              - button "2" [ref=e294]
+              - button "3" [ref=e295]
+              - img [ref=e297]
+              - button "17" [ref=e301]
+            - button "Next" [ref=e302]:
+              - text: Next
+              - img [ref=e303]
+  - contentinfo [ref=e305]:
+    - generic [ref=e306]:
+      - generic [ref=e307]:
+        - generic [ref=e308]:
+          - generic [ref=e309]:
+            - img [ref=e310]
+            - generic [ref=e313]: JobFrica
+          - paragraph [ref=e314]: Connecting talented professionals with leading companies across Africa. Build your career and find opportunities that match your skills and ambitions.
+          - generic [ref=e315]:
+            - link [ref=e316] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e317]
+            - link [ref=e319] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e320]
+            - link [ref=e322] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e323]
+            - link [ref=e327] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e328]
+        - generic [ref=e331]:
+          - heading "Quick Links" [level=3] [ref=e332]
+          - list [ref=e333]:
+            - listitem [ref=e334]:
+              - link "Browse Jobs" [ref=e335] [cursor=pointer]:
+                - /url: /jobs
+            - listitem [ref=e336]:
+              - link "Companies" [ref=e337] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e338]:
+              - link "Post a Job" [ref=e339] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e340]:
+              - link "Career Resources" [ref=e341] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e342]:
+              - link "Salary Guide" [ref=e343] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e344]:
+          - heading "Categories" [level=3] [ref=e345]
+          - list [ref=e346]:
+            - listitem [ref=e347]:
+              - link "Design" [ref=e348] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e349]:
+              - link "Engineering" [ref=e350] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e351]:
+              - link "Marketing" [ref=e352] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e353]:
+              - link "Sales" [ref=e354] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e355]:
+              - link "View All" [ref=e356] [cursor=pointer]:
+                - /url: /jobs
+        - generic [ref=e357]:
+          - heading "Contact Us" [level=3] [ref=e358]
+          - generic [ref=e359]:
+            - generic [ref=e360]:
+              - img [ref=e361]
+              - generic [ref=e364]: hello@jobfrica.com
+            - generic [ref=e365]:
+              - img [ref=e366]
+              - generic [ref=e368]: +234 (0) 123 456 7890
+            - generic [ref=e369]:
+              - img [ref=e370]
+              - generic [ref=e373]: Lagos, Nigeria
+          - generic [ref=e374]:
+            - heading "Stay Updated" [level=4] [ref=e375]
+            - generic [ref=e376]:
+              - textbox "Your email" [ref=e377]
+              - button "Subscribe" [ref=e378]
+      - generic [ref=e380]:
+        - generic [ref=e381]: © 2024 JobFrica. All rights reserved.
+        - generic [ref=e382]:
+          - link "Privacy Policy" [ref=e383] [cursor=pointer]:
+            - /url: "#"
+          - link "Terms of Service" [ref=e384] [cursor=pointer]:
+            - /url: "#"
+          - link "Cookie Policy" [ref=e385] [cursor=pointer]:
+            - /url: "#"
+          - link "Help Center" [ref=e386] [cursor=pointer]:
+            - /url: "#"
+  - button "Open Next.js Dev Tools" [ref=e392] [cursor=pointer]:
+    - img [ref=e393]
+  - alert [ref=e396]
+```

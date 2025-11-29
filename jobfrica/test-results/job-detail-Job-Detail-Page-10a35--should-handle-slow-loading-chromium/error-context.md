@@ -1,0 +1,232 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - img [ref=e6]
+        - generic [ref=e9]: JobFrica
+      - generic [ref=e11]:
+        - link "Home" [ref=e12] [cursor=pointer]:
+          - /url: /
+          - text: Home
+        - link "Find Jobs" [ref=e13] [cursor=pointer]:
+          - /url: /jobs
+          - text: Find Jobs
+        - link "Companies" [ref=e14] [cursor=pointer]:
+          - /url: /companies
+          - text: Companies
+        - link "Career Resources" [ref=e15] [cursor=pointer]:
+          - /url: /resources
+          - text: Career Resources
+        - link "For Employers" [ref=e16] [cursor=pointer]:
+          - /url: /employers
+          - text: For Employers
+      - generic [ref=e18]:
+        - link "Sign In" [ref=e19] [cursor=pointer]:
+          - /url: /auth/login
+        - link "Get Started" [ref=e20] [cursor=pointer]:
+          - /url: /auth/register
+  - main [ref=e21]:
+    - generic [ref=e23]:
+      - button "Back to Jobs" [ref=e24]:
+        - img [ref=e25]
+        - text: Back to Jobs
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - generic [ref=e29]:
+            - generic [ref=e30]:
+              - img [ref=e32]
+              - generic [ref=e36]:
+                - heading "Software Engineer slow-job" [level=1] [ref=e37]
+                - generic [ref=e38]:
+                  - generic [ref=e39]:
+                    - img [ref=e40]
+                    - text: Company slow-job
+                  - generic [ref=e44]:
+                    - img [ref=e45]
+                    - text: Lagos, Nigeria
+                  - generic [ref=e48]:
+                    - img [ref=e49]
+                    - text: 2025-11-28T16:24:52.044Z
+                - generic [ref=e52]:
+                  - generic [ref=e53]: Full-time
+                  - generic [ref=e54]:
+                    - img [ref=e55]
+                    - text: $50,000 - $70,000
+            - generic [ref=e57]:
+              - button "Apply Now" [ref=e58]
+              - button "Save job" [ref=e59]:
+                - img [ref=e60]
+              - button "Share job" [ref=e62]:
+                - img [ref=e63]
+          - generic [ref=e69]:
+            - heading "Job Description" [level=2] [ref=e70]
+            - generic [ref=e71]: This is a mock job description for job slow-job
+          - generic [ref=e72]:
+            - heading "Requirements" [level=2] [ref=e73]
+            - list [ref=e74]:
+              - listitem [ref=e75]:
+                - img [ref=e76]
+                - generic [ref=e79]: Requirement 1
+              - listitem [ref=e80]:
+                - img [ref=e81]
+                - generic [ref=e84]: Requirement 2
+          - generic [ref=e85]:
+            - heading "Responsibilities" [level=2] [ref=e86]
+            - list [ref=e87]:
+              - listitem [ref=e88]:
+                - img [ref=e89]
+                - generic [ref=e92]: Responsibility 1
+              - listitem [ref=e93]:
+                - img [ref=e94]
+                - generic [ref=e97]: Responsibility 2
+          - generic [ref=e98]:
+            - heading "Benefits & Perks" [level=2] [ref=e99]
+            - list [ref=e100]:
+              - listitem [ref=e101]:
+                - img [ref=e102]
+                - generic [ref=e105]: Benefit 1
+              - listitem [ref=e106]:
+                - img [ref=e107]
+                - generic [ref=e110]: Benefit 2
+          - generic [ref=e111]:
+            - heading "Required Skills" [level=2] [ref=e112]
+            - generic [ref=e113]:
+              - generic [ref=e114]: React
+              - generic [ref=e115]: TypeScript
+        - generic [ref=e116]:
+          - generic [ref=e117]:
+            - heading "Job Overview" [level=3] [ref=e118]
+            - generic [ref=e119]:
+              - generic [ref=e120]:
+                - img [ref=e121]
+                - generic [ref=e123]:
+                  - paragraph [ref=e124]: Posted
+                  - paragraph [ref=e125]: 2025-11-28T16:24:52.044Z
+              - generic [ref=e126]:
+                - img [ref=e127]
+                - generic [ref=e130]:
+                  - paragraph [ref=e131]: Job Type
+                  - paragraph [ref=e132]: Full-time
+              - generic [ref=e133]:
+                - img [ref=e134]
+                - generic [ref=e137]:
+                  - paragraph [ref=e138]: Location
+                  - paragraph [ref=e139]: Lagos, Nigeria
+              - generic [ref=e140]:
+                - img [ref=e141]
+                - generic [ref=e143]:
+                  - paragraph [ref=e144]: Salary Range
+                  - paragraph [ref=e145]: $50,000 - $70,000
+              - generic [ref=e146]:
+                - img [ref=e147]
+                - generic [ref=e152]:
+                  - paragraph [ref=e153]: Experience Level
+                  - paragraph [ref=e154]: Mid-Level
+            - button "Apply for this Job" [ref=e156]
+          - generic [ref=e157]:
+            - heading "About Company slow-job" [level=3] [ref=e158]
+            - generic [ref=e159]:
+              - img [ref=e161]
+              - generic [ref=e165]:
+                - paragraph [ref=e166]: Company slow-job
+                - paragraph [ref=e167]: Lagos, Nigeria
+            - paragraph [ref=e168]: Learn more about the company and explore other opportunities.
+            - button "View Company Profile" [ref=e169]
+          - generic [ref=e170]:
+            - heading "Share this Job" [level=3] [ref=e171]
+            - paragraph [ref=e172]: Help someone find their dream job
+            - button "Share Job" [ref=e173]:
+              - img [ref=e174]
+              - text: Share Job
+  - contentinfo [ref=e180]:
+    - generic [ref=e181]:
+      - generic [ref=e182]:
+        - generic [ref=e183]:
+          - generic [ref=e184]:
+            - img [ref=e185]
+            - generic [ref=e188]: JobFrica
+          - paragraph [ref=e189]: Connecting talented professionals with leading companies across Africa. Build your career and find opportunities that match your skills and ambitions.
+          - generic [ref=e190]:
+            - link [ref=e191] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e192]
+            - link [ref=e194] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e195]
+            - link [ref=e197] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e198]
+            - link [ref=e202] [cursor=pointer]:
+              - /url: "#"
+              - img [ref=e203]
+        - generic [ref=e206]:
+          - heading "Quick Links" [level=3] [ref=e207]
+          - list [ref=e208]:
+            - listitem [ref=e209]:
+              - link "Browse Jobs" [ref=e210] [cursor=pointer]:
+                - /url: /jobs
+            - listitem [ref=e211]:
+              - link "Companies" [ref=e212] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e213]:
+              - link "Post a Job" [ref=e214] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e215]:
+              - link "Career Resources" [ref=e216] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e217]:
+              - link "Salary Guide" [ref=e218] [cursor=pointer]:
+                - /url: "#"
+        - generic [ref=e219]:
+          - heading "Categories" [level=3] [ref=e220]
+          - list [ref=e221]:
+            - listitem [ref=e222]:
+              - link "Design" [ref=e223] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e224]:
+              - link "Engineering" [ref=e225] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e226]:
+              - link "Marketing" [ref=e227] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e228]:
+              - link "Sales" [ref=e229] [cursor=pointer]:
+                - /url: "#"
+            - listitem [ref=e230]:
+              - link "View All" [ref=e231] [cursor=pointer]:
+                - /url: /jobs
+        - generic [ref=e232]:
+          - heading "Contact Us" [level=3] [ref=e233]
+          - generic [ref=e234]:
+            - generic [ref=e235]:
+              - img [ref=e236]
+              - generic [ref=e239]: hello@jobfrica.com
+            - generic [ref=e240]:
+              - img [ref=e241]
+              - generic [ref=e243]: +234 (0) 123 456 7890
+            - generic [ref=e244]:
+              - img [ref=e245]
+              - generic [ref=e248]: Lagos, Nigeria
+          - generic [ref=e249]:
+            - heading "Stay Updated" [level=4] [ref=e250]
+            - generic [ref=e251]:
+              - textbox "Your email" [ref=e252]
+              - button "Subscribe" [ref=e253]
+      - generic [ref=e255]:
+        - generic [ref=e256]: © 2024 JobFrica. All rights reserved.
+        - generic [ref=e257]:
+          - link "Privacy Policy" [ref=e258] [cursor=pointer]:
+            - /url: "#"
+          - link "Terms of Service" [ref=e259] [cursor=pointer]:
+            - /url: "#"
+          - link "Cookie Policy" [ref=e260] [cursor=pointer]:
+            - /url: "#"
+          - link "Help Center" [ref=e261] [cursor=pointer]:
+            - /url: "#"
+  - button "Open Next.js Dev Tools" [ref=e267] [cursor=pointer]:
+    - img [ref=e268]
+  - alert [ref=e271]
+```

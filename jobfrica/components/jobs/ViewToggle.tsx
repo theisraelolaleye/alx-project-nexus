@@ -11,25 +11,13 @@ export interface ViewToggleProps {
   onViewChange: (mode: ViewMode) => void
 }
 
-/**
- * ViewToggle component allows users to switch between grid and list views
- * 
- * @component
- * @example
- * ```tsx
- * <ViewToggle 
- *   viewMode={viewMode} 
- *   onViewChange={(mode) => setViewMode(mode)} 
- * />
- * ```
- */
 export function ViewToggle({ viewMode, onViewChange }: ViewToggleProps) {
   const buttonClass = "p-2 rounded-lg transition-colors flex items-center justify-center"
   const activeClass = "bg-blue-600 text-white"
   const inactiveClass = "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
 
   return (
-    <div className="flex items-center gap-1 border border-gray-300 rounded-lg p-1 bg-white">
+    <div className="flex items-center gap-1 border border-gray-300 rounded-lg p-1 bg-white" data-testid="view-toggle">
       <button
         type="button"
         onClick={() => onViewChange('grid')}
@@ -37,6 +25,7 @@ export function ViewToggle({ viewMode, onViewChange }: ViewToggleProps) {
         aria-label="Grid view"
         aria-pressed={viewMode === 'grid'}
         title="Switch to grid view"
+        data-testid="grid-view-button"
       >
         <Grid3X3 className="w-4 h-4" />
       </button>
@@ -48,6 +37,7 @@ export function ViewToggle({ viewMode, onViewChange }: ViewToggleProps) {
         aria-label="List view"
         aria-pressed={viewMode === 'list'}
         title="Switch to list view"
+        data-testid="list-view-button"
       >
         <List className="w-4 h-4" />
       </button>

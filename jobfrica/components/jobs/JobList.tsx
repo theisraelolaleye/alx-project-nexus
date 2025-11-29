@@ -83,7 +83,7 @@ export function JobList({ jobs, loading = false, emptyStateMessage = "No jobs fo
             <option value="salary">Salary</option>
           </select>
         </div>
-      </div>
+      </div> 
 
       {/* Job Cards Grid/List */}
       <div className={
@@ -99,7 +99,6 @@ export function JobList({ jobs, loading = false, emptyStateMessage = "No jobs fo
             viewMode={viewMode}
           />
         ))}
-
 
       </div>
     </div>
