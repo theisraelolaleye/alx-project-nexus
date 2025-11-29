@@ -83,6 +83,10 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         if role not in ['job_seeker', 'employer']:
             role = 'job_seeker'
         validated_data['role'] = role
+
+        # Clear company name for job seekers
+        if role != 'employer':
+            validated_data['company_name'] = ''
         user = CustomUser.objects.create(**validated_data)
         
         # Set password properly

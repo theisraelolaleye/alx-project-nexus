@@ -102,6 +102,20 @@ class JobViewSet(viewsets.ModelViewSet):
     def apply(self, request, pk=None):
         """Apply for a job"""
         job = self.get_object()
+
+        # Validate job is still active
+        if job.application_deadline and job.application_deadline < timezone.now():
+            return Response(
+                {'error': 'Application deadline has passed.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        # Validate user is a job seeker
+        if request.user.role != 'job_seeker':
+            return Response(
+                {'error': 'Only job seekers can apply for jobs.'},
+                status=status.HTTP_403_FORBIDDEN
+            )
         
         # Check if user already applied
         if Application.objects.filter(job=job, applicant=request.user).exists():
