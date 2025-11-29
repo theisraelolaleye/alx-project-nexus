@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Job
+from django.http import Http404
 from users.permissions import IsEmployerOrAdmin, IsOwnerOrAdmin, IsJobSeekerOrAdmin
 from .serializers import JobSerializer
 from applications.serializers import ApplicationCreateSerializer
@@ -31,7 +32,7 @@ class JobCategoryViewSet(viewsets.ModelViewSet):
     def jobs(self, request, slug=None):
         """Get jobs for a specific category"""
         category = self.get_object()
-        jobs = Job.objects.filter(category=category, application_deadline__gte=timezone.now())
+        jobs = Job.objects.filter(category=category, status='open')
         page = self.paginate_queryset(jobs)
         
         if page is not None:
@@ -75,25 +76,42 @@ class JobViewSet(viewsets.ModelViewSet):
         return JobDetailSerializer
 
     def get_queryset(self):
-        """
-        Return active jobs for public, all jobs for authenticated users.
-        """
-        queryset = Job.objects.all()
-        
-        # Public users only see active jobs (not expired)
-        if not self.request.user.is_authenticated:
-            queryset = queryset.filter(application_deadline__gte=timezone.now())
-        # Employers can see all their jobs (even expired ones)
-        elif hasattr(self.request.user, 'role') and self.request.user.role == 'employer':
-            # For list view, show all jobs; for detail view, show specific job
-            if self.action == 'list':
+        queryset = Job.objects.select_related('employer', 'category')
+        # For LIST action only - apply role-based filtering
+        if self.action == 'list':
+            if not self.request.user.is_authenticated:
+                # Public users only see active jobs
+                queryset = queryset.filter(status='open')
+            elif self.request.user.role == 'employer':
+                # Employers see all their jobs in list view
                 queryset = queryset.filter(employer=self.request.user)
-        # Job seekers see only active jobs
-        else:
-            queryset = queryset.filter(application_deadline__gte=timezone.now())
-            
-        return queryset.select_related('employer', 'category')
+            else:
+                # Job seekers see active jobs
+                queryset = queryset.filter(status='open')
+        
+        # For RETRIEVE action - allow access to specific job with permission checks
+        # Don't apply the same filters for single job retrieval
+        # The permission checks will happen in get_object()
+        return queryset.prefetch_related('tags')
 
+    def get_object(self):
+        # Get the job first
+        job = super().get_object()
+        
+        # Check if user can view this specific job
+        if not self.request.user.is_authenticated:
+            # Public users can only view active jobs
+            if job.status != 'open':
+                raise Http404("No Job matches the given query.")
+        elif self.request.user.role == 'employer':
+            # Employers can only view their own jobs
+            if job.employer != self.request.user:
+                raise Http404("No Job matches the given query.")
+        else:
+            # Job seekers can only view active jobs
+            if job.status != 'open':
+                raise Http404("No Job matches the given query.")
+        return job
     
     def perform_create(self, serializer):
         serializer.save(employer=self.request.user)
@@ -104,7 +122,7 @@ class JobViewSet(viewsets.ModelViewSet):
         job = self.get_object()
 
         # Validate job is still active
-        if job.application_deadline and job.application_deadline < timezone.now():
+        if job.status != 'open':
             return Response(
                 {'error': 'Application deadline has passed.'},
                 status=status.HTTP_400_BAD_REQUEST
