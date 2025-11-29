@@ -45,7 +45,7 @@ class JobDetailSerializer(serializers.ModelSerializer):
         source='category',
         write_only=True
     )
-    posted_by = serializers.SerializerMethodField()
+    posted_by = serializers.CharField(source='employer.username', read_only=True)
     application_count = serializers.SerializerMethodField()
     search_vector = serializers.CharField(default='', read_only=True)
     
@@ -67,11 +67,12 @@ class JobDetailSerializer(serializers.ModelSerializer):
     
 
 class JobCreateSerializer(serializers.ModelSerializer):
+    posted_by = serializers.CharField(source='employer.username', read_only=True)
     class Meta:
         model = Job
         fields = [
             'id','title', 'description', 'company', 'location', 
-            'experience_level', 'job_type', 'category', 
+            'experience_level', 'job_type', 'category', 'posted_by',
             'salary_min', 'salary_max', 'application_deadline', 'tags'
         ]
         read_only_fields = ['id', 'posted_by', 'created_at']
