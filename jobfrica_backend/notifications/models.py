@@ -7,7 +7,7 @@ class Notification(models.Model):
         ('new_job_posting', 'New Job Posting'),
         ('company_announcement', 'Company Announcement'),
     )
-    receipient = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE, related_name='notifications')
+    recipient = models.ForeignKey('users.CustomUser', on_delete=models.CASCADE, related_name='notifications')
     notification_type = models.CharField(max_length=30, choices=NOTIFICATION_TYPE_CHOICES)
     title = models.CharField(max_length=255)
     message = models.TextField()

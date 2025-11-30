@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.db.models import Q, Count, Avg
 from django.db import models
 from django.utils import timezone
@@ -222,16 +222,26 @@ class CurrentUserProfileView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user
     
-class PasswordChangeView(generics.UpdateAPIView):
-    """Change password endpoint"""
-    serializer_class = PasswordChangeSerializer
-    permission_classes = [IsAuthenticated]
-    
-    def update(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer
 
+class PasswordChangeView(APIView):
+    """Change password endpoint"""
+    permission_classes = [IsAuthenticated]
+    serializer_class = PasswordChangeSerializer
+    
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        
+        user = request.user
+        user.set_password(serializer.validated_data['new_password'])
+        user.save()
+        
+        # Update session auth hash to prevent logout
+        update_session_auth_hash(request, user)
+        
+        return Response({
+            'message': 'Password changed successfully.'
+        }, status=status.HTTP_200_OK)
 class PasswordResetRequestView(generics.GenericAPIView):
     """
     Request password reset email
@@ -459,13 +469,13 @@ class UserDashboardView(APIView):
         if user.role == 'employer':
             # Employer dashboard data
             dashboard_data['statistics'] = {
-                'total_jobs_posted': user.posted_jobs.count(),
-                'active_jobs': user.posted_jobs.filter(application_deadline__gte=timezone.now()).count(),
+                'total_jobs_posted': Job.objects.filter(employer=user).count(),
+                'active_jobs': Job.objects.filter(employer=user, status='open').count(),
                 'total_applications_received': Application.objects.filter(
-                    job__posted_by=user
+                    job__employer=user
                 ).count(),
                 'pending_applications': Application.objects.filter(
-                    job__posted_by=user,
+                    job__employer=user,
                     status='under_review'
                 ).count(),
                 'recent_applications': self.get_recent_applications_for_employer(user),
@@ -499,7 +509,7 @@ class UserDashboardView(APIView):
     def get_recent_applications_for_employer(self, user):
         """Get recent applications for employer's jobs"""
         applications = Application.objects.filter(
-            job__posted_by=user
+            job__employer=user
         ).select_related('job', 'applicant').order_by('-applied_at')[:10]
         
         return [{
@@ -524,7 +534,7 @@ class UserDashboardView(APIView):
     
     def get_job_performance(self, user):
         """Get job posting performance metrics"""
-        jobs = user.posted_jobs.annotate(
+        jobs = user.jobs.annotate(
             application_count=Count('applications')
         )
         
@@ -568,7 +578,7 @@ class UserDashboardView(APIView):
             'jobs_posted_today': Job.objects.filter(created_at__date=today).count(),
             'applications_today': Application.objects.filter(applied_at__date=today).count(),
             'new_users_today': CustomUser.objects.filter(date_joined__date=today).count(),
-            'active_jobs': Job.objects.filter(application_deadline__gte=today).count(),
+            'active_jobs': Job.objects.filter(status='open').count(),
         }
 
 class PublicDashboardView(APIView):
@@ -588,7 +598,7 @@ class PublicDashboardView(APIView):
             total_companies = CustomUser.objects.filter(
                 role='employer', 
                 is_active=True,
-                id__in=Job.objects.filter(application_deadline__gte=timezone.now()).values('employer')
+                id__in=Job.objects.filter(status='open').values('employer')
             ).distinct().count()
             
             # Recent job postings
@@ -623,7 +633,7 @@ class PublicDashboardView(APIView):
         from jobs.models import Job
         try:
             jobs = Job.objects.filter(
-                application_deadline__gte=timezone.now()
+                status='open'
             ).select_related('employer').order_by('-created_at')[:10]
             
             return [{
@@ -632,7 +642,7 @@ class PublicDashboardView(APIView):
                 'company_name': job.employer.company_name,
                 'location': job.location,
                 'posted_at': job.created_at,
-                'application_deadline': job.application_deadline,
+                'status': job.status,
             } for job in jobs]
         except Exception as e:
             return [] # Graceful fallback if jobs table doesn't exist
@@ -730,7 +740,7 @@ class UserStatisticsView(APIView):
                     'active': CustomUser.objects.filter(role='employer', is_active=True).count(),
                     'with_jobs': CustomUser.objects.filter(
                         role='employer',
-                        posted_jobs__isnull=False
+                        jobs__isnull=False
                     ).distinct().count(),
                 },
                 'job_seekers': {
