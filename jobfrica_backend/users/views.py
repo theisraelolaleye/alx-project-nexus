@@ -223,28 +223,25 @@ class CurrentUserProfileView(generics.RetrieveUpdateAPIView):
         return self.request.user
     
 
-class PasswordChangeView(generics.UpdateAPIView):
+class PasswordChangeView(APIView):
     """Change password endpoint"""
-    serializer_class = PasswordChangeSerializer
     permission_classes = [IsAuthenticated]
-
-    def get_object(self):
-        return self.request.user
+    serializer_class = PasswordChangeSerializer
     
-    def update(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         
-        # Update the password
         user = request.user
         user.set_password(serializer.validated_data['new_password'])
         user.save()
-
+        
         # Update session auth hash to prevent logout
         update_session_auth_hash(request, user)
         
-        return Response({'detail': 'Password updated successfully'}, status=status.HTTP_200_OK)
-
+        return Response({
+            'message': 'Password changed successfully.'
+        }, status=status.HTTP_200_OK)
 class PasswordResetRequestView(generics.GenericAPIView):
     """
     Request password reset email
