@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Jobfrica is a beginner‑friendly job discovery web app built with Next.js (App Router) that lets users browse job listings, view detailed job information, and quickly express interest via a simple application popup. It integrates with RapidAPI’s JSearch to fetch real job data and uses Zustand for lightweight client state (like caching fetched jobs) to make navigation smooth.
 
-## Getting Started
+## What You Can Do
 
-First, run the development server:
+- Find jobs: Browse a paginated, filterable list of jobs on `/jobs`.
+- View details: See each job’s title, company, location, type, experience level, salary, description, and tags on `/jobs/[id]`.
+- Apply (no backend required): Click “Apply” to open a popup and fill in basic info (name, email, phone, cover letter). This is client‑only and does not submit to any server yet.
+
+## Key Technologies
+
+- Next.js 16 (App Router, Turbopack)
+- TypeScript
+- Zustand (simple client store for jobs)
+- RapidAPI JSearch (external jobs data)
+- Tailwind CSS (UI styling)
+
+## Project Structure (high‑level)
+
+- `app/jobs/page.tsx`: Jobs list with filters, view toggle, and pagination.
+- `app/jobs/[id]/page.tsx`: Job details page; opens the Apply popup.
+- `components/jobs/JobList.tsx` & `components/jobs/JobCard.tsx`: UI for listing jobs.
+- `components/jobs/ApplyModal.tsx`: Minimal, client‑only application popup.
+- `app/api/jobs/route.ts`: Server route proxy to RapidAPI JSearch (search).
+- `app/api/job-details/route.ts`: Server route proxy to RapidAPI JSearch (single job details).
+- `lib/api.ts`: Simple client helpers (`externalJobsApi`) to call the above routes.
+- `store/jobStore.ts`: Persisted Zustand store to cache jobs locally.
+- `types/index.ts`: Shared TypeScript types (e.g., `Job`).
+
+## Setup (Beginner Friendly)
+
+1. Install dependencies and start dev server
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Configure your RapidAPI key (to fetch real jobs)
+   Create `.env.local` in the `jobfrica` folder:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+RAPIDAPI_KEY=your_actual_rapidapi_key_here
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Open the app
+   Visit `http://localhost:3000/jobs` to browse jobs.
 
-## Learn More
+## How Data Flows
 
-To learn more about Next.js, take a look at the following resources:
+- The Jobs page calls `/api/jobs` → our server route calls RapidAPI JSearch → we transform the response to our `Job` type → the page renders.
+- The Details page first checks the job in the Zustand store. If missing, it calls `/api/job-details?id=<job_id>` to fetch full details.
+- The Apply popup is client‑only; it validates input and shows a success message without sending data anywhere.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Notes & Tips
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- If remote images fail to load with Next’s `<Image />`, whitelist hosts in `next.config.ts` using `images.remotePatterns`.
+- If RapidAPI returns errors (e.g., rate limits), our API routes surface the error details for easier debugging.
+- The code aims to stay beginner‑friendly: small helpers, clear types, and minimal state.
 
-## Deploy on Vercel
+## Future Enhancements (Optional)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Wire the Apply popup to a real backend (e.g., save applications in a database).
+- Add more filters (category, remote only) and server‑side pagination.
+- Improve accessibility and add loading skeletons across pages.

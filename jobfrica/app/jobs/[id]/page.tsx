@@ -18,6 +18,7 @@ import {
 import { Job } from '@/types'
 import { externalJobsApi } from '@/lib/api'
 import { useJobStore } from '@/store/jobStore'
+import ApplyModal from '@/components/jobs/ApplyModal'
 
 export default function JobDetailsPage() {
   const params = useParams()
@@ -26,6 +27,7 @@ export default function JobDetailsPage() {
 
   const [job, setJob] = useState<Job | null>(null)
   const [loading, setLoading] = useState(true)
+  const [showApply, setShowApply] = useState(false)
   const getJobById = useJobStore(state => state.getJobById)
   const upsertJob = useJobStore(state => state.upsertJob)
   const [isSaved, setIsSaved] = useState(false)
@@ -72,9 +74,7 @@ export default function JobDetailsPage() {
   }, [jobId])
 
   const handleApply = () => {
-    // TODO: Implement apply logic
-    console.log('Apply to job:', jobId)
-    router.push(`/jobs/${jobId}/apply`)
+    setShowApply(true)
   }
 
   const handleSave = () => {
@@ -135,6 +135,7 @@ export default function JobDetailsPage() {
 
   return (
     <div className="bg-gray-50 py-8">
+      <ApplyModal isOpen={showApply} onClose={() => setShowApply(false)} job={job} />
       <div className="max-w-5xl mx-auto px-4">
         {/* Back button */}
         <button

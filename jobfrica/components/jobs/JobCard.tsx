@@ -106,9 +106,9 @@ const JobCard = memo<JobCardProps>(({ job, onClick, viewMode = 'grid' }) => {
           </span>
 
           {/* Job Type Badge */}
-          <span className={`px-3 py-1 rounded-full text-xs font-medium ${getJobTypeColor(job.type)} whitespace-nowrap`}>
+          {/* <span className={`px-3 py-1 rounded-full text-xs font-medium ${getJobTypeColor(job.type)} whitespace-nowrap`}>
             {job.type}
-          </span>
+          </span> */}
         </div>
 
         {/* Salary */}
